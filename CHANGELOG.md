@@ -1,6 +1,10 @@
 # Changelog
 
-All notable changes to the HeyRon Agent Library will be documented in this file.
+## [1.1.0] - 2026-03-05
+
+### Added
+- **fixes/telegram-setup.sh** — safely configure Telegram bot integration from inside your container
+- **fixes/session-cap.sh** — truncate bloated session files to prevent context overflow
 
 ## [1.0.0] - 2026-03-04
 
