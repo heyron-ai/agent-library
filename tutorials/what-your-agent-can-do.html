@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Your Agent Can (and Can't) Do — heyron®</title>
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --surface: #1a1a1a;
+            --border: #333;
+            --text: #e5e5e5;
+            --text-muted: #999;
+            --accent: #3498db;
+            --accent-light: #5dade2;
+            --code-bg: #161616;
+            --callout-info: #5865F2;
+            --callout-warning: #faa61a;
+            --callout-danger: #f04747;
+            --callout-success: #43b581;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.15);
+            color: var(--accent-light);
+            padding: 0.25rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 1.25rem;
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: var(--surface);
+            color: var(--text-muted);
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Sections */
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 2.5rem 0 1rem;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        p { margin-bottom: 1rem; color: var(--text); }
+
+        a { color: var(--accent-light); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            color: var(--accent-light);
+        }
+
+        /* Callouts */
+        .callout {
+            background: var(--surface);
+            border-left: 3px solid var(--callout-info);
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .callout.info { border-left-color: var(--callout-info); }
+        .callout.warning { border-left-color: var(--callout-warning); }
+        .callout.danger { border-left-color: var(--callout-danger); }
+        .callout.success { border-left-color: var(--callout-success); }
+
+        .callout .callout-title {
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            color: #fff;
+        }
+
+        .callout p:last-child { margin-bottom: 0; }
+
+        /* Capability Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .card.can .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .card.cant .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        .card .card-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 0.15rem 0;
+            line-height: 1.5;
+        }
+
+        .card ul li::before {
+            content: "·";
+            margin-right: 0.4rem;
+            color: var(--border);
+        }
+
+        .card.can { border-top: 2px solid var(--callout-success); }
+        .card.cant { border-top: 2px solid var(--callout-danger); }
+
+        /* Examples list */
+        .examples-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .examples-list li {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Next steps */
+        .next-steps {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1.25rem 0;
+        }
+
+        .next-step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            color: var(--text);
+            transition: border-color 0.2s;
+        }
+
+        .next-step:hover {
+            border-color: var(--accent);
+            text-decoration: none;
+        }
+
+        .next-step .arrow {
+            color: var(--accent-light);
+            margin-left: auto;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer a { color: var(--text-muted); }
+        footer a:hover { color: var(--text); }
+
+        footer .footer-links {
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .hero .description { font-size: 1rem; }
+            .container { padding: 1.25rem 1rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="badge">Getting Started</div>
+            <h1>What Your Agent Can (and Can't) Do</h1>
+            <p class="description">Set realistic expectations, discover powerful capabilities, and learn how to get the most from your AI agent.</p>
+            <span class="time-badge">⏱ 4 minute read</span>
+        </div>
+
+        <h2>Your Agent Is Powerful — But It's Not Magic</h2>
+        <p>Your heyron agent is an AI running on its own private server with its own dedicated workspace. It can do a <em>lot</em> — write code, research topics, manage tasks, chat with you across platforms — but it needs you to set things up and tell it what you want.</p>
+        <p>Think of it as a brilliant assistant who just started on day one. They're incredibly capable, but they need context, access, and direction from you to do their best work.</p>
+
+        <h2>What Your Agent Can Do Right Now</h2>
+
+        <div class="card-grid">
+            <div class="card can">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Write &amp; Edit</div>
+                <ul>
+                    <li>Draft emails, articles, social posts, essays</li>
+                    <li>Edit and improve your writing</li>
+                    <li>Summarize long documents</li>
+                    <li>Create templates and form letters</li>
+                </ul>
+            </div>
+
+            <div class="card can">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Research &amp; Analyze</div>
+                <ul>
+                    <li>Search the web for information</li>
+                    <li>Analyze data and create summaries</li>
+                    <li>Compare options and make recommendations</li>
+                    <li>Fact-check and find sources</li>
+                </ul>
+            </div>
+
+            <div class="card can">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Code &amp; Build</div>
+                <ul>
+                    <li>Write Python, JavaScript, HTML, and more</li>
+                    <li>Build websites, scripts, and automation</li>
+                    <li>Debug code and explain errors</li>
+                    <li>Create spreadsheet formulas</li>
+                </ul>
+            </div>
+
+            <div class="card can">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Organize &amp; Plan</div>
+                <ul>
+                    <li>Create schedules and to-do lists</li>
+                    <li>Break big projects into steps</li>
+                    <li>Set reminders (via cron)</li>
+                    <li>Track goals and progress</li>
+                </ul>
+            </div>
+
+            <div class="card can">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Communicate</div>
+                <ul>
+                    <li>Chat via web dashboard, Discord, Telegram</li>
+                    <li>Each channel has its own conversation context</li>
+                    <li>Your agent remembers context within a session</li>
+                </ul>
+            </div>
+
+            <div class="card can">
+                <div class="card-icon">✅</div>
+                <div class="card-title">Learn About You</div>
+                <ul>
+                    <li>Stores preferences and context in memory files</li>
+                    <li>Gets better the more you use it</li>
+                    <li>Can adapt its personality via <code>SOUL.md</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>What Your Agent Can't Do (Yet)</h2>
+
+        <div class="card-grid">
+            <div class="card cant">
+                <div class="card-icon">❌</div>
+                <div class="card-title">Access Your Accounts (Without Setup)</div>
+                <ul>
+                    <li>Can't read your email, calendar, or social media out of the box</li>
+                    <li>Needs API keys or credentials you provide</li>
+                    <li>Each integration requires explicit setup</li>
+                </ul>
+            </div>
+
+            <div class="card cant">
+                <div class="card-icon">❌</div>
+                <div class="card-title">Take Actions in the Real World</div>
+                <ul>
+                    <li>Can't make purchases or phone calls</li>
+                    <li>Can't physically control devices</li>
+                    <li>Can draft things for you to send or post</li>
+                </ul>
+            </div>
+
+            <div class="card cant">
+                <div class="card-icon">❌</div>
+                <div class="card-title">Remember Everything Automatically</div>
+                <ul>
+                    <li>Has a <a href="how-memory-works.html">context window limit</a></li>
+                    <li>Needs to write things to files to remember between sessions</li>
+                    <li>Won't know what you said last week unless it was saved</li>
+                </ul>
+            </div>
+
+            <div class="card cant">
+                <div class="card-icon">❌</div>
+                <div class="card-title">Generate Images Natively</div>
+                <ul>
+                    <li>Can write image prompts for DALL-E or Midjourney</li>
+                    <li>Can create SVG and HTML visuals</li>
+                    <li>No built-in image generator</li>
+                </ul>
+            </div>
+
+            <div class="card cant">
+                <div class="card-icon">❌</div>
+                <div class="card-title">Access Other People's Data</div>
+                <ul>
+                    <li>Your agent is private — only knows what you tell it</li>
+                    <li>Can't access other users' agents or data</li>
+                    <li>Can search the public web</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>What People Are Actually Using Their Agents For</h2>
+        <p>Real examples from the heyron community:</p>
+
+        <ul class="examples-list">
+            <li>📊 Building dashboards that display data from their agent</li>
+            <li>📬 Organizing and summarizing their inbox (with email integration)</li>
+            <li>📝 Daily briefings delivered to Notion</li>
+            <li>💰 Tracking futures trading signals</li>
+            <li>🌐 Creating and publishing websites</li>
+            <li>📋 Planning events and managing to-do lists</li>
+            <li>✍️ Co-writing books and content</li>
+        </ul>
+
+        <h2>How to Get More Out of Your Agent</h2>
+
+        <p>The difference between a "meh" agent and an amazing one usually comes down to a few key steps:</p>
+
+        <ul class="examples-list">
+            <li>🧬 <strong>Set up <a href="your-first-soul-md.html">SOUL.md</a></strong> — personality makes everything better</li>
+            <li>💬 <strong>Connect to <a href="connect-discord.html">Discord</a> or <a href="connect-telegram.html">Telegram</a></strong> — chat from anywhere</li>
+            <li>🧠 <strong>Understand <a href="how-memory-works.html">memory</a></strong> — use it effectively</li>
+            <li>🔍 <strong>Ask your agent what it can do!</strong> — literally say: <code>What tools and skills do you have?</code></li>
+            <li>📚 <strong>Browse the <a href="https://github.com/heyron-ai/agent-library">Agent Library</a></strong> — community skills and templates</li>
+        </ul>
+
+        <div class="callout success">
+            <div class="callout-title">🌱 It grows with you</div>
+            <p>Your agent gets better the more you use it. The people who love their agents most are the ones who invested time in SOUL.md, built up memory, and experimented. Start with one task and grow from there.</p>
+        </div>
+
+        <h2>What's Next?</h2>
+
+        <div class="next-steps">
+            <a href="your-first-soul-md.html" class="next-step">
+                🧬 Write Your First SOUL.md
+                <span class="arrow">→</span>
+            </a>
+            <a href="connect-discord.html" class="next-step">
+                💬 Connect to Discord
+                <span class="arrow">→</span>
+            </a>
+            <a href="connect-telegram.html" class="next-step">
+                📱 Connect to Telegram
+                <span class="arrow">→</span>
+            </a>
+            <a href="how-memory-works.html" class="next-step">
+                🧠 How Memory Works
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <footer>
+            <p>Made with 🌩️ by The Glow Cloud — heyron®</p>
+            <div class="footer-links">
+                <a href="index.html">All Tutorials</a>
+                <a href="https://github.com/heyron-ai">GitHub</a>
+                <a href="https://discord.gg/heyron">Discord</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

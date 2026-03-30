@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Keys & Models — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #9b59b6;
+      --accent-light: #bb77d4;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* Headings */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+
+    p { margin-bottom: 16px; }
+
+    a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* Inline code */
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-info {
+      background: rgba(155, 89, 182, 0.08);
+      border-left: 3px solid var(--accent);
+    }
+
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+
+    .callout-danger {
+      background: rgba(240, 71, 71, 0.08);
+      border-left: 3px solid var(--danger);
+    }
+
+    .callout-success {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .callout-info .callout-label { color: var(--accent-light); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-success .callout-label { color: var(--success); }
+
+    /* Provider cards */
+    .provider-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .provider-card:hover {
+      border-color: var(--accent);
+    }
+
+    .provider-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .provider-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .provider-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .provider-header .models {
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .provider-body {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .provider-body p { margin-bottom: 8px; }
+    .provider-body p:last-child { margin-bottom: 0; }
+
+    .provider-tag {
+      display: inline-block;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+
+    .provider-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-light);
+    }
+
+    /* Decision cards */
+    .decision-grid {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .decision-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .decision-card .emoji {
+      font-size: 24px;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .decision-card .label {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .decision-card .rec {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .decision-card .rec strong {
+      color: var(--accent-light);
+    }
+
+    /* Steps */
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+
+    .step h3 { margin: 0 0 12px; font-size: 18px; }
+    .step p { color: var(--text-muted); }
+    .step p:last-child { margin-bottom: 0; }
+
+    /* What's next */
+    .next-grid {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .next-link {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.1s;
+    }
+
+    .next-link:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .next-link .arrow {
+      color: var(--accent-light);
+      font-size: 14px;
+    }
+
+    .next-link .title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .next-link .desc {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--text-muted);
+    }
+
+    .footer a:hover {
+      color: var(--accent-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .provider-card { padding: 20px; }
+      .step { padding: 20px; }
+      .container { padding: 24px 16px 60px; }
+      .decision-card { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">Concepts</div>
+      <h1>API Keys &amp; Models</h1>
+      <p>Choosing your agent's brain — what models are, what they cost, and how to set them up.</p>
+      <div class="time-badge">⏱ 5 minute read</div>
+    </div>
+
+    <!-- What Are Models -->
+    <h2>What Are Models and Why Do They Matter?</h2>
+    <p>Your agent needs an AI "brain" to think with — that's the <strong>model</strong>. When your agent reads a message and writes a reply, it's the model doing the heavy lifting.</p>
+    <p>Different models have different strengths. Some are faster, some are smarter, some are cheaper. Think of it like choosing between a sports car, an SUV, and a commuter bike — they all get you there, but the experience (and the price) is different.</p>
+    <p>The good news: <strong>heyron® lets you switch models anytime.</strong> You're never locked in. Try one, and if it doesn't fit, swap it in seconds.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-label">How billing works</div>
+      <p style="margin:0">The model runs on the provider's servers (OpenAI, Anthropic, Google, etc.). <strong>You pay the provider directly, not heyron®.</strong> You bring your own API key, and usage gets billed to your provider account.</p>
+    </div>
+
+    <hr>
+
+    <!-- Providers -->
+    <h2>The Main Providers</h2>
+
+    <!-- OpenAI -->
+    <div class="provider-card">
+      <div class="provider-header">
+        <div class="provider-icon" style="background: #10a37f22; color: #10a37f;">⬡</div>
+        <div>
+          <h3>OpenAI</h3>
+          <div class="models">GPT-4o · GPT-4o-mini</div>
+        </div>
+      </div>
+      <div class="provider-body">
+        <p><strong>Best for:</strong> General tasks, coding, creative writing</p>
+        <div style="margin-bottom: 12px;">
+          <span class="provider-tag">GPT-4o — smartest, ~$2.50–10/M tokens</span>
+          <span class="provider-tag">GPT-4o-mini — fast &amp; cheap</span>
+        </div>
+        <p>The most popular choice. GPT-4o is the flagship — great at almost everything. GPT-4o-mini is the budget option that still punches above its weight.</p>
+        <a class="provider-link" href="https://platform.openai.com" target="_blank">Get API key → platform.openai.com</a>
+      </div>
+    </div>
+
+    <!-- Anthropic -->
+    <div class="provider-card">
+      <div class="provider-header">
+        <div class="provider-icon" style="background: #d4a27422; color: #d4a274;">◈</div>
+        <div>
+          <h3>Anthropic</h3>
+          <div class="models">Claude Sonnet · Claude Opus</div>
+        </div>
+      </div>
+      <div class="provider-body">
+        <p><strong>Best for:</strong> Long documents, careful reasoning, following complex instructions</p>
+        <div style="margin-bottom: 12px;">
+          <span class="provider-tag">Claude Sonnet — excellent all-rounder</span>
+          <span class="provider-tag">Claude Opus — most capable, premium price</span>
+        </div>
+        <p>Claude models are known for being thorough and precise. If your agent handles long documents or nuanced requests, Claude shines.</p>
+        <a class="provider-link" href="https://console.anthropic.com" target="_blank">Get API key → console.anthropic.com</a>
+      </div>
+    </div>
+
+    <!-- Google -->
+    <div class="provider-card">
+      <div class="provider-header">
+        <div class="provider-icon" style="background: #4285f422; color: #4285f4;">◆</div>
+        <div>
+          <h3>Google</h3>
+          <div class="models">Gemini 2.5 Flash · Gemini 2.5 Pro</div>
+        </div>
+      </div>
+      <div class="provider-body">
+        <p><strong>Best for:</strong> Research, analysis, multimodal (images + text)</p>
+        <div style="margin-bottom: 12px;">
+          <span class="provider-tag">Gemini 2.5 Flash — fast &amp; affordable</span>
+          <span class="provider-tag">Gemini 2.5 Pro — very capable</span>
+        </div>
+        <p>Google's Gemini models handle text and images natively. Great value, especially the Flash tier for everyday use.</p>
+        <a class="provider-link" href="https://aistudio.google.com" target="_blank">Get API key → aistudio.google.com</a>
+      </div>
+    </div>
+
+    <!-- OpenRouter -->
+    <div class="provider-card">
+      <div class="provider-header">
+        <div class="provider-icon" style="background: #6366f122; color: #6366f1;">⊡</div>
+        <div>
+          <h3>OpenRouter</h3>
+          <div class="models">Many models · One API key</div>
+        </div>
+      </div>
+      <div class="provider-body">
+        <p><strong>Best for:</strong> Experimenting, accessing free/cheap models, variety</p>
+        <div style="margin-bottom: 12px;">
+          <span class="provider-tag">One key, many providers</span>
+          <span class="provider-tag">Some models are free</span>
+        </div>
+        <p>OpenRouter is a gateway to dozens of models from different providers. Great if you want to try things without committing to one provider. Some models are free or nearly free.</p>
+        <a class="provider-link" href="https://openrouter.ai" target="_blank">Get API key → openrouter.ai</a>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Setup -->
+    <h2>How to Set Up Your API Key</h2>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Create a Provider Account</h3>
+      <p>Go to the provider's website (links above) and sign up. Most offer free credits to start with.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Generate an API Key</h3>
+      <p>Find the API keys section in your provider's dashboard and create a new key. It'll look something like <code>sk-proj-abc123...xyz</code> — a long string of characters.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Add It to heyron®</h3>
+      <p>Go to your <a href="https://heyron.ai/chat" target="_blank">heyron® dashboard</a> and configure the model in your agent's settings. Or just tell your agent:</p>
+      <p style="margin-bottom:0"><code>"Set my OpenAI API key to sk-proj-..."</code></p>
+    </div>
+
+    <div class="callout callout-danger">
+      <div class="callout-label">⚠️ Security</div>
+      <p style="margin:0"><strong>Never share your API key publicly.</strong> Never paste it in Discord, a public channel, or a GitHub repo. Treat it like a password. If you accidentally leak it, revoke it immediately on the provider's site and generate a new one.</p>
+    </div>
+
+    <hr>
+
+    <!-- Costs -->
+    <h2>What Do Models Cost?</h2>
+    <p>Models charge per <strong>token</strong> — roughly 1 token ≈ 0.75 words. A typical back-and-forth conversation uses 1,000–5,000 tokens.</p>
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 16px 0;">
+      <p style="margin-bottom: 12px;"><strong>💬 Casual use</strong> (chatting, quick questions) — <strong>$5–20/month</strong></p>
+      <p style="margin-bottom: 12px;"><strong>💻 Heavy use</strong> (coding, long documents, frequent conversations) — <strong>$20–50/month</strong></p>
+      <p style="margin-bottom: 0;"><strong>🧪 Experimenting</strong> (free models via OpenRouter) — <strong>$0</strong></p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">Set spending limits!</div>
+      <p style="margin:0">All major providers let you set a monthly spending cap so you don't get surprised. Do this <strong>before</strong> you start using the API. <br>OpenAI: Settings → Limits · Anthropic: Settings → Spend Limits · Google: Billing → Budgets</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">💡 Pro tip</div>
+      <p style="margin:0">Start with a cheaper model like <strong>GPT-4o-mini</strong> or <strong>Gemini Flash</strong>. They're surprisingly good for most tasks. Upgrade to a premium model only when you hit the limits of what the cheaper one can do.</p>
+    </div>
+
+    <hr>
+
+    <!-- Switch Models -->
+    <h2>How to Switch Models</h2>
+    <p>Switching is instant. You have two options:</p>
+    <p><strong>Talk to your agent:</strong> Just say <code>"Switch to Claude Sonnet"</code> or <code>"Use GPT-4o-mini"</code>. Your agent will handle the rest.</p>
+    <p><strong>Use the dashboard:</strong> Go to your agent's settings and change the model in the Model section.</p>
+    <p>You can switch anytime — even mid-conversation. Different tasks might work better with different models, so don't be afraid to experiment.</p>
+
+    <hr>
+
+    <!-- Which Model -->
+    <h2>Which Model Should I Pick?</h2>
+
+    <div class="decision-grid">
+      <div class="decision-card">
+        <div class="emoji">🚀</div>
+        <div>
+          <div class="label">"I just want it to work"</div>
+          <div class="rec"><strong>GPT-4o-mini</strong> or <strong>Gemini Flash</strong> — cheap, fast, good enough for most things</div>
+        </div>
+      </div>
+      <div class="decision-card">
+        <div class="emoji">🏆</div>
+        <div>
+          <div class="label">"I need the best quality"</div>
+          <div class="rec"><strong>Claude Opus</strong> or <strong>GPT-4o</strong> — premium models, premium results</div>
+        </div>
+      </div>
+      <div class="decision-card">
+        <div class="emoji">💰</div>
+        <div>
+          <div class="label">"I'm on a tight budget"</div>
+          <div class="rec"><strong>Gemini Flash</strong> or <strong>OpenRouter free models</strong> — great quality at $0–5/month</div>
+        </div>
+      </div>
+      <div class="decision-card">
+        <div class="emoji">👨‍💻</div>
+        <div>
+          <div class="label">"I do a lot of coding"</div>
+          <div class="rec"><strong>Claude Sonnet</strong> or <strong>GPT-4o</strong> — excellent at generating and reviewing code</div>
+        </div>
+      </div>
+      <div class="decision-card">
+        <div class="emoji">📄</div>
+        <div>
+          <div class="label">"I work with long documents"</div>
+          <div class="rec"><strong>Claude Sonnet</strong> — great context window, handles long inputs gracefully</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- What's Next -->
+    <h2>What's Next?</h2>
+
+    <div class="next-grid">
+      <a href="your-first-soul-md.html" class="next-link">
+        <div class="title">Write Your First SOUL.md <span class="arrow">→</span></div>
+        <div class="desc">Give your agent a personality, instructions, and purpose.</div>
+      </a>
+      <a href="connect-discord.html" class="next-link">
+        <div class="title">Connect to Discord <span class="arrow">→</span></div>
+        <div class="desc">Talk to your agent from any Discord server.</div>
+      </a>
+      <a href="how-memory-works.html" class="next-link">
+        <div class="title">How Memory Works <span class="arrow">→</span></div>
+        <div class="desc">Understand how your agent remembers (and forgets) things.</div>
+      </a>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="index.html">heyron®</a></p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/heyronhq" target="_blank">GitHub</a> · 
+        <a href="https://discord.gg/Jx6bpttw7m" target="_blank">Discord</a>
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

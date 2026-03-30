@@ -45,6 +45,16 @@
       max-width: 540px;
       margin: 0 auto;
     }
+    .hero .count {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
 
     .section-label {
       font-size: 12px;
@@ -60,8 +70,8 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 28px;
-      margin-bottom: 16px;
+      padding: 24px 28px;
+      margin-bottom: 12px;
       text-decoration: none;
       display: block;
       transition: border-color 0.2s, transform 0.1s;
@@ -79,24 +89,26 @@
       letter-spacing: 0.08em;
       padding: 3px 10px;
       border-radius: 100px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .badge-setup { background: rgba(88, 101, 242, 0.15); color: #7289DA; }
     .badge-getting-started { background: rgba(232, 168, 56, 0.15); color: #f0c060; }
     .badge-concepts { background: rgba(67, 181, 129, 0.15); color: #43b581; }
+    .badge-howto { background: rgba(230, 126, 34, 0.15); color: #f39c12; }
     .card h2 {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .card p {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--text-muted);
       margin: 0;
+      line-height: 1.5;
     }
     .card-meta {
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 13px;
       color: var(--text-muted);
     }
@@ -122,10 +134,18 @@
     <div class="hero">
       <h1>heyron® Tutorials</h1>
       <p>Step-by-step guides to get the most out of your AI agent. No coding required.</p>
+      <div class="count">📚 7 tutorials</div>
     </div>
 
     <!-- Start Here -->
     <div class="section-label">🚀 Start Here</div>
+
+    <a href="what-your-agent-can-do.html" class="card">
+      <div class="card-badge badge-getting-started">Getting Started</div>
+      <h2>What Your Agent Can (and Can't) Do</h2>
+      <p>Set your expectations right. Everything your agent can do out of the box, what needs setup, and what's not possible yet.</p>
+      <div class="card-meta">⏱ 4 minute read · Beginner</div>
+    </a>
 
     <a href="your-first-soul-md.html" class="card">
       <div class="card-badge badge-getting-started">Getting Started</div>
@@ -134,11 +154,30 @@
       <div class="card-meta">⏱ 5 minutes · Beginner</div>
     </a>
 
+    <a href="api-keys-and-models.html" class="card">
+      <div class="card-badge badge-concepts">Concepts</div>
+      <h2>API Keys &amp; Models — Choosing Your Agent's Brain</h2>
+      <p>What models are, what they cost, how to get API keys, and which model is right for you.</p>
+      <div class="card-meta">⏱ 5 minute read · Beginner</div>
+    </a>
+
+    <div class="spacer"></div>
+
+    <!-- Connect Your Agent -->
+    <div class="section-label">🔌 Connect Your Agent</div>
+
     <a href="connect-discord.html" class="card">
       <div class="card-badge badge-setup">Setup</div>
       <h2>Connect Your Agent to Discord</h2>
       <p>Talk to your AI agent from any Discord server. Full walkthrough plus troubleshooting for the most common issues.</p>
       <div class="card-meta">⏱ 10 minutes · Beginner</div>
+    </a>
+
+    <a href="connect-telegram.html" class="card">
+      <div class="card-badge badge-setup">Setup</div>
+      <h2>Connect Your Agent to Telegram</h2>
+      <p>Set up your agent on Telegram in under 5 minutes. The easiest channel to get running.</p>
+      <div class="card-meta">⏱ 5 minutes · Beginner</div>
     </a>
 
     <div class="spacer"></div>
@@ -149,8 +188,15 @@
     <a href="how-memory-works.html" class="card">
       <div class="card-badge badge-concepts">Concepts</div>
       <h2>How Agent Memory Works</h2>
-      <p>Why your agent "forgets" things, how memory actually works under the hood, and how to make important things stick between sessions.</p>
+      <p>Why your agent "forgets" things, how memory actually works under the hood, and how to make important things stick.</p>
       <div class="card-meta">⏱ 5 minute read · Beginner</div>
+    </a>
+
+    <a href="working-with-files.html" class="card">
+      <div class="card-badge badge-howto">How-To</div>
+      <h2>Working with Files — Sending Photos, Documents &amp; More</h2>
+      <p>Where file attachments work, where they don't, and workarounds for getting images and documents to your agent.</p>
+      <div class="card-meta">⏱ 3 minute read · Beginner</div>
     </a>
 
     <!-- Coming soon -->

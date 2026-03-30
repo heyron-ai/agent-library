@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Working with Files — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #e67e22;
+      --accent-light: #f39c12;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* Headings */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+
+    p { margin-bottom: 16px; }
+
+    a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* Callouts */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+
+    .callout-danger {
+      background: rgba(240, 71, 71, 0.08);
+      border-left: 3px solid var(--danger);
+    }
+
+    .callout-success {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+    }
+
+    .callout-info {
+      background: rgba(88, 101, 242, 0.08);
+      border-left: 3px solid #5865F2;
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: #7289DA; }
+
+    /* Inline code */
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+
+    /* Comparison table */
+    .platform-grid {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .platform-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .platform-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: center;
+    }
+
+    .platform-info h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .platform-info p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .platform-status {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    .status-yes {
+      background: rgba(67, 181, 129, 0.15);
+      color: var(--success);
+    }
+
+    .status-no {
+      background: rgba(240, 71, 71, 0.15);
+      color: var(--danger);
+    }
+
+    /* Method cards */
+    .method-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .method-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .method-card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 0;
+    }
+
+    .method-card ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .method-card ul li {
+      margin-bottom: 4px;
+    }
+
+    /* FAQ / Trouble cards */
+    .trouble-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .trouble-card summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 16px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .trouble-card summary::before {
+      content: "▸";
+      color: var(--accent-light);
+      transition: transform 0.2s;
+    }
+
+    .trouble-card[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .trouble-card .answer {
+      padding-top: 12px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .trouble-card .answer p { margin-bottom: 8px; }
+
+    /* Next links */
+    .next-links {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .next-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .next-link:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .next-link .arrow {
+      color: var(--accent-light);
+      font-size: 18px;
+    }
+
+    .next-link span {
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--text-muted);
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .container { padding: 24px 16px 60px; }
+      .platform-card { padding: 16px; gap: 12px; }
+      .method-card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">How-To</div>
+      <h1>Working with Files</h1>
+      <p>Sending photos, documents &amp; more to your heyron agent — and getting files back.</p>
+      <div class="time-badge">⏱ 3 minute read</div>
+    </div>
+
+    <!-- The Problem -->
+    <p>One of the most common questions we get: <em>"How do I send my agent a screenshot?"</em> or <em>"I tried pasting an image in the web chat and nothing happened."</em></p>
+
+    <p>You're not doing anything wrong. File attachments depend on <strong>which platform you're using</strong> to talk to your agent. Here's the full picture.</p>
+
+    <!-- Where File Attachments Work -->
+    <h2>Where File Attachments Work</h2>
+
+    <div class="platform-grid">
+
+      <div class="platform-card">
+        <div class="platform-icon">💬</div>
+        <div class="platform-info">
+          <div class="platform-status status-yes">✅ Full Support</div>
+          <h4>Discord</h4>
+          <p>Paste, drag-and-drop, or use the attachment button. Images, documents, PDFs, code files — it all works. Your agent can see and analyze everything you send.</p>
+        </div>
+      </div>
+
+      <div class="platform-card">
+        <div class="platform-icon">✈️</div>
+        <div class="platform-info">
+          <div class="platform-status status-yes">✅ Full Support</div>
+          <h4>Telegram</h4>
+          <p>Send photos, documents, and voice messages directly — just like you would to any contact. Your agent receives and processes them automatically.</p>
+        </div>
+      </div>
+
+      <div class="platform-card">
+        <div class="platform-icon">🌐</div>
+        <div class="platform-info">
+          <div class="platform-status status-no">❌ Text Only</div>
+          <h4>Web Dashboard <span style="font-weight: 400; color: var(--text-muted); font-size: 14px;">(heyron.ai/chat)</span></h4>
+          <p>The web chat is <strong>text only</strong> right now. The paperclip button, copy-paste, and drag-and-drop won't work for files. This is a known limitation and we're actively working on it.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-label">💡 Tip</div>
+      If you need to send your agent an image or file, use <strong>Discord</strong> or <strong>Telegram</strong>. They're the best way to share files with your agent right now.
+    </div>
+
+    <!-- How to Share Files -->
+    <h2>How to Share Files with Your Agent</h2>
+
+    <div class="method-card">
+      <h4>💬 Through Discord</h4>
+      <p>Just paste or upload files directly in your agent's DM or channel. Works exactly like sending files to any Discord user.</p>
+      <ul>
+        <li>Paste screenshots with <code>Ctrl+V</code> / <code>Cmd+V</code></li>
+        <li>Drag and drop files into the chat</li>
+        <li>Click the <strong>+</strong> button to browse and attach</li>
+      </ul>
+    </div>
+
+    <div class="method-card">
+      <h4>✈️ Through Telegram</h4>
+      <p>Send photos, documents, or voice messages as you normally would. Your agent picks them up instantly.</p>
+      <ul>
+        <li>Use the 📎 attachment button for documents</li>
+        <li>Send photos directly from your camera or gallery</li>
+        <li>Voice messages are transcribed automatically</li>
+      </ul>
+    </div>
+
+    <div class="method-card">
+      <h4>🌐 Through the Web Dashboard</h4>
+      <p>Since file uploads aren't supported yet, here's what you can do:</p>
+      <ul>
+        <li>Describe what you need in text — your agent is great at working from descriptions</li>
+        <li>Paste text content directly (code, logs, error messages)</li>
+        <li>For images: upload to <a href="https://imgur.com">Imgur</a> or Google Drive, then share the link</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">⚡ Workaround</div>
+      Need your agent to see an image but you're on the web chat? Upload it to any public image host and paste the URL. Your agent can fetch and analyze images from links.
+    </div>
+
+    <!-- Agent Can Create Files -->
+    <h2>Your Agent Can Create Files For You</h2>
+
+    <p>While getting files <em>to</em> your agent depends on the platform, your agent can create files on its own — regardless of how you're chatting.</p>
+
+    <div class="method-card">
+      <h4>📝 What your agent can create</h4>
+      <ul>
+        <li>Code files in any language</li>
+        <li>Documents and notes</li>
+        <li>HTML pages and web content</li>
+        <li>CSV and structured data</li>
+        <li>Configuration files, scripts, and more</li>
+      </ul>
+    </div>
+
+    <p>Your agent saves files to its <strong>workspace</strong> — a dedicated directory on its host machine. To get those files back to you:</p>
+
+    <div class="method-card">
+      <h4>📤 Getting files from your agent</h4>
+      <ul>
+        <li><strong>Ask it to share in chat</strong> — your agent can paste file contents directly into the conversation</li>
+        <li><strong>GitHub integration</strong> — if connected, your agent can commit and push files to a repo</li>
+        <li><strong>Direct download</strong> — ask your agent to provide the file path or content you need</li>
+      </ul>
+    </div>
+
+    <!-- Common Questions -->
+    <hr>
+    <h2>Common Questions</h2>
+
+    <details class="trouble-card">
+      <summary>"Why can't I paste images in the web chat?"</summary>
+      <div class="answer">
+        <p>The web dashboard at heyron.ai/chat is <strong>text-only</strong> for now. It doesn't support image paste, file uploads, or drag-and-drop. This isn't a bug — it's a feature that hasn't shipped yet.</p>
+        <p>In the meantime, use <strong>Discord</strong> or <strong>Telegram</strong> for anything involving files or images. Both have full support.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>"Can my agent see images I send?"</summary>
+      <div class="answer">
+        <p><strong>Yes!</strong> When you send an image via Discord or Telegram, your agent can analyze it — describe what's in it, read text from screenshots, identify objects, review designs, and more.</p>
+        <p>This uses vision capabilities built into the AI model. Just send the image and ask your agent what you need.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>"Can my agent create images?"</summary>
+      <div class="answer">
+        <p>Your agent can create <strong>HTML pages, SVG graphics, and code-based visuals</strong> natively. For AI-generated images (like DALL·E), it depends on your setup — some users connect image generation tools as skills.</p>
+        <p>Your agent can also write detailed image prompts that you can use in Midjourney, DALL·E, or other generators.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>"How do I get files my agent created?"</summary>
+      <div class="answer">
+        <p>A few options:</p>
+        <p>• <strong>Ask it to display the content</strong> — your agent can paste file contents right into the chat.<br>
+        • <strong>Push to GitHub</strong> — if your agent is connected to a repo, ask it to commit and push.<br>
+        • <strong>Share a link</strong> — for hosted content (like HTML pages), your agent can provide the URL.</p>
+      </div>
+    </details>
+
+    <!-- What's Next -->
+    <hr>
+    <h2>What's Next</h2>
+
+    <div class="next-links">
+      <a href="connect-discord.html" class="next-link">
+        <span class="arrow">→</span>
+        <span>Connect Your Agent to Discord</span>
+      </a>
+      <a href="connect-telegram.html" class="next-link">
+        <span class="arrow">→</span>
+        <span>Connect Your Agent to Telegram</span>
+      </a>
+      <a href="how-memory-works.html" class="next-link">
+        <span class="arrow">→</span>
+        <span>How Memory Works</span>
+      </a>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="https://heyron.ai">heyron®</a></p>
+      <p style="margin-top: 8px;"><a href="index.html">All Tutorials</a> · <a href="https://github.com/heyronhq">GitHub</a> · <a href="https://discord.gg/heyron">Discord</a></p>
+    </div>
+
+  </div>
+</body>
+</html>

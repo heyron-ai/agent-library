@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect Your Agent to Telegram — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #0088cc;
+      --accent-light: #29b6f6;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Header */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Section headings */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+
+    p { margin-bottom: 16px; }
+
+    a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* Steps */
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .step p { color: var(--text-muted); }
+    .step p:last-child { margin-bottom: 0; }
+
+    /* Substeps */
+    .substeps {
+      list-style: none;
+      counter-reset: substep;
+      margin: 12px 0 0;
+      padding: 0;
+    }
+
+    .substeps li {
+      counter-increment: substep;
+      padding: 8px 0 8px 32px;
+      position: relative;
+      color: var(--text);
+    }
+
+    .substeps li::before {
+      content: counter(substep) ".";
+      position: absolute;
+      left: 0;
+      color: var(--accent-light);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+
+    .callout-danger {
+      background: rgba(240, 71, 71, 0.08);
+      border-left: 3px solid var(--danger);
+    }
+
+    .callout-success {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+    }
+
+    .callout-info {
+      background: rgba(0, 136, 204, 0.08);
+      border-left: 3px solid var(--accent);
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: var(--accent-light); }
+
+    /* Inline code */
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+
+    /* Troubleshooting */
+    .trouble-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .trouble-card summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 16px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .trouble-card summary::before {
+      content: "▸";
+      color: var(--accent-light);
+      transition: transform 0.2s;
+    }
+
+    .trouble-card[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .trouble-card .answer {
+      padding-top: 12px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .trouble-card .answer p { margin-bottom: 8px; }
+
+    /* Time estimate */
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--text-muted);
+      text-decoration: underline;
+    }
+
+    /* What's Next cards */
+    .next-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .next-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .next-card:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .next-card .next-emoji {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .next-card .next-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .step { padding: 20px; }
+      .container { padding: 24px 16px 60px; }
+      .next-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">Setup</div>
+      <h1>Connect Your Agent to Telegram</h1>
+      <p>Chat with your AI agent from Telegram. The fastest channel to set up — most people finish in under 5 minutes.</p>
+      <div class="time-badge">⏱ 5 minutes</div>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Why Telegram?</div>
+      <p style="margin:0">Telegram is often the easiest channel to set up — most people get it working in under 5 minutes. No developer portals, no permissions panels, no server setup. Just a bot token and you're live.</p>
+    </div>
+
+    <hr>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Open Telegram and Find @BotFather</h3>
+      <p>BotFather is Telegram's official bot for creating and managing bots. It's made by Telegram — not a third party.</p>
+      <ol class="substeps">
+        <li>Open Telegram and search for <strong>@BotFather</strong> in the search bar.</li>
+        <li>Make sure it's the real one — look for the <strong>blue checkmark</strong> ✓ next to the name. There are fakes.</li>
+        <li>Tap <strong>Start</strong> (or send <code>/start</code>) to begin.</li>
+        <li>Send <code>/newbot</code> to create a new bot.</li>
+        <li>BotFather will ask for a <strong>display name</strong> — this is what people see. Pick anything you like (e.g., "My Agent").</li>
+        <li>Next it asks for a <strong>username</strong> — this must end in <code>bot</code> (e.g., <code>my_heyron_bot</code>). It must be unique across all of Telegram.</li>
+        <li>BotFather gives you a <strong>bot token</strong> — a long string like <code>7123456789:AAH...</code>. Copy it and save it.</li>
+      </ol>
+
+      <div class="callout callout-danger">
+        <div class="callout-label">Keep your token secret</div>
+        <p style="margin:0">Never share your bot token publicly. Treat it like a password. Anyone with your token can control your bot. If you accidentally leak it, use <code>/revoke</code> in BotFather to invalidate it.</p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Tell Your Agent to Connect</h3>
+      <p>Go to your heyron® dashboard at <a href="https://heyron.ai/chat" target="_blank">heyron.ai/chat</a> and tell your agent:</p>
+
+      <div style="background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-family: -apple-system, sans-serif; font-size: 15px; color: var(--text); line-height: 1.6;">
+        Set up Telegram. My bot token is <span style="color: var(--text-muted)">[paste your token here]</span>
+      </div>
+
+      <p>Your agent handles everything from here — it saves the token, configures the Telegram channel, and restarts the gateway. Usually takes about 15 seconds.</p>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Find and Message Your Bot</h3>
+      <ol class="substeps">
+        <li>Go back to Telegram and search for your bot's username (the one ending in <code>bot</code>).</li>
+        <li>Tap <strong>Start</strong> or send it any message — "hello" works fine.</li>
+        <li>Your bot will reply with a <strong>pairing code</strong>.</li>
+      </ol>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Approve the Pairing</h3>
+      <p>Go back to your heyron® dashboard and tell your agent:</p>
+
+      <div style="background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-family: -apple-system, sans-serif; font-size: 15px; color: var(--text);">
+        Approve this Telegram pairing code: <span style="color: var(--text-muted)">[paste the code]</span>
+      </div>
+
+      <p>Once approved, you're connected. Chat freely with your agent from Telegram — it works just like the web dashboard.</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">🎉 You're Connected!</div>
+      <p style="margin:0">That's it. Your agent is now live on Telegram. Messages in Telegram and your web dashboard are separate conversations — each channel has its own history.</p>
+    </div>
+
+    <hr>
+
+    <!-- Group Chat Warning -->
+    <h2>Using Your Bot in Groups</h2>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">Privacy Mode</div>
+      <p style="margin:0">If you add your bot to a Telegram group, it won't see messages by default. You need to either disable privacy mode via <code>/setprivacy</code> in BotFather, or make the bot a group admin.</p>
+    </div>
+
+    <p>To disable privacy mode:</p>
+    <ol class="substeps">
+      <li>Open <strong>@BotFather</strong> in Telegram.</li>
+      <li>Send <code>/setprivacy</code>.</li>
+      <li>Select your bot.</li>
+      <li>Choose <strong>Disable</strong>.</li>
+    </ol>
+    <p>Alternatively, making your bot an admin in the group also lets it see all messages without changing privacy mode.</p>
+
+    <hr>
+
+    <!-- Troubleshooting -->
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    <p>Something not working? Here are the most common issues.</p>
+
+    <details class="trouble-card">
+      <summary>Bot is online but won't reply</summary>
+      <div class="answer">
+        <p>First, make sure the pairing was approved. Go to your dashboard and check that Telegram shows as a connected channel.</p>
+        <p>If pairing is approved but it still won't reply, verify the token is correct. You can check by telling your agent: <em>"Is Telegram connected?"</em></p>
+        <p>If nothing else works, regenerate the token in BotFather (<code>/mybot</code> → select your bot → <strong>API Token</strong> → <strong>Revoke</strong>) and give the new token to your agent.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Bot doesn't respond in groups</summary>
+      <div class="answer">
+        <p>Privacy mode is on by default for all Telegram bots. This means your bot can't see messages in group chats unless it's mentioned or privacy mode is disabled.</p>
+        <p>Fix it: send <code>/setprivacy</code> to <strong>@BotFather</strong>, select your bot, and choose <strong>Disable</strong>. Or make the bot a group admin.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>I lost my bot token</summary>
+      <div class="answer">
+        <p>Go back to <strong>@BotFather</strong> in Telegram. Send <code>/mybot</code>, select your bot, then tap <strong>API Token</strong>. You can view the current token or revoke it and generate a new one.</p>
+        <p>If you generate a new token, make sure to update your agent with it in the dashboard.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Messages on Telegram don't show in my web dashboard</summary>
+      <div class="answer">
+        <p>This is by design. Each channel is a separate session — Telegram and web chat have independent conversation histories. Your agent remembers context within each channel, but they don't cross over.</p>
+        <p>Think of it like texting vs. calling — same person, different conversations.</p>
+      </div>
+    </details>
+
+    <hr>
+
+    <!-- What's Next -->
+    <h2>What's Next</h2>
+    <div class="next-grid">
+      <a href="your-first-soul-md.html" class="next-card">
+        <div class="next-emoji">🧬</div>
+        <div class="next-title">Write Your SOUL.md</div>
+      </a>
+      <a href="connect-discord.html" class="next-card">
+        <div class="next-emoji">💬</div>
+        <div class="next-title">Connect to Discord</div>
+      </a>
+      <a href="how-memory-works.html" class="next-card">
+        <div class="next-emoji">🧠</div>
+        <div class="next-title">How Memory Works</div>
+      </a>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — heyron®</p>
+      <p style="margin-top: 8px;">
+        <a href="index.html">All Tutorials</a> · 
+        <a href="https://github.com/heyron-ai" target="_blank">GitHub</a> · 
+        <a href="https://discord.gg/Jx6bpttw7m" target="_blank">Discord</a>
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>
