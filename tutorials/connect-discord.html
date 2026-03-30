@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect Your Agent to Discord — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Header */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Section headings */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+
+    p { margin-bottom: 16px; }
+
+    a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* Steps */
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .step p { color: var(--text-muted); }
+    .step p:last-child { margin-bottom: 0; }
+
+    /* Substeps */
+    .substeps {
+      list-style: none;
+      counter-reset: substep;
+      margin: 12px 0 0;
+      padding: 0;
+    }
+
+    .substeps li {
+      counter-increment: substep;
+      padding: 8px 0 8px 32px;
+      position: relative;
+      color: var(--text);
+    }
+
+    .substeps li::before {
+      content: counter(substep) ".";
+      position: absolute;
+      left: 0;
+      color: var(--accent-light);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+
+    .callout-danger {
+      background: rgba(240, 71, 71, 0.08);
+      border-left: 3px solid var(--danger);
+    }
+
+    .callout-success {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+    }
+
+    .callout-info {
+      background: rgba(88, 101, 242, 0.08);
+      border-left: 3px solid var(--accent);
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: var(--accent-light); }
+
+    /* Inline code */
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+
+    /* Checkboxes */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    .checkbox-item .check {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .checkbox-item .check.checked {
+      background: var(--accent);
+    }
+
+    .checkbox-item .check.checked::after {
+      content: "✓";
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Troubleshooting */
+    .trouble-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .trouble-card summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 16px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .trouble-card summary::before {
+      content: "▸";
+      color: var(--accent-light);
+      transition: transform 0.2s;
+    }
+
+    .trouble-card[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .trouble-card .answer {
+      padding-top: 12px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .trouble-card .answer p { margin-bottom: 8px; }
+
+    /* Time estimate */
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Screenshot placeholder */
+    .screenshot {
+      background: var(--surface-2);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 16px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .step { padding: 20px; }
+      .checkbox-grid { grid-template-columns: 1fr; }
+      .container { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">Tutorial</div>
+      <h1>Connect Your Agent to Discord</h1>
+      <p>Talk to your AI agent from any Discord server. Set up in 10 minutes — no coding required.</p>
+      <div class="time-badge">⏱ About 10 minutes</div>
+    </div>
+
+    <!-- What you'll need -->
+    <h2>Before You Start</h2>
+    <p>Make sure you have:</p>
+    <div style="margin: 12px 0 24px;">
+      <div class="checkbox-item" style="margin-bottom: 8px;">
+        <div class="check checked"></div>
+        <span>A heyron® account with a working agent (you can chat in the web dashboard)</span>
+      </div>
+      <div class="checkbox-item" style="margin-bottom: 8px;">
+        <div class="check checked"></div>
+        <span>A Discord account</span>
+      </div>
+      <div class="checkbox-item" style="margin-bottom: 8px;">
+        <div class="check checked"></div>
+        <span>A Discord server you own (or have admin access to)</span>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Don't have your own Discord server?</div>
+      <p style="margin:0">Create one for free: open Discord → click the <strong>+</strong> button on the left sidebar → <strong>Create My Own</strong> → <strong>For me and my friends</strong>. Done in 30 seconds.</p>
+    </div>
+
+    <hr>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Create a Discord Application</h3>
+      <p>Go to the <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a> and click <strong>New Application</strong>.</p>
+      <ol class="substeps">
+        <li>Name it whatever you want — this is just the app name, not your bot's display name. Something like "My Agent" works fine.</li>
+        <li>Accept the Terms of Service and click <strong>Create</strong>.</li>
+      </ol>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Set Up the Bot</h3>
+      <p>In the left sidebar, click <strong>Bot</strong>.</p>
+      <ol class="substeps">
+        <li>Change the <strong>Username</strong> to whatever you want your bot to be called in Discord. This is the name people will see.</li>
+        <li>(Optional) Upload a profile picture for your bot.</li>
+      </ol>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" id="step-intents">
+      <div class="step-number">3</div>
+      <h3>Enable Message Content Intent</h3>
+      <p>This is the step people miss most often. Still on the <strong>Bot</strong> page, scroll down to <strong>Privileged Gateway Intents</strong>.</p>
+      <p>Turn on these toggles:</p>
+
+      <div style="margin: 12px 0;">
+        <div class="checkbox-item" style="margin-bottom: 10px;">
+          <div class="check checked"></div>
+          <span><strong>Message Content Intent</strong> — <em>Required.</em> Without this, your bot can't read messages.</span>
+        </div>
+        <div class="checkbox-item" style="margin-bottom: 10px;">
+          <div class="check checked"></div>
+          <span><strong>Server Members Intent</strong> — Recommended. Lets your bot see who's in the server.</span>
+        </div>
+      </div>
+
+      <div class="callout callout-danger">
+        <div class="callout-label">⚠️ #1 Cause of "My Bot Won't Reply"</div>
+        <p style="margin:0">If you skip <strong>Message Content Intent</strong>, your bot will appear online but <em>never respond to anything</em>. This is the most common setup issue — it trips up almost everyone. Go back and double-check this toggle is ON.</p>
+      </div>
+
+      <p>Click <strong>Save Changes</strong> at the bottom of the page.</p>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Copy Your Bot Token</h3>
+      <p>Scroll back to the top of the <strong>Bot</strong> page and click <strong>Reset Token</strong>.</p>
+
+      <div class="callout callout-info">
+        <div class="callout-label">First time?</div>
+        <p style="margin:0">Despite saying "Reset," this just generates your first token. Nothing is being deleted.</p>
+      </div>
+
+      <p>Copy the token and <strong>save it somewhere safe</strong> (a text file, a note, whatever). You'll need it in a few minutes. You can only view this token once — if you lose it, you'll have to regenerate it.</p>
+
+      <div class="callout callout-danger">
+        <div class="callout-label">Keep your token private</div>
+        <p style="margin:0">Your bot token is like a password. <strong>Never share it in a public channel or screenshot.</strong> Anyone with your token can control your bot. If you accidentally leak it, come back here and click Reset Token to invalidate the old one.</p>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-number">5</div>
+      <h3>Set Bot Permissions and Create Invite Link</h3>
+      <p>In the left sidebar, click <strong>OAuth2</strong>.</p>
+      <p>Scroll down to <strong>OAuth2 URL Generator</strong>.</p>
+
+      <h3 style="margin-top:16px;">Select Scopes:</h3>
+      <div class="checkbox-grid">
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span><code>bot</code></span>
+        </div>
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span><code>applications.commands</code></span>
+        </div>
+      </div>
+
+      <h3 style="margin-top:20px;">Select Bot Permissions:</h3>
+      <p>A permissions panel appears after you select <code>bot</code>. Enable these:</p>
+      <div class="checkbox-grid">
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span>View Channels</span>
+        </div>
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span>Send Messages</span>
+        </div>
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span>Read Message History</span>
+        </div>
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span>Embed Links</span>
+        </div>
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span>Attach Files</span>
+        </div>
+        <div class="checkbox-item">
+          <div class="check checked"></div>
+          <span>Add Reactions</span>
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-label">Don't use Administrator</div>
+        <p style="margin:0">You might be tempted to just check "Administrator" to cover everything. Don't. Give your bot only what it needs. The permissions above are plenty.</p>
+      </div>
+
+      <p style="margin-top:16px;">Scroll to the bottom and <strong>copy the generated URL</strong>.</p>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step">
+      <div class="step-number">6</div>
+      <h3>Add the Bot to Your Server</h3>
+      <ol class="substeps">
+        <li>Paste the URL from Step 5 into your browser.</li>
+        <li>Select your Discord server from the dropdown.</li>
+        <li>Click <strong>Continue</strong>, then <strong>Authorize</strong>.</li>
+        <li>Complete the captcha if prompted.</li>
+      </ol>
+      <p>You should now see your bot in your server's member list (it'll show as offline for now — that's normal).</p>
+    </div>
+
+    <!-- Step 7 -->
+    <div class="step">
+      <div class="step-number">7</div>
+      <h3>Enable Developer Mode &amp; Copy Your IDs</h3>
+      <p>You need two IDs from Discord to connect everything. First, enable Developer Mode:</p>
+      <ol class="substeps">
+        <li>In Discord, click the <strong>gear icon</strong> (User Settings) next to your avatar.</li>
+        <li>Go to <strong>Advanced</strong> (under App Settings).</li>
+        <li>Toggle on <strong>Developer Mode</strong>.</li>
+      </ol>
+
+      <p style="margin-top: 16px;">Now copy your IDs:</p>
+      <ol class="substeps">
+        <li><strong>Server ID</strong> — Right-click your server icon in the sidebar → <strong>Copy Server ID</strong>.</li>
+        <li><strong>Your User ID</strong> — Right-click your own avatar or name → <strong>Copy User ID</strong>.</li>
+      </ol>
+
+      <p>Save both IDs alongside your bot token. You'll need all three in the next step.</p>
+    </div>
+
+    <!-- Step 8 -->
+    <div class="step">
+      <div class="step-number">8</div>
+      <h3>Enable Direct Messages</h3>
+      <p>Your agent needs to be able to DM you for the initial pairing handshake.</p>
+      <ol class="substeps">
+        <li>Right-click your <strong>server icon</strong> → <strong>Privacy Settings</strong>.</li>
+        <li>Toggle on <strong>Direct Messages</strong>.</li>
+      </ol>
+      <p>This lets bots on this server send you DMs. You can turn it off after pairing if you only want to use channel chat.</p>
+    </div>
+
+    <!-- Step 9 -->
+    <div class="step" id="step-connect">
+      <div class="step-number">9</div>
+      <h3>Tell Your Agent to Connect</h3>
+      <p>Now go to your heyron® dashboard chat (<a href="https://heyron.ai/chat" target="_blank">heyron.ai/chat</a>) and tell your agent:</p>
+
+      <div style="background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-family: -apple-system, sans-serif; font-size: 15px; color: var(--text); line-height: 1.6;">
+        Set up Discord for me. Here are my details:<br><br>
+        Bot Token: <span style="color: var(--text-muted)">[paste your token]</span><br>
+        Server ID: <span style="color: var(--text-muted)">[paste your server ID]</span><br>
+        User ID: <span style="color: var(--text-muted)">[paste your user ID]</span>
+      </div>
+
+      <p>Your agent will handle the rest — it'll save the token, configure Discord, and restart its gateway. This usually takes about 30 seconds.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-label">If the automatic setup fails</div>
+        <p style="margin:0">Sometimes the auto-setup hits a snag. If your agent says something went wrong, don't worry — check the <a href="#troubleshooting">troubleshooting section</a> below. The most common fix is to make sure Message Content Intent is enabled (Step 3) and try again.</p>
+      </div>
+
+      <div class="callout callout-danger">
+        <div class="callout-label">⚠️ Important: Only send the token in your dashboard chat</div>
+        <p style="margin:0">Your dashboard at heyron.ai/chat is a private, encrypted connection to your agent. <strong>Never paste your bot token in a Discord channel, a support ticket, or anywhere public.</strong> It's like posting your password.</p>
+      </div>
+    </div>
+
+    <!-- Step 10 -->
+    <div class="step">
+      <div class="step-number">10</div>
+      <h3>Approve the Pairing</h3>
+      <p>After your agent sets up Discord, go to Discord and <strong>DM your bot</strong>. Say anything — "hello" works.</p>
+      <p>Your bot will reply with a <strong>pairing code</strong>. Go back to your heyron® dashboard chat and tell your agent:</p>
+
+      <div style="background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-family: -apple-system, sans-serif; font-size: 15px; color: var(--text);">
+        Approve this Discord pairing code: <span style="color: var(--text-muted)">[paste the code]</span>
+      </div>
+
+      <p>Once approved, your bot is live. Try chatting with it in Discord!</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">🎉 You're Connected!</div>
+      <p style="margin:0">Your agent is now live on Discord. Every channel in your server gets its own conversation — like separate chat rooms. Your DMs with the bot are your main private line.</p>
+    </div>
+
+    <hr>
+
+    <!-- After Setup -->
+    <h2>After Setup: Making It Yours</h2>
+
+    <h3>Talk Without @Mentioning</h3>
+    <p>By default, your bot only responds in channels when you <strong>@mention</strong> it. If it's your private server and you want it to reply to every message, tell your agent in the dashboard:</p>
+    <div style="background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 12px 0; font-family: -apple-system, sans-serif; font-size: 15px; color: var(--text);">
+      Allow my agent to respond on Discord without being @mentioned
+    </div>
+
+    <h3>Use Different Channels for Different Tasks</h3>
+    <p>Create channels like <code>#work</code>, <code>#brainstorm</code>, <code>#daily-journal</code> — each one gets its own separate conversation with your agent. Your agent won't mix up contexts between channels.</p>
+
+    <hr>
+
+    <!-- Troubleshooting -->
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    <p>Something not working? Here are the most common issues and their fixes.</p>
+
+    <details class="trouble-card">
+      <summary>My bot is online but won't reply to anything</summary>
+      <div class="answer">
+        <p><strong>95% of the time this is the Message Content Intent.</strong></p>
+        <p>Go to <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a> → your application → <strong>Bot</strong> → scroll to <strong>Privileged Gateway Intents</strong> → make sure <strong>Message Content Intent</strong> is toggled ON → <strong>Save Changes</strong>.</p>
+        <p>Then tell your agent: "Restart the gateway" or just wait a minute for it to reconnect.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Bot replies in DMs but ignores channel messages</summary>
+      <div class="answer">
+        <p>Your server probably isn't on the guild allowlist. Tell your agent in the dashboard:</p>
+        <p><em>"Add my Discord Server ID [your server ID] to the guild allowlist"</em></p>
+        <p>If it replies in channels only when @mentioned, that's actually the default. To change it, tell your agent to allow responses without being @mentioned.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>I can't DM the bot / no pairing code appears</summary>
+      <div class="answer">
+        <p>Check that you enabled DMs from server members (Step 8). Right-click your server icon → Privacy Settings → toggle Direct Messages ON.</p>
+        <p>Also make sure the bot is actually online in your server. If it shows offline, the token might be wrong or the gateway hasn't started. Ask your agent "Is Discord connected?" in the dashboard.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>I get a "pairing code" but it won't approve</summary>
+      <div class="answer">
+        <p>Pairing codes expire after 1 hour. If too much time has passed, DM the bot again to get a fresh code.</p>
+        <p>Make sure you're pasting the code exactly — no extra spaces. Tell your agent: <em>"Approve this Discord pairing code: XXXX"</em></p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>My agent broke after trying Discord setup</summary>
+      <div class="answer">
+        <p>In rare cases, an agent can accidentally overwrite its own config during setup. If your agent stopped responding everywhere (including the web dashboard), you'll need support.</p>
+        <p>Open a ticket in <strong>#help</strong> on the heyron® Discord with your signup email, and the team will fix your config server-side. This is a known edge case and they can usually resolve it in minutes.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>I see the bot in my server but it says "offline"</summary>
+      <div class="answer">
+        <p>The bot showing offline usually means the gateway hasn't connected yet. Tell your agent: <em>"Restart the gateway"</em> in the web dashboard.</p>
+        <p>If that doesn't work, double-check that your bot token is correct. You can regenerate it in the Developer Portal (Bot → Reset Token) and give the new token to your agent.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>How do I connect to a server I don't own?</summary>
+      <div class="answer">
+        <p>You need admin permissions on the server to add a bot. If you're a regular member, ask the server owner to add your bot using the invite URL from Step 5.</p>
+        <p>For most use cases, we recommend creating your own private server. It's free and takes 30 seconds.</p>
+      </div>
+    </details>
+
+    <hr>
+
+    <!-- Quick Reference -->
+    <h2>Quick Reference</h2>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 16px;">
+      <p style="margin-bottom: 12px;"><strong>Discord Developer Portal:</strong> <a href="https://discord.com/developers/applications" target="_blank">discord.com/developers/applications</a></p>
+      <p style="margin-bottom: 12px;"><strong>Your Dashboard:</strong> <a href="https://heyron.ai/chat" target="_blank">heyron.ai/chat</a></p>
+      <p style="margin-bottom: 12px;"><strong>Need Help?</strong> Post in <a href="https://discord.gg/Jx6bpttw7m" target="_blank">#help on The Den</a></p>
+      <p style="margin-bottom: 0;"><strong>Full Docs:</strong> <a href="https://docs.openclaw.ai/channels/discord" target="_blank">docs.openclaw.ai/channels/discord</a></p>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — heyron® Community</p>
+    </div>
+
+  </div>
+</body>
+</html>
