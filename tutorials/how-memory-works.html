@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Agent Memory Works — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #43b581;
+      --accent-light: #5fd49a;
+      --accent-dim: rgba(67, 181, 129, 0.12);
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+      --blue: #5865F2;
+      --blue-dim: rgba(88, 101, 242, 0.12);
+      --purple: #9b59b6;
+      --purple-dim: rgba(155, 89, 182, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+
+    p { margin-bottom: 16px; }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-info {
+      background: var(--blue-dim);
+      border-left: 3px solid var(--blue);
+    }
+
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+
+    .callout-success {
+      background: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+    }
+
+    .callout-danger {
+      background: rgba(240, 71, 71, 0.08);
+      border-left: 3px solid var(--danger);
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .callout-info .callout-label { color: var(--blue); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-success .callout-label { color: var(--accent); }
+    .callout-danger .callout-label { color: var(--danger); }
+
+    /* Diagram */
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin: 24px 0;
+      text-align: center;
+    }
+
+    .diagram-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+
+    .diagram-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 140px;
+    }
+
+    .diagram-box.active {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .diagram-box.file {
+      border-color: var(--blue);
+      background: var(--blue-dim);
+    }
+
+    .diagram-arrow {
+      color: var(--text-muted);
+      font-size: 20px;
+    }
+
+    .diagram-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Memory type cards */
+    .memory-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .memory-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .memory-card .icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .memory-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .memory-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .memory-card code {
+      font-size: 12px;
+    }
+
+    /* Analogy box */
+    .analogy {
+      background: var(--purple-dim);
+      border: 1px solid rgba(155, 89, 182, 0.3);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+
+    .analogy-header {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    .analogy p {
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .analogy p:last-child { margin-bottom: 0; }
+
+    /* Tip list */
+    .tip-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+
+    .tip-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .tip-list li strong {
+      color: var(--text);
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer a { color: var(--accent-light); }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .memory-cards { grid-template-columns: 1fr; }
+      .diagram-row { flex-direction: column; gap: 8px; }
+      .diagram-arrow { transform: rotate(90deg); }
+      .container { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-badge">Understanding Your Agent</div>
+      <h1>How Agent Memory Works</h1>
+      <p>Why your agent "forgets" things, how memory actually works under the hood, and how to make it stick.</p>
+      <div class="time-badge">⏱ 5 minute read</div>
+    </div>
+
+    <!-- The Big Misunderstanding -->
+    <h2>The Big Misunderstanding</h2>
+
+    <p>Here's the most common complaint we hear:</p>
+
+    <div class="callout callout-danger">
+      <p style="margin:0;font-style:italic;">"My agent keeps forgetting everything. I told it my name and five minutes later it asked me again. Is it broken?"</p>
+    </div>
+
+    <p><strong>Your agent is not broken.</strong> It's working exactly as designed. The confusion comes from how AI memory is different from human memory — and once you understand the difference, you can work <em>with</em> the system instead of fighting it.</p>
+
+    <hr>
+
+    <!-- How it actually works -->
+    <h2>The Two Types of Memory</h2>
+
+    <p>Your agent has two completely different memory systems:</p>
+
+    <div class="memory-cards">
+      <div class="memory-card">
+        <div class="icon">💬</div>
+        <h4>Conversation Memory</h4>
+        <p>What your agent "remembers" during a single chat session. Like a phone call — the agent knows everything said so far, but when the call ends, it's gone.</p>
+        <p style="margin-top:8px;"><strong>Temporary. Disappears when the session resets.</strong></p>
+      </div>
+      <div class="memory-card">
+        <div class="icon">📁</div>
+        <h4>File Memory</h4>
+        <p>Files your agent writes to disk. Like a notebook — your agent can write things down and read them back later, even in a completely new session.</p>
+        <p style="margin-top:8px;"><strong>Permanent. Survives forever.</strong></p>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <div class="analogy-header">🧠 Think of it like this:</div>
+      <p>Conversation memory = <strong>short-term memory</strong> (what you said at dinner)</p>
+      <p>File memory = <strong>writing it in a journal</strong> (you can read it again tomorrow)</p>
+      <p>Without writing it down, even the smartest person will forget what they had for lunch last Tuesday. Your agent is the same way.</p>
+    </div>
+
+    <hr>
+
+    <!-- Context window -->
+    <h2>The Context Window (Why It "Forgets")</h2>
+
+    <p>Every AI model has a <strong>context window</strong> — a limit on how much text it can "see" at once. Think of it as a window that slides over your conversation:</p>
+
+    <div class="diagram">
+      <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Your full conversation history:</div>
+      <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px;">
+        <div style="width: 40px; height: 24px; background: #333; border-radius: 4px;" title="Old message"></div>
+        <div style="width: 40px; height: 24px; background: #333; border-radius: 4px;" title="Old message"></div>
+        <div style="width: 40px; height: 24px; background: #333; border-radius: 4px;" title="Old message"></div>
+        <div style="width: 40px; height: 24px; background: #444; border-radius: 4px;" title="Old message"></div>
+        <div style="width: 40px; height: 24px; background: #444; border-radius: 4px;" title="Old message"></div>
+        <div style="width: 40px; height: 24px; background: rgba(67,181,129,0.3); border-radius: 4px; border: 1px solid var(--accent);" title="Visible"></div>
+        <div style="width: 40px; height: 24px; background: rgba(67,181,129,0.3); border-radius: 4px; border: 1px solid var(--accent);" title="Visible"></div>
+        <div style="width: 40px; height: 24px; background: rgba(67,181,129,0.3); border-radius: 4px; border: 1px solid var(--accent);" title="Visible"></div>
+        <div style="width: 40px; height: 24px; background: rgba(67,181,129,0.5); border-radius: 4px; border: 2px solid var(--accent);" title="Current"></div>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 40px; font-size: 13px;">
+        <span style="color: #555;">← Can't see these anymore</span>
+        <span style="color: var(--accent);">Context window →</span>
+      </div>
+    </div>
+
+    <p>When your conversation gets long enough, the oldest messages get pushed out of the window. Your agent literally can't see them anymore — it's not choosing to ignore you, it physically cannot access that part of the conversation.</p>
+
+    <p>This is called <strong>compaction</strong> and it happens automatically. When your session gets close to the limit, the system summarizes the old context and starts fresh with that summary. Some detail is lost in the process.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-label">This isn't a bug — it's a feature</div>
+      <p style="margin:0">Context windows are a fundamental property of how AI models work. Even the most advanced models have them. The solution isn't to make the window bigger (though that helps) — it's to write important things to files.</p>
+    </div>
+
+    <hr>
+
+    <!-- The file system -->
+    <h2>How File Memory Works</h2>
+
+    <p>Your agent has a workspace with files it can read and write. The important ones for memory are:</p>
+
+    <div class="diagram">
+      <div class="diagram-row">
+        <div class="diagram-box file">
+          <div>📄 SOUL.md</div>
+          <div class="diagram-label">Who your agent is</div>
+        </div>
+        <div class="diagram-box file">
+          <div>📄 MEMORY.md</div>
+          <div class="diagram-label">Long-term memories</div>
+        </div>
+      </div>
+      <div class="diagram-row">
+        <div class="diagram-box file">
+          <div>📄 AGENTS.md</div>
+          <div class="diagram-label">Behavior rules</div>
+        </div>
+        <div class="diagram-box file">
+          <div>📁 memory/</div>
+          <div class="diagram-label">Daily notes folder</div>
+        </div>
+      </div>
+      <div style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
+        ↑ These files are loaded every time your agent starts a new session
+      </div>
+    </div>
+
+    <h3>MEMORY.md — The Long-Term Brain</h3>
+    <p>This is your agent's curated memory. Important facts, preferences, decisions, and context that should persist forever. Your agent reads this at the start of every private session.</p>
+    <p>Think of it like a personal wiki about you and your projects.</p>
+
+    <h3>memory/2026-03-30.md — Daily Notes</h3>
+    <p>Daily files in the <code>memory/</code> folder. Your agent reads today's and yesterday's notes at startup. These are raw logs — what happened today, what you discussed, what decisions were made.</p>
+    <p>Over time, the important stuff from daily notes should get promoted to <code>MEMORY.md</code>.</p>
+
+    <hr>
+
+    <!-- What to do about it -->
+    <h2>How to Make Your Agent Remember</h2>
+
+    <p>Now that you understand the system, here's how to work with it:</p>
+
+    <ul class="tip-list">
+      <li>
+        <strong>📌 Say "remember this"</strong><br>
+        When you tell your agent something important, explicitly say: "Remember that my project deadline is April 15th." This prompts the agent to write it to a memory file.
+      </li>
+      <li>
+        <strong>📝 Ask it to take notes</strong><br>
+        During a long session, say: "Write down the key decisions we made today." This saves the conversation highlights to a file before they scroll out of the context window.
+      </li>
+      <li>
+        <strong>🔁 Start sessions with context</strong><br>
+        If you're picking up where you left off, say: "Check your memory files for our conversation about the marketing plan." Your agent can search its own notes.
+      </li>
+      <li>
+        <strong>📋 Build your MEMORY.md together</strong><br>
+        Tell your agent: "Add to MEMORY.md that I prefer bullet points over paragraphs" or "Update MEMORY.md with my current project list." Over time, this file becomes a rich profile.
+      </li>
+      <li>
+        <strong>⚡ Front-load important context</strong><br>
+        Put your most important info in <code>SOUL.md</code> and <code>AGENTS.md</code> — these are loaded <em>every single session</em>. Anything here is truly permanent.
+      </li>
+    </ul>
+
+    <div class="callout callout-success">
+      <div class="callout-label">💡 Power user tip</div>
+      <p style="margin:0">The best agents in the community have rich MEMORY.md files that their owners built over time. It's a feedback loop — the more your agent knows about you, the better it helps, the more useful things it writes down, the better it gets.</p>
+    </div>
+
+    <hr>
+
+    <!-- Common scenarios -->
+    <h2>Common Scenarios</h2>
+
+    <h3>"I told my agent my name but it forgot"</h3>
+    <p>Your name should be in <code>SOUL.md</code> or <code>MEMORY.md</code>, not just mentioned in conversation. Tell your agent: <em>"Add my name to MEMORY.md so you always know it."</em></p>
+
+    <h3>"My agent forgot the project we've been working on"</h3>
+    <p>Long projects should be tracked in memory files. Ask your agent: <em>"Write a summary of our project to memory and keep it updated as we go."</em> Next session, it'll have the full context.</p>
+
+    <h3>"My agent used to know something but now it doesn't"</h3>
+    <p>The conversation probably compacted and that detail was lost in the summary. If it was important, it should have been in a file. Going forward, ask your agent to save key info: <em>"Save this to today's memory file."</em></p>
+
+    <h3>"My agent seems to have amnesia every morning"</h3>
+    <p>That's actually normal — each new session starts fresh with only the files. This is actually a feature: you get a clean slate. Your agent reads <code>SOUL.md</code>, <code>AGENTS.md</code>, and recent memory files at startup, so anything important should live in those files.</p>
+
+    <hr>
+
+    <!-- The mental model -->
+    <h2>The Simple Mental Model</h2>
+
+    <div class="diagram" style="text-align: left; padding: 28px;">
+      <p style="margin-bottom: 12px; font-size: 15px;"><strong>Within a session:</strong> Your agent remembers everything you've said (until the context window fills up).</p>
+      <p style="margin-bottom: 12px; font-size: 15px;"><strong>Between sessions:</strong> Your agent only remembers what's in files (<code>SOUL.md</code>, <code>MEMORY.md</code>, daily notes).</p>
+      <p style="margin-bottom: 0; font-size: 15px;"><strong>The rule:</strong> If it matters, write it to a file. If it's in a file, it survives forever.</p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">One thing to avoid</div>
+      <p style="margin:0">Don't put <em>everything</em> in memory files. If MEMORY.md becomes a 10-page novel, it eats up your context window at the start of every session, leaving less room for actual conversation. Keep it focused — facts, preferences, active projects, key decisions. Trim what's no longer relevant.</p>
+    </div>
+
+    <hr>
+
+    <!-- What's next -->
+    <h2>What's Next?</h2>
+    <p>Now that you understand memory:</p>
+    <div style="margin: 12px 0;">
+      <p>✍️ <strong>Set up your SOUL.md</strong> — give your agent a personality that loads every session. <a href="your-first-soul-md.html">Follow the tutorial →</a></p>
+      <p>💬 <strong>Connect to Discord</strong> — each Discord channel gets its own memory context. <a href="connect-discord.html">Set it up →</a></p>
+      <p>📌 <strong>Start building MEMORY.md</strong> — tell your agent: <em>"Create a MEMORY.md file and add my name, my job, and the three things I use you for most."</em></p>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="https://heyron.ai">heyron®</a></p>
+      <p style="margin-top: 8px;"><a href="index.html">All Tutorials</a> · <a href="https://github.com/heyron-ai/agent-library">GitHub</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
+    </div>
+
+  </div>
+</body>
+</html>

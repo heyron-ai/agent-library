@@ -45,6 +45,17 @@
       max-width: 540px;
       margin: 0 auto;
     }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -70,9 +81,9 @@
       border-radius: 100px;
       margin-bottom: 12px;
     }
-    .badge-setup { background: rgba(88, 101, 242, 0.15); color: var(--accent-light); }
-    .badge-memory { background: rgba(67, 181, 129, 0.15); color: #43b581; }
-    .badge-prompting { background: rgba(250, 166, 26, 0.15); color: #faa61a; }
+    .badge-setup { background: rgba(88, 101, 242, 0.15); color: #7289DA; }
+    .badge-getting-started { background: rgba(232, 168, 56, 0.15); color: #f0c060; }
+    .badge-concepts { background: rgba(67, 181, 129, 0.15); color: #43b581; }
     .card h2 {
       font-size: 20px;
       font-weight: 700;
@@ -89,6 +100,9 @@
       font-size: 13px;
       color: var(--text-muted);
     }
+
+    .spacer { height: 32px; }
+
     .footer {
       text-align: center;
       padding-top: 40px;
@@ -110,14 +124,36 @@
       <p>Step-by-step guides to get the most out of your AI agent. No coding required.</p>
     </div>
 
+    <!-- Start Here -->
+    <div class="section-label">🚀 Start Here</div>
+
+    <a href="your-first-soul-md.html" class="card">
+      <div class="card-badge badge-getting-started">Getting Started</div>
+      <h2>Your First SOUL.md — Give Your Agent a Personality</h2>
+      <p>The single most impactful thing you can do. Give your agent a name, a voice, and a personality with ready-to-use templates.</p>
+      <div class="card-meta">⏱ 5 minutes · Beginner</div>
+    </a>
+
     <a href="connect-discord.html" class="card">
       <div class="card-badge badge-setup">Setup</div>
       <h2>Connect Your Agent to Discord</h2>
-      <p>Talk to your AI agent from any Discord server. Full walkthrough from zero to chatting, plus troubleshooting for the most common issues.</p>
-      <div class="card-meta">⏱ 10 minutes</div>
+      <p>Talk to your AI agent from any Discord server. Full walkthrough plus troubleshooting for the most common issues.</p>
+      <div class="card-meta">⏱ 10 minutes · Beginner</div>
     </a>
 
-    <!-- More tutorials coming soon -->
+    <div class="spacer"></div>
+
+    <!-- Understand Your Agent -->
+    <div class="section-label">🧠 Understand Your Agent</div>
+
+    <a href="how-memory-works.html" class="card">
+      <div class="card-badge badge-concepts">Concepts</div>
+      <h2>How Agent Memory Works</h2>
+      <p>Why your agent "forgets" things, how memory actually works under the hood, and how to make important things stick between sessions.</p>
+      <div class="card-meta">⏱ 5 minute read · Beginner</div>
+    </a>
+
+    <!-- Coming soon -->
     <div style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 15px;">
       🌩️ More tutorials coming soon. Check back or follow updates in <a href="https://discord.gg/Jx6bpttw7m" style="color: var(--accent-light);">The Den</a>.
     </div>

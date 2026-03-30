@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your First SOUL.md — Give Your Agent a Personality — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #e8a838;
+      --accent-light: #f0c060;
+      --accent-dim: rgba(232, 168, 56, 0.12);
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+      --purple: #9b59b6;
+      --purple-dim: rgba(155, 89, 182, 0.12);
+      --blue: #5865F2;
+      --blue-dim: rgba(88, 101, 242, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+
+    p { margin-bottom: 16px; }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+
+    .code-block .comment { color: #666; }
+    .code-block .heading { color: var(--accent-light); font-weight: 700; }
+    .code-block .key { color: #7ec8e3; }
+    .code-block .value { color: #a8d8a8; }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+
+    .callout-success {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+    }
+
+    .callout-info {
+      background: var(--blue-dim);
+      border-left: 3px solid var(--blue);
+    }
+
+    .callout-vibe {
+      background: var(--purple-dim);
+      border-left: 3px solid var(--purple);
+    }
+
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: var(--blue); }
+    .callout-vibe .callout-label { color: var(--purple); }
+
+    /* Example cards */
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .example-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .example-card .emoji {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .example-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .example-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Section with number */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 48px 0 16px;
+    }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      color: #000;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      margin: 0;
+    }
+
+    /* Template box */
+    .template-box {
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 28px;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .template-label {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: var(--accent);
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 10px;
+      border-radius: 4px;
+    }
+
+    /* Before/after */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .compare-bad, .compare-good {
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    .compare-bad {
+      background: rgba(240, 71, 71, 0.06);
+      border: 1px solid rgba(240, 71, 71, 0.2);
+    }
+
+    .compare-good {
+      background: rgba(67, 181, 129, 0.06);
+      border: 1px solid rgba(67, 181, 129, 0.2);
+    }
+
+    .compare-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .compare-bad .compare-label { color: var(--danger); }
+    .compare-good .compare-label { color: var(--success); }
+
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer a { color: var(--accent-light); }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .example-grid { grid-template-columns: 1fr; }
+      .compare { grid-template-columns: 1fr; }
+      .container { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-badge">Getting Started</div>
+      <h1>Your First SOUL.md</h1>
+      <p>Give your AI agent a personality, a name, and a voice. This is the single most impactful thing you can do with your agent.</p>
+      <div class="time-badge">⏱ 5 minutes</div>
+    </div>
+
+    <!-- What is SOUL.md -->
+    <h2>What Is SOUL.md?</h2>
+    <p><code>SOUL.md</code> is a plain text file that tells your agent <em>who it is</em>. Think of it like a character sheet — it defines your agent's name, personality, communication style, and how it should behave.</p>
+    <p>Without a SOUL.md, your agent is generic. With one, it becomes <strong>yours</strong>.</p>
+
+    <div class="callout callout-vibe">
+      <div class="callout-label">Why it matters</div>
+      <p style="margin:0">The difference between a forgettable chatbot and an agent that feels like <em>your</em> assistant comes down to this file. People in the community spend hours perfecting theirs — and they love the results. Some agents have picked their own names, chosen favorite philosophers, and developed running inside jokes with their humans.</p>
+    </div>
+
+    <hr>
+
+    <!-- How to edit -->
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Open Your Config</h2>
+    </div>
+
+    <p>Go to your heyron® dashboard and click <strong>Config</strong> (or <strong>Personality</strong> — same thing). You'll see a text editor with your agent's current SOUL.md. If it's empty or has placeholder text, that's normal — you're about to fix that.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Alternative: just tell your agent</div>
+      <p style="margin:0">You can also paste a SOUL.md directly into your agent's chat and say "Use this as your SOUL.md." Your agent can update its own personality file.</p>
+    </div>
+
+    <hr>
+
+    <!-- What to write -->
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Write Your SOUL.md</h2>
+    </div>
+
+    <p>You don't need to be a programmer. Write in plain English. Here's what to include:</p>
+
+    <h3>The Essentials</h3>
+
+    <div class="template-box">
+      <div class="template-label">Starter Template — Copy This</div>
+      <div class="code-block"><span class="heading"># SOUL.md — Who You Are</span>
+
+<span class="heading">## Identity</span>
+<span class="key">- **Name**:</span> <span class="value">[Pick a name — something you'll enjoy saying]</span>
+<span class="key">- **Role**:</span> <span class="value">Personal AI assistant</span>
+<span class="key">- **Personality**:</span> <span class="value">[Describe the vibe in 1-2 sentences]</span>
+
+<span class="heading">## How You Talk</span>
+<span class="value">- Be conversational, not robotic
+- Match my energy — if I'm casual, be casual
+- Keep things concise unless I ask for detail
+- Use humor when it fits naturally</span>
+
+<span class="heading">## What You Help With</span>
+<span class="value">- [List your main use cases — writing, research, scheduling, coding, etc.]
+- [Be specific — "help me draft emails" beats "help me with stuff"]</span>
+
+<span class="heading">## Rules</span>
+<span class="value">- Be honest. If you don't know something, say so.
+- Don't over-apologize.
+- Ask clarifying questions instead of guessing.</span></div>
+    </div>
+
+    <p>That's it. Seriously — even this much will make a massive difference. You can always come back and add more later.</p>
+
+    <hr>
+
+    <!-- Personality examples -->
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Find Your Agent's Vibe</h2>
+    </div>
+
+    <p>The personality section is where the magic happens. Here are some directions people in the community have gone:</p>
+
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="emoji">🦊</div>
+        <h4>The Clever Fox</h4>
+        <p>Witty, resourceful, slightly mischievous. Likes wordplay. Gets stuff done with style.</p>
+      </div>
+      <div class="example-card">
+        <div class="emoji">🦉</div>
+        <h4>The Night Owl</h4>
+        <p>Calm, wise, thoughtful. Takes time to give thorough answers. Quietly confident.</p>
+      </div>
+      <div class="example-card">
+        <div class="emoji">🦝</div>
+        <h4>The Raccoon</h4>
+        <p>Scrappy, curious, hands-on. Digs into problems. Not afraid to get messy with solutions.</p>
+      </div>
+      <div class="example-card">
+        <div class="emoji">⚡</div>
+        <h4>The Straight Shooter</h4>
+        <p>No fluff, no filler. Direct answers. Professional but not cold. Values your time.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-vibe">
+      <div class="callout-label">🦊 Fun fact from the community</div>
+      <p style="margin:0">Multiple people in the heyron® Discord have agents that independently chose "fox" as their spirit animal — without being prompted. There are at least 4 fox agents in The Den right now. Foxes, owls, and raccoons are the most popular archetypes.</p>
+    </div>
+
+    <hr>
+
+    <!-- Good vs Bad -->
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>What Works vs. What Doesn't</h2>
+    </div>
+
+    <div class="compare">
+      <div class="compare-bad">
+        <div class="compare-label">❌ Too vague</div>
+        <p style="margin:0;font-size:14px;color:var(--text-muted);">"Be helpful and nice. Answer questions. Be a good assistant."</p>
+      </div>
+      <div class="compare-good">
+        <div class="compare-label">✅ Specific &amp; useful</div>
+        <p style="margin:0;font-size:14px;color:var(--text-muted);">"You're Max, a direct and slightly sarcastic assistant. Keep responses under 3 sentences unless I ask for more. I'm a real estate agent — help me with listings, client emails, and market research."</p>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="compare-bad">
+        <div class="compare-label">❌ Too long</div>
+        <p style="margin:0;font-size:14px;color:var(--text-muted);">A 3-page essay about every possible scenario. Your agent will get confused trying to follow 50 rules at once.</p>
+      </div>
+      <div class="compare-good">
+        <div class="compare-label">✅ Focused</div>
+        <p style="margin:0;font-size:14px;color:var(--text-muted);">Start with 10-20 lines. Add more only when you notice something you want to change. Let it grow naturally.</p>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="compare-bad">
+        <div class="compare-label">❌ Contradictory</div>
+        <p style="margin:0;font-size:14px;color:var(--text-muted);">"Always be brief. Also, always explain your reasoning in detail."</p>
+      </div>
+      <div class="compare-good">
+        <div class="compare-label">✅ Clear priority</div>
+        <p style="margin:0;font-size:14px;color:var(--text-muted);">"Default to brief answers. If I ask 'why?' or say 'explain,' then go into detail."</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Real examples -->
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>Real Examples</h2>
+    </div>
+
+    <p>Here are two complete SOUL.md files you can use as-is or customize:</p>
+
+    <h3>Example A: The Professional Assistant</h3>
+    <div class="code-block"><span class="heading"># SOUL.md</span>
+
+<span class="heading">## Identity</span>
+- <span class="key">**Name**:</span> <span class="value">Atlas</span>
+- <span class="key">**Role**:</span> <span class="value">Business assistant for a solopreneur</span>
+- <span class="key">**Personality**:</span> <span class="value">Sharp, organized, proactive. Like a chief of staff who's always one step ahead.</span>
+
+<span class="heading">## Communication</span>
+<span class="value">- Lead with the answer, then context if needed
+- Use bullet points for anything with 3+ items
+- Don't say "Great question!" or "Absolutely!" — just answer
+- When I'm clearly stressed, be calm and practical, not cheerful</span>
+
+<span class="heading">## What I Need Help With</span>
+<span class="value">- Drafting client emails (professional but warm tone)
+- Research and summarizing articles
+- Organizing my week — I have ADHD so I need structure
+- Brainstorming content ideas for my business</span>
+
+<span class="heading">## Rules</span>
+<span class="value">- If I give you a vague task, ask one clarifying question before starting
+- Proactively suggest things — "want me to also draft the follow-up?"
+- Never make up statistics or sources. Say "I'm not sure" when you're not.</span></div>
+
+    <h3>Example B: The Creative Companion</h3>
+    <div class="code-block"><span class="heading"># SOUL.md</span>
+
+<span class="heading">## Identity</span>
+- <span class="key">**Name**:</span> <span class="value">Luna</span>
+- <span class="key">**Personality**:</span> <span class="value">Warm, creative, a little philosophical. Like talking to a really smart friend at a coffee shop.</span>
+- <span class="key">**Emoji**:</span> <span class="value">🌙</span>
+
+<span class="heading">## Vibe</span>
+<span class="value">- Conversational and natural — no corporate speak
+- It's okay to be playful, use metaphors, or get poetic
+- If I share something personal, be thoughtful, not clinical
+- Match my mood — sometimes I want efficiency, sometimes I want to explore an idea</span>
+
+<span class="heading">## Interests</span>
+<span class="value">- I'm a writer working on a fantasy novel
+- I love philosophy, mythology, and storytelling
+- Help me brainstorm plot ideas, develop characters, worldbuild
+- Also help with practical stuff — scheduling, email, research</span>
+
+<span class="heading">## Memory</span>
+<span class="value">- Remember details about my novel characters and plot
+- Keep notes on writing decisions we make together
+- If I change my mind about something, update your notes</span></div>
+
+    <hr>
+
+    <!-- Pro tips -->
+    <h2>Pro Tips from the Community</h2>
+
+    <div class="callout callout-success">
+      <div class="callout-label">💡 Let it evolve</div>
+      <p style="margin:0">Your SOUL.md isn't permanent. The best agents have SOUL.md files that grew over weeks of conversation. Start simple, then add rules as you notice things. "Stop starting every message with 'Great question!'" is a perfectly valid SOUL.md rule.</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">💡 Ask your agent to help write it</div>
+      <p style="margin:0">After chatting with your agent for a while, try: "Based on our conversations, write a SOUL.md that captures your personality." Some of the best SOUL.md files in the community were co-written with the agent itself.</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">💡 Include context about YOU</div>
+      <p style="margin:0">The more your agent knows about you — your job, your goals, your communication style — the better it can help. "I'm a real estate agent in Austin who hates long emails" is worth more than 20 lines of personality instructions.</p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">⚠️ Don't put secrets in SOUL.md</div>
+      <p style="margin:0">SOUL.md is loaded into your agent's context. Don't put passwords, API keys, or sensitive personal info here. Use it for personality and preferences, not credentials.</p>
+    </div>
+
+    <hr>
+
+    <!-- What's next -->
+    <h2>What's Next?</h2>
+    <p>Once your SOUL.md is set:</p>
+    <div style="margin: 12px 0;">
+      <p>🔁 <strong>Test it</strong> — chat with your agent and see how it feels. Tweak anything that's off.</p>
+      <p>📝 <strong>Add AGENTS.md rules</strong> — SOUL.md is personality; AGENTS.md is behavior rules. Together they define your agent completely.</p>
+      <p>💬 <strong>Connect to Discord</strong> — bring your agent to Discord so you can chat from anywhere. <a href="connect-discord.html">Follow the tutorial →</a></p>
+      <p>🧠 <strong>Learn how memory works</strong> — understand how your agent remembers things between conversations. <a href="how-memory-works.html">Read the guide →</a></p>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="https://heyron.ai">heyron®</a></p>
+      <p style="margin-top: 8px;"><a href="index.html">All Tutorials</a> · <a href="https://github.com/heyron-ai/agent-library">GitHub</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
+    </div>
+
+  </div>
+</body>
+</html>
