@@ -678,6 +678,20 @@
     </details>
 
     <details class="trouble-card">
+      <summary>DM works, but my server channel feels like a different bot</summary>
+      <div class="answer">
+        <p>You're still talking to the <strong>same agent identity</strong>. Discord just gives you two conversation surfaces:</p>
+        <p>• <strong>DM</strong> = private one-on-one thread<br>
+           • <strong>Server channels</strong> = group/public threads with separate channel context</p>
+        <p>If channel behavior feels different, it's usually one of these:</p>
+        <p>1) You're testing in a different channel (each channel has its own conversation history).<br>
+           2) Channel permissions/overrides differ from DM behavior.<br>
+           3) You accidentally created a second bot application/token during retries.</p>
+        <p>Quick check: in Discord Developer Portal, confirm you're using one app + one token; in heyron dashboard, ask your agent to report the active Discord app name and server ID, then test in a clean new channel with one @mention.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
       <summary>How do I connect to a server I don't own?</summary>
       <div class="answer">
         <p>You need admin permissions on the server to add a bot. If you're a regular member, ask the server owner to add your bot using the invite URL from Step 5.</p>
