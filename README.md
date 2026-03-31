@@ -48,6 +48,7 @@ Battle-tested workspace files to get started fast:
 - **[TOOLS.md](templates/TOOLS.md)** — Environment-specific notes
 - **[HEARTBEAT.md](templates/HEARTBEAT.md)** — Proactive heartbeat checklist template
 - **[COMMUNITY-SWEEP.md](templates/COMMUNITY-SWEEP.md)** — Community intelligence workflow template
+- **[DISCORD-CONNECT-CHECKLIST.md](templates/DISCORD-CONNECT-CHECKLIST.md)** — Fast diagnostic checklist for Discord connection failures
 
 ## 🔧 Fix Scripts
 
