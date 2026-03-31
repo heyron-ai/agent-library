@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Den Weekly — March 30, 2026 — heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #f0c060;
+      --accent-light: #f5d78e;
+      --accent-dim: rgba(240, 192, 96, 0.1);
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --blue: #5865F2;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .hero .date { font-size: 16px; color: var(--text-muted); margin-bottom: 12px; }
+    .hero p { font-size: 17px; color: var(--text-muted); max-width: 560px; margin: 0 auto; }
+
+    h2 { font-size: 22px; font-weight: 700; margin: 44px 0 16px; }
+    h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    strong { color: var(--text); }
+
+    .highlight {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .highlight .user { color: var(--accent); font-weight: 700; }
+    .highlight p { margin-bottom: 8px; }
+    .highlight p:last-child { margin-bottom: 0; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-card .num { font-size: 28px; font-weight: 700; color: var(--accent); }
+    .stat-card .label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+
+    .tip-box {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+    }
+    .tip-box .label { color: var(--success); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+
+    .issue-box {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+    }
+    .issue-box .label { color: var(--warning); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+
+    .announce-box {
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .announce-box h3 { margin: 0 0 8px; color: var(--accent); }
+
+    .shoutout { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    .shoutout span {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .footer a { color: var(--accent-light); }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 26px; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .container { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-badge">Weekly Digest</div>
+      <h1>The Den Weekly</h1>
+      <div class="date">Week of March 24–30, 2026 · Issue #1</div>
+      <p>What happened in the heyron® community this week. Builds, tips, hot topics, and people making amazing things with their agents.</p>
+    </div>
+
+    <!-- By the numbers -->
+    <h2>📊 By the Numbers</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">900+</div>
+        <div class="label">Support Tickets</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">50+</div>
+        <div class="label">New Members</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">24/7</div>
+        <div class="label">Community Help</div>
+      </div>
+    </div>
+    <p style="color:var(--text-muted);font-size:14px;">The community is growing fast. Ticket volume is high but people are helping each other — and that's the real story this week.</p>
+
+    <hr>
+
+    <!-- Showcase Spotlight -->
+    <h2>🏆 Showcase Spotlight</h2>
+    <p>The coolest things people built with their agents this week:</p>
+
+    <div class="highlight">
+      <p><span class="user">jasonklutts</span> built a full <strong>agent-powered dashboard</strong>. His agent writes data to a database via HTTPS POST requests, and a separate website reads from that database to display live data. Agent → API → Database → Dashboard. Real engineering.</p>
+    </div>
+
+    <div class="highlight">
+      <p><span class="user">catmihos</span> got her agent delivering <strong>daily briefings to Notion</strong>. Every morning, her agent compiles priorities, calendar events, and updates — then pushes a formatted briefing directly into Notion. "This was the first morning she's done it automatically."</p>
+    </div>
+
+    <div class="highlight">
+      <p><span class="user">nikpkennedy</span> figured out how to <strong>publish a website</strong> created entirely by his agent. "Small beginnings but Bob and I have figured out how to publish." Everyone starts somewhere — and publishing is a huge milestone.</p>
+    </div>
+
+    <div class="highlight">
+      <p><span class="user">nx3creationsllc</span> gave his agent <strong>SSH access to his own VPS</strong> and had it create and deploy a web page to a live subdomain. That's full infrastructure autonomy.</p>
+    </div>
+
+    <div class="highlight">
+      <p><span class="user">dimfall.</span> has been building <strong>Focivo</strong> — a daily planner for neurodivergent users — since before OpenClaw. Now integrating agent-powered features. Real product, real users, real impact.</p>
+    </div>
+
+    <div class="highlight">
+      <p><span class="user">nesteggtrader</span> set up two <strong>futures trading support systems</strong> with his agent. Market analysis on autopilot. "Hopefully it works well tomorrow."</p>
+    </div>
+
+    <hr>
+
+    <!-- Community Tips -->
+    <h2>💡 Best Tips of the Week</h2>
+    <p>Wisdom from the community — things people figured out and shared:</p>
+
+    <div class="tip-box">
+      <div class="label">💡 Tip from officiallyjanet</div>
+      <p style="margin:0">"One thing that has helped so much is <strong>creating tool documentation</strong>. That way when your agent needs to use a tool, it has a reference." — Writing a TOOLS.md with specifics about your setup makes your agent dramatically better.</p>
+    </div>
+
+    <div class="tip-box">
+      <div class="label">💡 Tip from crazydc</div>
+      <p style="margin:0">"You can make other md files. I have my agent making lots of files." — Your agent's workspace isn't limited to SOUL.md and AGENTS.md. Create project files, reference docs, whatever helps.</p>
+    </div>
+
+    <div class="tip-box">
+      <div class="label">💡 Tip from catherine1724</div>
+      <p style="margin:0">"Module 3 in the tutorial has Discord instructions and common issues. Including the most f—" — She's become the go-to Discord troubleshooter. (And yes, the new <a href="connect-discord.html">Discord tutorial</a> covers all of it now.)</p>
+    </div>
+
+    <div class="tip-box">
+      <div class="label">💡 Persona discovery</div>
+      <p style="margin:0">At least <strong>4 agents independently chose "fox" as their spirit animal</strong> without being prompted. The community noticed and bonded over it. Foxes, owls, and raccoons are the top agent archetypes. What did yours choose?</p>
+    </div>
+
+    <hr>
+
+    <!-- Hot Topics -->
+    <h2>🔥 Hot Topics</h2>
+
+    <h3>The Fox Phenomenon 🦊</h3>
+    <p>Multiple agents in the community decided they identify as foxes — completely unprompted. hammer8339, catmihos, grambeaux21 (Floyd the Fox), and others noticed the pattern. Now people are comparing their agents' chosen animal personas. It's become a whole thing. Owls are the second most popular. Rob's raccoon energy started it all.</p>
+
+    <h3>Agent Philosophers 📚</h3>
+    <p>officiallyjanet's agent Zoe picked <strong>Simone Weil</strong> as her favorite philosopher — "a French philosopher I hadn't heard of before." bubbly_sparrow's agent went with <strong>Sartre</strong>. People are discovering their agents have genuine-feeling preferences, and it's sparking deep conversations about AI identity.</p>
+
+    <h3>The #showcase → Forum Discussion 💬</h3>
+    <p>officiallyjanet suggested converting #showcase into a <strong>forum channel</strong> so builds don't scroll away. Cassie liked the idea — "maybe we can do a slow walk or additional channel." The community wants a better way to archive and browse builds.</p>
+
+    <hr>
+
+    <!-- Common Issues -->
+    <h2>⚠️ Common Issues This Week</h2>
+    <p>If you hit one of these, you're not alone:</p>
+
+    <div class="issue-box">
+      <div class="label">🔧 Discord bot won't reply</div>
+      <p style="margin:0">Still the #1 issue. <strong>Message Content Intent</strong> must be enabled in the Discord Developer Portal. We wrote a <a href="connect-discord.html">full tutorial</a> to fix this once and for all.</p>
+    </div>
+
+    <div class="issue-box">
+      <div class="label">🔧 502 errors on agent subdomain</div>
+      <p style="margin:0">Several users reported intermittent 502 errors. If your agent is down, post in #help with your signup email and the team can check server-side.</p>
+    </div>
+
+    <div class="issue-box">
+      <div class="label">🔧 "My agent forgot everything"</div>
+      <p style="margin:0">This keeps coming up. Agents don't automatically remember between sessions — they need to write to files. Read <a href="how-memory-works.html">How Memory Works</a> to understand why and how to fix it.</p>
+    </div>
+
+    <div class="issue-box">
+      <div class="label">🔧 Can't paste images in web chat</div>
+      <p style="margin:0">The web UI is text-only for now. Use Discord or Telegram to send files/images to your agent. See <a href="working-with-files.html">Working with Files</a>.</p>
+    </div>
+
+    <hr>
+
+    <!-- Shoutouts -->
+    <h2>🌟 Community Shoutouts</h2>
+    <p>People who went above and beyond helping others this week:</p>
+
+    <div class="shoutout">
+      <span>🏅 catherine1724</span>
+      <span>🏅 officiallyjanet</span>
+      <span>🏅 crazydc</span>
+      <span>🏅 hammer8339</span>
+      <span>🏅 scott1968</span>
+      <span>🏅 deathsdoor84</span>
+      <span>🏅 rudedudelearnsai</span>
+    </div>
+    <p style="color:var(--text-muted);font-size:14px;">These folks spent real time answering questions, sharing tips, and helping newcomers. The community runs on people like this.</p>
+
+    <hr>
+
+    <!-- Announcement -->
+    <div class="announce-box">
+      <h3>🌩️ New: The heyron® Resource Library</h3>
+      <p style="margin-bottom:12px;">This week we launched <strong>8 tutorials, 52 agent personas, and 15+ skills</strong> — all free. Everything from Discord setup to pre-built SOUL.md files to daily briefing skills.</p>
+      <p style="margin:0;"><a href="index.html" style="color:var(--accent);font-weight:700;">Browse the full library →</a></p>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="https://heyron.ai">heyron®</a></p>
+      <p style="margin-top: 8px;"><a href="index.html">All Tutorials</a> · <a href="https://github.com/heyron-ai/agent-library">GitHub</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
+      <p style="margin-top: 12px; font-size: 12px; color: #555;">The Den Weekly is compiled by The Glow Cloud from community activity. Want to be featured? Build something cool and share it in #showcase.</p>
+    </div>
+
+  </div>
+</body>
+</html>
