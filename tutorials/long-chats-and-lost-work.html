@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Your Agent Gets Worse in Long Chats — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #43b581;
+      --accent-light: #5fd49a;
+      --accent-dim: rgba(67, 181, 129, 0.12);
+      --warning: #faa61a;
+      --danger: #f04747;
+      --danger-dim: rgba(240, 71, 71, 0.1);
+      --blue: #5865F2;
+      --blue-dim: rgba(88, 101, 242, 0.12);
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--warning);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .callout-danger {
+      background: var(--danger-dim);
+      border-left: 3px solid var(--danger);
+    }
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+    .callout-info {
+      background: var(--blue-dim);
+      border-left: 3px solid var(--blue);
+    }
+    .callout-success {
+      background: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+    }
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-info .callout-label { color: var(--blue); }
+    .callout-success .callout-label { color: var(--accent); }
+    .checklist, .prompt-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+    .checklist li, .prompt-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+    .prompt-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 14px 0;
+    }
+    .prompt-box p {
+      margin: 0 0 10px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .prompt-box code {
+      display: block;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      padding: 12px 14px;
+    }
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .comparison-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .comparison-card.bad {
+      border-color: rgba(240, 71, 71, 0.35);
+    }
+    .comparison-card.good {
+      border-color: rgba(67, 181, 129, 0.35);
+    }
+    .comparison-card h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .comparison-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .footer a { color: var(--accent-light); }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .comparison { grid-template-columns: 1fr; }
+      .container { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Top Retention Fix</div>
+      <h1>Why Your Agent Gets Worse in Long Chats</h1>
+      <p>If you've ever thought "we worked for hours and then my agent got stupid," this is for you. Here's why it happens — and how to never lose the important work again.</p>
+      <div class="time-badge">⏱ 6 minute read</div>
+    </div>
+
+    <h2>The Pain Is Real</h2>
+    <p>One of the most frustrating things in AI is this feeling:</p>
+
+    <div class="callout callout-danger">
+      <p style="margin:0;font-style:italic;">"I worked on this for hours. Then suddenly my agent got worse, forgot the plan, and everything went off the rails."</p>
+    </div>
+
+    <p>If that happened to you, you're not imagining it. And no, it doesn't mean your agent is useless.</p>
+    <p><strong>What's broken is the mental model.</strong> Most people assume a long conversation becomes permanent intelligence. It doesn't. A long conversation is just a long conversation.</p>
+
+    <hr>
+
+    <h2>The One Sentence Version</h2>
+    <div class="callout callout-success">
+      <div class="callout-label">The rule</div>
+      <p style="margin:0"><strong>Chat is for working. Files are for keeping.</strong> If something matters, get it out of the chat and into a file before the session gets too full.</p>
+    </div>
+
+    <hr>
+
+    <h2>Why Long Chats Get Worse</h2>
+    <p>AI models have a limited <strong>context window</strong> — a cap on how much conversation they can actively see at one time.</p>
+    <p>As your chat gets longer, older messages start falling out of view or getting compressed into summaries. That means:</p>
+
+    <ul class="checklist">
+      <li><strong>Early decisions get fuzzy</strong> — the agent may stop honoring details you agreed on an hour ago.</li>
+      <li><strong>The plan gets blurry</strong> — especially if you changed direction a few times.</li>
+      <li><strong>Quality drops</strong> — because the agent is now juggling a huge, messy transcript instead of a clean brief.</li>
+      <li><strong>You feel betrayed</strong> — because emotionally, it feels like the work was saved when it wasn't.</li>
+    </ul>
+
+    <div class="comparison">
+      <div class="comparison-card bad">
+        <h4>❌ What beginners assume</h4>
+        <p>"We talked about it for 3 hours, so the agent has it now forever."</p>
+      </div>
+      <div class="comparison-card good">
+        <h4>✅ What's actually true</h4>
+        <p>"We talked about it for 3 hours, so we'd better save the important parts before the chat gets too bloated."</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>What "Lost Work" Usually Really Means</h2>
+    <p>Most of the time, the work isn't truly gone. One of these things happened:</p>
+
+    <ul class="checklist">
+      <li><strong>The plan only existed in chat</strong> — never written to a file.</li>
+      <li><strong>The session got too long</strong> — so older details were pushed out or compacted.</li>
+      <li><strong>The project had no checkpoint</strong> — no summary, no task list, no saved decisions.</li>
+      <li><strong>The next session started clean</strong> — and there was nothing durable to reload.</li>
+    </ul>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">Important</div>
+      <p style="margin:0">Your agent is not a magical forever-chat. If you want work to survive, you have to treat important progress like project data: summarize it, name it, and save it.</p>
+    </div>
+
+    <hr>
+
+    <h2>The Bottom-50% Workflow That Actually Works</h2>
+    <p>You do <em>not</em> need to become a power user. Just adopt these 4 habits:</p>
+
+    <ul class="checklist">
+      <li><strong>1. Break long projects into sessions</strong><br>Don't try to do everything in one massive chat. Treat it like chapters, not one endless scroll.</li>
+      <li><strong>2. Create checkpoints</strong><br>Every 20–40 minutes, ask the agent to summarize progress and save it.</li>
+      <li><strong>3. Save decisions, not every word</strong><br>You don't need the full transcript forever. You need the important outcomes.</li>
+      <li><strong>4. Start fresh when the chat gets messy</strong><br>A clean new session + a good summary is usually stronger than continuing a giant bloated thread.</li>
+    </ul>
+
+    <hr>
+
+    <h2>4 Copy/Paste Prompts That Prevent Disaster</h2>
+    <p>These are the prompts beginners should use <strong>before</strong> things go sideways:</p>
+
+    <div class="prompt-box">
+      <p><strong>Checkpoint prompt</strong> — use during long work sessions</p>
+      <code>Summarize what we've decided so far, what still needs to be done, and the key constraints. Then write it to today's memory file before we continue.</code>
+    </div>
+
+    <div class="prompt-box">
+      <p><strong>Project save prompt</strong> — use when you've made real progress</p>
+      <code>Create or update a project file for this work. Include the goal, decisions made, current status, next steps, and anything I should not lose.</code>
+    </div>
+
+    <div class="prompt-box">
+      <p><strong>Fresh chat handoff prompt</strong> — use when the thread feels bloated</p>
+      <code>We're going to continue this in a fresh chat. First, write a clean handoff summary I can paste into the next session with the project goal, current status, and next best step.</code>
+    </div>
+
+    <div class="prompt-box">
+      <p><strong>Recovery prompt</strong> — use when the agent already seems confused</p>
+      <code>Pause. Read the files related to this project, summarize the current plan in 8 bullets, list any uncertainties, and ask me only the most important missing question.</code>
+    </div>
+
+    <hr>
+
+    <h2>When to Start a New Chat</h2>
+    <p>Start a new conversation if you notice any of these signs:</p>
+
+    <ul class="checklist">
+      <li>The agent starts contradicting earlier decisions</li>
+      <li>It forgets the format, goal, or audience you already agreed on</li>
+      <li>The responses get slower, sloppier, or repetitive</li>
+      <li>You have switched topics several times in one thread</li>
+      <li>You feel like you're spending more time correcting than progressing</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Counterintuitive but true</div>
+      <p style="margin:0">A fresh chat does <strong>not</strong> mean starting over — if you've saved the right summary. In practice, a fresh chat plus a clean handoff often works better than forcing one giant session to keep going.</p>
+    </div>
+
+    <hr>
+
+    <h2>What to Save Between Sessions</h2>
+    <p>You don't need to save everything. Save the stuff that would be painful to re-explain:</p>
+
+    <ul class="checklist">
+      <li><strong>Goal</strong> — what you're trying to build or decide</li>
+      <li><strong>Decisions</strong> — what you already chose and why</li>
+      <li><strong>Constraints</strong> — budget, tone, deadlines, tools, limits</li>
+      <li><strong>Current status</strong> — what's done and what's blocked</li>
+      <li><strong>Next steps</strong> — what should happen next</li>
+    </ul>
+
+    <p>That is enough to recreate momentum without dragging a giant transcript around forever.</p>
+
+    <hr>
+
+    <h2>The Best Beginner Habit</h2>
+    <div class="callout callout-success">
+      <div class="callout-label">Do this every time</div>
+      <p style="margin:0">Before you end any meaningful work session, say: <strong>"Write down the important outcomes from today so we can pick this up later without losing anything."</strong></p>
+    </div>
+
+    <p>If users learn just that one sentence, they will lose far less work and trust the platform more.</p>
+
+    <hr>
+
+    <h2>If You Want Your Agent to Feel Smarter Over Time</h2>
+    <p>The goal is not infinite chat history. The goal is a better working system.</p>
+    <p>That means:</p>
+
+    <ul class="checklist">
+      <li><strong>Use chat for thinking together</strong></li>
+      <li><strong>Use files for durability</strong></li>
+      <li><strong>Use fresh sessions when a thread gets overloaded</strong></li>
+      <li><strong>Use saved summaries to preserve momentum</strong></li>
+    </ul>
+
+    <p>Once people understand this, the agent stops feeling flaky and starts feeling reliable.</p>
+
+    <hr>
+
+    <h2>What's Next?</h2>
+    <div style="margin: 12px 0;">
+      <p>🧠 <strong>Understand the full memory model</strong> — <a href="how-memory-works.html">How Agent Memory Works →</a></p>
+      <p>✍️ <strong>Give your agent durable identity and rules</strong> — <a href="your-first-soul-md.html">Your First SOUL.md →</a></p>
+      <p>📁 <strong>Learn where important work should live</strong> — <a href="working-with-files.html">Working with Files →</a></p>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="https://heyron.ai">heyron</a></p>
+      <p style="margin-top: 8px;"><a href="index.html">All Tutorials</a> · <a href="https://github.com/heyron-ai/agent-library">GitHub</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
+    </div>
+  </div>
+</body>
+</html>
