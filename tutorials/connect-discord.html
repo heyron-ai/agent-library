@@ -647,6 +647,24 @@
     </details>
 
     <details class="trouble-card">
+      <summary>My setup gets stuck on an “Approval Required” prompt</summary>
+      <div class="answer">
+        <p>This is expected if your agent is configured to ask before sensitive actions. Read the full guide: <a href="approval-required-explained.html">Why Your Agent Says “Approval Required”</a>.</p>
+        <p>Quick rule: approve only if the command matches what you're trying to do (Discord connect / gateway restart), and deny anything that looks unrelated.</p>
+        <p>If you denied a needed command by accident, just tell your agent to try again and approve the same safe action on the next prompt.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Slash commands or @mentions still don't trigger a response</summary>
+      <div class="answer">
+        <p>First, make sure your bot has <strong>View Channels</strong>, <strong>Send Messages</strong>, and <strong>Read Message History</strong> in the specific channel you're testing.</p>
+        <p>Then test in a brand-new channel with minimal custom permissions. Channel-level overrides are a common hidden blocker.</p>
+        <p>If it works in the new channel, the issue is channel permissions — not your token or intents.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
       <summary>How do I connect to a server I don't own?</summary>
       <div class="answer">
         <p>You need admin permissions on the server to add a bot. If you're a regular member, ask the server owner to add your bot using the invite URL from Step 5.</p>
