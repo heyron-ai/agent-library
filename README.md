@@ -49,6 +49,7 @@ Battle-tested workspace files to get started fast:
 - **[HEARTBEAT.md](templates/HEARTBEAT.md)** — Proactive heartbeat checklist template
 - **[COMMUNITY-SWEEP.md](templates/COMMUNITY-SWEEP.md)** — Community intelligence workflow template
 - **[DISCORD-CONNECT-CHECKLIST.md](templates/DISCORD-CONNECT-CHECKLIST.md)** — Fast diagnostic checklist for Discord connection failures
+- **[MEMORY-RECOVERY-PLAYBOOK.md](templates/MEMORY-RECOVERY-PLAYBOOK.md)** — Step-by-step playbook for diagnosing and fixing “my agent forgot” complaints
 
 ## 🔧 Fix Scripts
 
