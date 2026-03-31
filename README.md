@@ -51,6 +51,7 @@ Battle-tested workspace files to get started fast:
 - **[DISCORD-CONNECT-CHECKLIST.md](templates/DISCORD-CONNECT-CHECKLIST.md)** — Fast diagnostic checklist for Discord connection failures
 - **[MEMORY-RECOVERY-PLAYBOOK.md](templates/MEMORY-RECOVERY-PLAYBOOK.md)** — Step-by-step playbook for diagnosing and fixing “my agent forgot” complaints
 - **[CONTEXT-LIMIT-RESCUE.md](templates/CONTEXT-LIMIT-RESCUE.md)** — Quick triage and recovery workflow for `context limit exceeded` / oversized prompt failures
+- **[APPROVAL-SAFETY-CHECKLIST.md](templates/APPROVAL-SAFETY-CHECKLIST.md)** — Rapid decision framework for handling “Approval Required” prompts safely
 
 ## 🔧 Fix Scripts
 
