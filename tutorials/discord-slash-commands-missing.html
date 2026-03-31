@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Slash Commands Missing? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Discord Slash Commands Missing?</h1>
+      <p>Fix the “I typed / and nothing shows up” problem in a few minutes with this exact checklist.</p>
+    </div>
+
+    <p>A common setup blocker in Discord is: <em>“My agent is online, but slash commands do not appear.”</em> In most cases, this is a permissions or channel-scope issue, not a broken bot.</p>
+
+    <div class="callout">
+      <p><strong>Fast truth:</strong> if the bot is in the server but commands are invisible, check where you’re typing and what that channel allows.</p>
+    </div>
+
+    <h2>Most common causes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong channel:</strong> command usage is blocked in that channel/category.</li>
+        <li><strong>Missing permission:</strong> your role lacks <em>Use Application Commands</em>.</li>
+        <li><strong>Bot permission override:</strong> channel overrides block app commands for the bot.</li>
+        <li><strong>Fresh install delay:</strong> Discord is still syncing commands after invite/restart.</li>
+        <li><strong>Different server:</strong> you invited the bot to one server but are testing in another.</li>
+      </ul>
+    </div>
+
+    <h2>5-step recovery checklist</h2>
+
+    <div class="step">
+      <div class="step-title">1) Confirm you’re in the right server</div>
+      <p>Sounds obvious, but this is frequent. Make sure you are testing in the same guild where you completed the bot invite flow.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Test a plain text channel (not thread/stage/forum)</div>
+      <p>Use a normal text channel first. Some channel types and restrictive categories can hide command usage.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Check your role permission</div>
+      <p>Server Settings → Roles → your role → verify <strong>Use Application Commands</strong> is enabled.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Check channel-level overrides</div>
+      <p>Channel Settings → Permissions. Ensure neither your role nor the bot is denied app command usage in that channel.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) Wait 1–2 minutes, then retry</div>
+      <p>After permission changes, Discord can take a short time to refresh command visibility. Close/reopen Discord if needed.</p>
+    </div>
+
+    <h2>Known-good test flow</h2>
+    <div class="code">1) Open a standard text channel
+2) Type "/" and pause for 2-3 seconds
+3) Look for the bot command list
+4) Run a simple command first (status/help/ping)
+5) If it works here but not elsewhere, it's a channel override issue</div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> if @mentions work but slash commands do not, that strongly suggests a permissions or command-scope problem — not model/API failure.</p>
+    </div>
+
+    <h2>If it still doesn't work</h2>
+    <p>When asking for help, include these details so support can diagnose quickly:</p>
+    <ul>
+      <li>Server name + channel name where you tested</li>
+      <li>Whether @mention responses work</li>
+      <li>Your role permissions screenshot (Application Commands)</li>
+      <li>Any recent permission/category changes</li>
+    </ul>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> slash-command visibility failures are usually Discord permission wiring. Run this checklist top to bottom and you’ll fix most cases without opening a ticket.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="connect-discord.html">Connect Your Agent to Discord</a> and <a href="my-agent-replies-to-everything.html">My Agent Replies to Everything</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
