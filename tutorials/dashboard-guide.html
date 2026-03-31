@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Dashboard — Every Button Explained | heyron®</title>
+<style>
+:root {
+  --bg: #0f0f0f;
+  --surface: #1a1a1a;
+  --border: #333;
+  --text: #e5e5e5;
+  --text-muted: #999;
+  --accent: #5865F2;
+  --accent-light: #7289DA;
+  --code-bg: #161616;
+  --info: #5865F2;
+  --warning: #faa61a;
+  --danger: #f04747;
+  --success: #43b581;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.hero .desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin: 0 auto 1rem;
+}
+
+.hero .time {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Sections */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 2.5rem 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 2rem 0 0.5rem;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin: 1.25rem 0 0.4rem;
+}
+
+p { margin-bottom: 0.85rem; }
+
+ul {
+  margin: 0.5rem 0 1rem 1.25rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+li strong {
+  color: #fff;
+}
+
+code {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.88em;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+}
+
+/* Callouts */
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--info);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.callout.info    { border-left-color: var(--info); }
+.callout.warning { border-left-color: var(--warning); }
+.callout.danger  { border-left-color: var(--danger); }
+.callout.success { border-left-color: var(--success); }
+
+.callout .callout-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.callout.info .callout-title    { color: var(--info); }
+.callout.warning .callout-title { color: var(--warning); }
+.callout.danger .callout-title  { color: var(--danger); }
+.callout.success .callout-title { color: var(--success); }
+
+/* Group header */
+.group-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.group-header .group-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.group-header .group-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.group-header .group-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+/* Reference table */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+}
+
+.ref-table th,
+.ref-table td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+
+.ref-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ref-table td:first-child {
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ref-table a {
+  color: var(--accent-light);
+  text-decoration: none;
+}
+
+.ref-table a:hover { text-decoration: underline; }
+
+/* Links */
+a { color: var(--accent-light); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Related tutorials */
+.related {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+}
+
+.related h4 {
+  color: #fff;
+  margin: 0 0 0.75rem;
+}
+
+.related ul {
+  margin: 0 0 0 1.25rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2.5rem 0 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.footer a {
+  color: var(--accent-light);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footer a:hover { text-decoration: underline; }
+
+.footer .brand {
+  margin-bottom: 0.5rem;
+}
+
+/* TOC */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 0 0 2rem;
+}
+
+.toc h4 {
+  color: #fff;
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  margin-bottom: 0.3rem;
+}
+
+.toc a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.toc a:hover { color: var(--accent-light); }
+
+.toc .toc-group {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 1rem 1rem 3rem; }
+  .hero { padding: 2rem 0 1.5rem; }
+  .hero h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  .group-header { padding: 1rem; }
+  .ref-table td:first-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <span class="badge">Reference</span>
+    <h1>Your Dashboard — Every Button Explained</h1>
+    <p class="desc">A complete guide to the OpenClaw Control UI. What every page, button, and field does — so you never feel lost.</p>
+    <p class="time">⏱ 10 minute reference</p>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h4>📑 Table of Contents</h4>
+    <ul>
+      <li><a href="#sidebar">The Sidebar</a></li>
+      <li class="toc-group">💬 Chat</li>
+      <li><a href="#chat">Chat Page</a></li>
+      <li class="toc-group">📊 Control</li>
+      <li><a href="#overview">Overview</a> · <a href="#channels">Channels</a> · <a href="#instances">Instances</a> · <a href="#sessions">Sessions</a> · <a href="#usage">Usage</a> · <a href="#cron">Cron</a></li>
+      <li class="toc-group">🤖 Agent</li>
+      <li><a href="#agents">Agents</a> · <a href="#skills">Skills</a> · <a href="#nodes">Nodes</a></li>
+      <li class="toc-group">⚙️ Settings</li>
+      <li><a href="#config">Config</a> · <a href="#communications">Communications</a> · <a href="#appearance">Appearance</a> · <a href="#automation">Automation</a> · <a href="#infrastructure">Infrastructure</a> · <a href="#ai-agents">AI Agents</a> · <a href="#debug">Debug</a> · <a href="#logs">Logs</a></li>
+      <li class="toc-group">📋 Quick Reference</li>
+      <li><a href="#quick-ref">Where Do I Go To…</a></li>
+    </ul>
+  </div>
+
+  <!-- Sidebar -->
+  <h2 id="sidebar">The Sidebar</h2>
+  <p>The left sidebar is your navigation. It's organized into <strong>4 groups</strong>, each with an icon and a label. Click a group to expand it and see its pages:</p>
+  <ul>
+    <li><strong>💬 Chat</strong> — Talk to your agent</li>
+    <li><strong>📊 Control</strong> — Monitor and manage your agent's operations</li>
+    <li><strong>🤖 Agent</strong> — Configure your agent's identity, skills, and connections</li>
+    <li><strong>⚙️ Settings</strong> — System configuration, infrastructure, and debugging</li>
+  </ul>
+  <p>Each group expands to reveal its pages. You can collapse groups you don't need to keep things tidy.</p>
+
+  <!-- GROUP 1: CHAT -->
+  <div class="group-header">
+    <span class="group-icon">💬</span>
+    <span class="group-name">Chat</span>
+    <div class="group-desc">The main page. This is where you talk to your agent.</div>
+  </div>
+
+  <h3 id="chat">Chat Page</h3>
+  <p>This is the core of the experience — your direct conversation with your agent.</p>
+  <ul>
+    <li><strong>Message input</strong> — Type your message and press Enter or click Send.</li>
+    <li><strong>Stop button</strong> — Appears while your agent is thinking. Click to cancel the current response.</li>
+    <li><strong>Attachment button</strong> — Attach files to your message (if supported by your channel).</li>
+    <li><strong>Model selector</strong> — If visible, lets you switch which AI model your agent uses mid-conversation.</li>
+    <li><strong>Session indicator</strong> — Shows which session you're currently chatting in.</li>
+    <li><strong>Chat bubbles</strong> — Your messages appear on the right, agent responses on the left.</li>
+    <li><strong>Tool call cards</strong> — When your agent uses tools (web search, file operations, etc.), you'll see expandable cards showing exactly what it did and what it returned.</li>
+    <li><strong>Typing indicator</strong> — Shows when your agent is generating a response.</li>
+  </ul>
+
+  <!-- GROUP 2: CONTROL -->
+  <div class="group-header">
+    <span class="group-icon">📊</span>
+    <span class="group-name">Control</span>
+    <div class="group-desc">Monitor and manage your agent's operations, channels, sessions, and scheduled tasks.</div>
+  </div>
+
+  <h3 id="overview">Overview Page 📊</h3>
+  <p>The dashboard home. Shows the at-a-glance status of your agent.</p>
+  <ul>
+    <li><strong>Status cards</strong> — Gateway status, uptime, current model, and channel connections.</li>
+    <li><strong>Attention items</strong> — Issues that need your attention — disconnected channels, errors, missing config.</li>
+    <li><strong>Event log</strong> — Recent activity feed showing messages sent/received, tool calls, and errors.</li>
+    <li><strong>Quick hints</strong> — Suggestions for things to set up or fix if your agent isn't fully configured yet.</li>
+  </ul>
+
+  <h3 id="channels">Channels Page 🔗</h3>
+  <p>Manage your chat connections — Discord, Telegram, WhatsApp, and more.</p>
+  <ul>
+    <li><strong>Channel cards</strong> — Each connected channel shows its name and current status.</li>
+    <li><strong>QR code / Login buttons</strong> — For channels that need browser login (like WhatsApp), you'll see a QR code to scan.</li>
+    <li><strong>Status indicators</strong> — <span style="color:var(--success)">Green</span> = connected, <span style="color:var(--warning)">Yellow</span> = connecting, <span style="color:var(--danger)">Red</span> = disconnected.</li>
+    <li><strong>Per-channel config</strong> — Click a channel to see its settings and options.</li>
+    <li><strong>Add channel</strong> — Instructions for connecting new channels to your agent.</li>
+  </ul>
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Warning</div>
+    Don't edit channel configs unless you know what you're doing. A wrong change can disconnect your agent from that channel.
+  </div>
+
+  <h3 id="instances">Instances Page 📡</h3>
+  <p>Shows all running OpenClaw instances and processes.</p>
+  <ul>
+    <li><strong>Presence list</strong> — Shows which gateway instances are currently active.</li>
+    <li><strong>Refresh button</strong> — Update the list to see current status.</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-title">ℹ️ Info</div>
+    Most users will only see one instance here. This page is mainly for advanced multi-gateway setups.
+  </div>
+
+  <h3 id="sessions">Sessions Page 📄</h3>
+  <p>View and manage your agent's conversation sessions.</p>
+  <ul>
+    <li><strong>Session list</strong> — Each channel and conversation gets its own session.</li>
+    <li><strong>Session key</strong> — The unique identifier, e.g. <code>agent:main:discord:channel:123456</code>.</li>
+    <li><strong>Per-session overrides</strong> — Toggle thinking mode, verbose mode, fast mode, or reasoning for individual sessions.</li>
+    <li><strong>Token count</strong> — How many tokens each session has used.</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-title">ℹ️ Info</div>
+    Each Discord channel, Telegram chat, and web chat gets its own separate session. They don't share context with each other.
+  </div>
+
+  <h3 id="usage">Usage Page 📊</h3>
+  <p>Track your API usage and costs.</p>
+  <ul>
+    <li><strong>Token usage</strong> — How many tokens you've used (input vs output).</li>
+    <li><strong>Cost estimates</strong> — Approximate cost based on model pricing.</li>
+    <li><strong>Time period filters</strong> — View by day, week, or month.</li>
+    <li><strong>Per-model breakdown</strong> — See which models are costing the most.</li>
+  </ul>
+
+  <h3 id="cron">Cron Page ⏰</h3>
+  <p>Schedule recurring tasks and reminders for your agent.</p>
+  <ul>
+    <li><strong>Job list</strong> — All scheduled jobs with their status (enabled/disabled).</li>
+    <li><strong>Add job button</strong> — Create a new scheduled task.</li>
+    <li><strong>Job fields</strong> — Name, schedule (cron expression or interval), message/prompt, and optional model override.</li>
+    <li><strong>Run now button</strong> — Trigger a job immediately without waiting for its schedule.</li>
+    <li><strong>Run history</strong> — See when each job last ran and its result.</li>
+    <li><strong>Enable/disable toggle</strong> — Turn jobs on or off without deleting them.</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-title">💡 Tip</div>
+    Cron is powerful — use it for daily briefings, periodic checks, and reminders. Example: schedule a "morning briefing" every day at 8am that summarizes your calendar and emails.
+  </div>
+
+  <!-- GROUP 3: AGENT -->
+  <div class="group-header">
+    <span class="group-icon">🤖</span>
+    <span class="group-name">Agent</span>
+    <div class="group-desc">Configure your agent's identity, skills, and connected nodes.</div>
+  </div>
+
+  <h3 id="agents">Agents Page 📁</h3>
+  <p>View your agent(s) and their configuration.</p>
+  <ul>
+    <li><strong>Agent overview</strong> — Name, status, and workspace path.</li>
+    <li><strong>Status tab</strong> — Shows agent health and recent activity.</li>
+    <li><strong>Files tab</strong> — Browse your agent's workspace files: <code>SOUL.md</code>, <code>AGENTS.md</code>, <code>MEMORY.md</code>, the <code>memory/</code> folder, and more.</li>
+    <li><strong>Tools &amp; Skills tab</strong> — See what tools and skills are available. Shows "Available Right Now" (what works in the current session) vs "Tool Configuration" (what's configured overall).</li>
+  </ul>
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Note</div>
+    The Files tab lets you <em>browse</em> but not edit files directly. To edit your <code>SOUL.md</code> or <code>AGENTS.md</code>, tell your agent in chat — e.g. "update my SOUL.md to be more friendly."
+  </div>
+
+  <h3 id="skills">Skills Page ⚡</h3>
+  <p>Manage installed skills — instruction files that teach your agent new abilities.</p>
+  <ul>
+    <li><strong>Skill list</strong> — All installed skills with their descriptions.</li>
+    <li><strong>Enable/disable toggle</strong> — Turn skills on or off.</li>
+    <li><strong>Install button</strong> — Install new skills from the library or a URL.</li>
+    <li><strong>API key fields</strong> — Some skills need API keys — enter them here.</li>
+    <li><strong>Skill status</strong> — Shows if a skill is active, disabled, or has errors.</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-title">ℹ️ Info</div>
+    Skills are instruction files that teach your agent new abilities. Check the <a href="skills.html">Skills tutorial</a> for ready-to-use skills and how to install them.
+  </div>
+
+  <h3 id="nodes">Nodes Page 💻</h3>
+  <p>Manage connected node hosts — external machines your agent can access.</p>
+  <ul>
+    <li><strong>Node list</strong> — Connected machines and hosts.</li>
+    <li><strong>Capabilities</strong> — What each node can do (exec commands, browser access, etc.).</li>
+    <li><strong>Exec approvals</strong> — Allowlists for what commands your agent can run on each node.</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-title">ℹ️ Info</div>
+    Most users won't need this page. It's for advanced setups where your agent connects to external machines (like a home server or VPS).
+  </div>
+
+  <!-- GROUP 4: SETTINGS -->
+  <div class="group-header">
+    <span class="group-icon">⚙️</span>
+    <span class="group-name">Settings</span>
+    <div class="group-desc">System configuration, infrastructure, AI models, and debugging tools.</div>
+  </div>
+
+  <h3 id="config">Config Page ⚙️</h3>
+  <p>The raw configuration editor for your entire OpenClaw setup.</p>
+  <ul>
+    <li><strong>Form view</strong> — User-friendly fields organized by category.</li>
+    <li><strong>JSON editor</strong> — Raw JSON editor for advanced users who want full control.</li>
+    <li><strong>Apply &amp; Restart button</strong> — Save your changes and restart the gateway to apply them.</li>
+    <li><strong>Schema validation</strong> — Shows errors if your config is invalid before you save.</li>
+  </ul>
+  <div class="callout danger">
+    <div class="callout-title">🛑 Danger</div>
+    Be very careful editing config directly. A bad change can break your agent. If you're unsure, ask your agent to make config changes for you in chat — it's safer and it knows the schema.
+  </div>
+
+  <h3 id="communications">Communications Page 📤</h3>
+  <p>Channel and messaging configuration.</p>
+  <ul>
+    <li><strong>Reply behavior</strong> — How your agent sends and receives messages.</li>
+    <li><strong>Streaming settings</strong> — Enable/disable streaming responses and chunk sizes.</li>
+    <li><strong>Per-channel overrides</strong> — Customize messaging behavior for specific channels.</li>
+  </ul>
+
+  <h3 id="appearance">Appearance Page ✨</h3>
+  <p>UI theme and display settings.</p>
+  <ul>
+    <li><strong>Dark/Light mode toggle</strong> — Switch between dark and light themes.</li>
+    <li><strong>Language selector</strong> — English, Chinese, Spanish, Portuguese, German.</li>
+    <li><strong>UI preferences</strong> — Other display customizations.</li>
+  </ul>
+
+  <h3 id="automation">Automation Page 💻</h3>
+  <p>Exec approvals and command security — control what your agent is allowed to run.</p>
+  <ul>
+    <li><strong>Gateway exec allowlist</strong> — What commands your agent can run on the gateway host.</li>
+    <li><strong>Node exec allowlists</strong> — What commands can run on connected nodes.</li>
+    <li><strong>Ask policy</strong> — How the agent requests permission for new or unlisted commands.</li>
+  </ul>
+
+  <h3 id="infrastructure">Infrastructure Page 🌐</h3>
+  <p>Gateway and network settings.</p>
+  <ul>
+    <li><strong>Gateway bind settings</strong> — What address and port the gateway listens on.</li>
+    <li><strong>Auth settings</strong> — Token or password for gateway access.</li>
+    <li><strong>Proxy settings</strong> — Network proxy configuration.</li>
+    <li><strong>Remote settings</strong> — Remote gateway connection details (for VPS or cloud setups).</li>
+  </ul>
+
+  <h3 id="ai-agents">AI Agents Page 🧠</h3>
+  <p>Agent and model configuration.</p>
+  <ul>
+    <li><strong>Agent list</strong> — All configured agents.</li>
+    <li><strong>Default model</strong> — Which AI model your agent uses by default.</li>
+    <li><strong>Model overrides</strong> — Per-agent or per-session model settings.</li>
+    <li><strong>Bindings</strong> — Route different conversations to different agents.</li>
+  </ul>
+
+  <h3 id="debug">Debug Page 🐛</h3>
+  <p>Diagnostics and troubleshooting tools.</p>
+  <ul>
+    <li><strong>Status snapshot</strong> — Current gateway health and state at a glance.</li>
+    <li><strong>Health check</strong> — Detailed health information for all subsystems.</li>
+    <li><strong>Models list</strong> — All available models and their current status.</li>
+    <li><strong>Event log</strong> — Raw event stream for debugging.</li>
+    <li><strong>Manual RPC</strong> — Send raw commands to the gateway (advanced).</li>
+  </ul>
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Warning</div>
+    This is a developer tool. You can break things here. Use it only for troubleshooting — not for everyday config changes.
+  </div>
+
+  <h3 id="logs">Logs Page 📜</h3>
+  <p>Live log viewer — your first stop when something goes wrong.</p>
+  <ul>
+    <li><strong>Log stream</strong> — Real-time gateway logs as they happen.</li>
+    <li><strong>Filter bar</strong> — Filter by log level: error, warn, info, debug.</li>
+    <li><strong>Export button</strong> — Download logs for sharing with support.</li>
+  </ul>
+  <div class="callout info">
+    <div class="callout-title">💡 Tip</div>
+    If something goes wrong, check Logs first. Error messages here often explain exactly what happened and point you to the fix.
+  </div>
+
+  <!-- Quick Reference -->
+  <h2 id="quick-ref">📋 Quick Reference: "Where Do I Go To…"</h2>
+
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>I want to…</th>
+        <th>Go here</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Change my agent's personality</td>
+        <td>Chat — tell your agent "update my SOUL.md"</td>
+      </tr>
+      <tr>
+        <td>Connect to Discord or Telegram</td>
+        <td><a href="#channels">Channels</a> page</td>
+      </tr>
+      <tr>
+        <td>See what my agent can do</td>
+        <td><a href="#agents">Agents</a> → Tools &amp; Skills tab</td>
+      </tr>
+      <tr>
+        <td>Change which AI model I use</td>
+        <td><a href="#chat">Chat</a> (model selector) or <a href="#ai-agents">AI Agents</a> page</td>
+      </tr>
+      <tr>
+        <td>Schedule a daily briefing</td>
+        <td><a href="#cron">Cron</a> page</td>
+      </tr>
+      <tr>
+        <td>Check my API usage / costs</td>
+        <td><a href="#usage">Usage</a> page</td>
+      </tr>
+      <tr>
+        <td>Fix something broken</td>
+        <td><a href="#debug">Debug</a> or <a href="#logs">Logs</a> page</td>
+      </tr>
+      <tr>
+        <td>Install a new skill</td>
+        <td><a href="#skills">Skills</a> page</td>
+      </tr>
+      <tr>
+        <td>Edit my config</td>
+        <td><a href="#config">Config</a> page (careful!) or ask your agent in chat</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Related Tutorials -->
+  <div class="related">
+    <h4>📚 Related Tutorials</h4>
+    <ul>
+      <li><a href="your-first-soul-md.html">Your First SOUL.md</a> — Give your agent a personality</li>
+      <li><a href="connect-discord.html">Connect to Discord</a> — Set up the Discord channel</li>
+      <li><a href="connect-telegram.html">Connect to Telegram</a> — Set up the Telegram channel</li>
+      <li><a href="how-memory-works.html">How Memory Works</a> — Understand your agent's memory system</li>
+      <li><a href="api-keys-and-models.html">API Keys &amp; Models</a> — Configure your AI providers</li>
+      <li><a href="skills.html">Skills</a> — Install and manage agent skills</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="brand">Made with 🌩️ by The Glow Cloud — heyron®</div>
+    <a href="index.html">All Tutorials</a>
+    <a href="https://github.com/heyron">GitHub</a>
+    <a href="https://discord.gg/heyron">Discord</a>
+  </div>
+
+</div>
+</body>
+</html>
