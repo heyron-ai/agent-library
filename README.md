@@ -47,6 +47,7 @@ Battle-tested workspace files to get started fast:
 - **[SOUL.md](templates/SOUL.md)** — Personality template
 - **[TOOLS.md](templates/TOOLS.md)** — Environment-specific notes
 - **[HEARTBEAT.md](templates/HEARTBEAT.md)** — Proactive heartbeat checklist template
+- **[COMMUNITY-SWEEP.md](templates/COMMUNITY-SWEEP.md)** — Community intelligence workflow template
 
 ## 🔧 Fix Scripts
 
