@@ -476,6 +476,26 @@
       </ul>
     </div>
 
+    <!-- Troubleshooting -->
+    <hr>
+    <h2>Quick Troubleshooting Checklist</h2>
+
+    <div class="method-card">
+      <h4>🛠️ If file sending isn't working, check these first</h4>
+      <ul>
+        <li><strong>You're in the right channel:</strong> Test in the same Discord DM/channel where your agent already replies to text.</li>
+        <li><strong>Discord Message Content Intent is enabled:</strong> If this is off, your bot may miss file + message context.</li>
+        <li><strong>Bot has permissions:</strong> In server channels, confirm the bot can <code>View Channel</code>, <code>Send Messages</code>, and <code>Read Message History</code>.</li>
+        <li><strong>File size is reasonable:</strong> Extremely large uploads may fail before your agent sees them.</li>
+        <li><strong>Try a known-good test:</strong> Upload a small PNG screenshot with a simple prompt like <code>"What text is in this image?"</code>.</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">Still stuck?</div>
+      If your agent answers normal text messages but ignores file uploads, reconnect Discord integration and re-check intents/permissions. Most upload issues are configuration, not model problems.
+    </div>
+
     <!-- Common Questions -->
     <hr>
     <h2>Common Questions</h2>
