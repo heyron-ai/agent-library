@@ -169,6 +169,16 @@
       <p>If channel replies still work while dashboard fails, your agent may be alive and only web access is degraded.</p>
     </div>
 
+    <h2>Quick isolation matrix (find the failing layer fast)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Fails only in one browser:</strong> local cache/extension/session issue is most likely</li>
+        <li><strong>Fails on all browsers but Discord/Telegram still replies:</strong> dashboard/web path issue</li>
+        <li><strong>Fails on web + Discord/Telegram:</strong> agent/container startup issue</li>
+        <li><strong>Fails only on your Wi-Fi, works on mobile data:</strong> local network/VPN/DNS filtering issue</li>
+      </ul>
+    </div>
+
     <h2>What usually causes 502</h2>
     <div class="card">
       <ul>
@@ -176,7 +186,24 @@
         <li>Temporary upstream outage/load spike</li>
         <li>Corrupted browser cache/session state</li>
         <li>Workspace startup blocked by a bad config change</li>
+        <li>Network middleware interference (VPN, ad blocker, DNS filtering, strict corporate proxy)</li>
       </ul>
+    </div>
+
+    <h2>Extra checks before support (2 minutes)</h2>
+    <div class="step">
+      <div class="step-title">6) Disable extensions that modify traffic</div>
+      <p>Temporarily disable ad blockers/privacy tools for your Heyron domain, then retry. These can block websocket or upstream requests and produce 502-like failures.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">7) Turn off VPN/proxy and retry</div>
+      <p>Some VPN/proxy paths timeout or filter required requests. A quick no-VPN retry helps isolate network path issues.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">8) Compare Wi-Fi vs mobile hotspot</div>
+      <p>If hotspot works but home/work Wi-Fi fails, share that detail in your #help post. It narrows diagnosis immediately.</p>
     </div>
 
     <h2>When to contact support</h2>
