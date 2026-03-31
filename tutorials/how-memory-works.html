@@ -506,6 +506,39 @@
 
     <hr>
 
+    <h2>Quick Memory Troubleshooting Checklist</h2>
+    <p>If memory feels inconsistent, run this 60-second checklist before opening a support ticket:</p>
+
+    <ul class="tip-list">
+      <li>
+        <strong>✅ Check where the fact is stored</strong><br>
+        If it's only in chat history, it can be compacted away. Important info should be in <code>MEMORY.md</code> or <code>memory/YYYY-MM-DD.md</code>.
+      </li>
+      <li>
+        <strong>✅ Check the conversation context</strong><br>
+        Discord channels are separate contexts. Something discussed in #general won't automatically appear in #help unless it was written to files.
+      </li>
+      <li>
+        <strong>✅ Check privacy boundaries</strong><br>
+        In many setups, <code>MEMORY.md</code> is loaded in private/main sessions but not shared group contexts. This is intentional for privacy.
+      </li>
+      <li>
+        <strong>✅ Check for explicit save instructions</strong><br>
+        Tell your agent directly: <em>"Save this to MEMORY.md"</em> or <em>"Write this to today's memory file."</em> Don't assume it will auto-save everything.
+      </li>
+      <li>
+        <strong>✅ Run a known-good memory test</strong><br>
+        Say: <em>"Save that my favorite output format is bullet points to MEMORY.md."</em> Then start a new session and ask: <em>"What's my preferred output format?"</em>
+      </li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Fast recovery prompt</div>
+      <p style="margin:0"><em>"Please read SOUL.md, AGENTS.md, MEMORY.md (if available), and today's memory file, then summarize what you know about me in 8 bullet points."</em></p>
+    </div>
+
+    <hr>
+
     <!-- What's next -->
     <h2>What's Next?</h2>
     <p>Now that you understand memory:</p>
