@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompting Your Agent Like a Pro — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">How-To</div>
+      <h1>Prompting Your Agent Like a Pro</h1>
+      <p>Get better answers, better action plans, and fewer frustrating back-and-forth messages — without learning "prompt engineering."</p>
+    </div>
+
+    <p>A common community complaint is: <em>"My agent gave me a generic answer."</em> Most of the time, the model is fine — the request was just too vague.</p>
+
+    <div class="callout">
+      <p><strong>Good news:</strong> you don't need technical prompts. You just need a clear ask, context, and a useful output format.</p>
+    </div>
+
+    <h2>The 4-part prompt formula</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Goal:</strong> What do you want done?</li>
+        <li><strong>Context:</strong> What should the agent know first?</li>
+        <li><strong>Constraints:</strong> What limits or preferences matter?</li>
+        <li><strong>Output format:</strong> How should the answer be structured?</li>
+      </ol>
+    </div>
+
+    <h2>Example: weak vs strong prompt</h2>
+
+    <h3>⚠️ Weak</h3>
+    <div class="code">Write a welcome message for my Discord server.</div>
+
+    <h3>✅ Strong</h3>
+    <div class="code">Write a welcome message for my Discord server.
+
+Context:
+- Server is for first-time AI users
+- Tone should be friendly and simple
+- We want people to ask questions without feeling dumb
+
+Constraints:
+- Max 120 words
+- No emojis
+- Avoid technical jargon
+
+Output format:
+- 1 final message
+- 3 alternate headline options</div>
+
+    <p>The second prompt gives the agent enough signal to produce something usable on the first try.</p>
+
+    <h2>Use this copy/paste template</h2>
+    <div class="code">I need help with: [goal]
+
+Context:
+- [relevant background]
+- [who this is for]
+
+Constraints:
+- [length / style / budget / deadline]
+- [things to avoid]
+
+Output format:
+- [bullet list, table, draft, checklist, etc.]
+- [how many options]</div>
+
+    <h2>When your agent still feels off</h2>
+
+    <div class="step">
+      <div class="step-title">1) Ask for a rewrite, not a restart</div>
+      <p>Say exactly what to change: "Keep the structure, make it shorter, and sound less formal."</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Give one concrete example</div>
+      <p>One sample line often calibrates tone better than a long explanation.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Add audience and channel</div>
+      <p>"This is for non-technical founders in Discord" is much better than "make it better."</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Ask for options</div>
+      <p>Request 2–3 variations and pick the best one. You'll get stronger output faster.</p>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Watch out:</strong> dumping huge context walls can make answers worse. Include only what changes the decision.</p>
+    </div>
+
+    <h2>High-leverage prompt starters</h2>
+    <div class="card">
+      <ul>
+        <li>"Give me a beginner-friendly version in plain English."</li>
+        <li>"List assumptions before you answer."</li>
+        <li>"Give me a quick draft first, then a polished version."</li>
+        <li>"If anything is unclear, ask me 3 clarifying questions first."</li>
+      </ul>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> specificity beats complexity. A clear prompt saves time, tokens, and frustration.</p>
+    </div>
+
+    <div class="footer">
+      <p>Next: read <a href="how-memory-works.html">How Agent Memory Works</a> to understand what your agent retains between messages.</p>
+      <p style="margin-top: 8px;">Back to <a href="index.html">Tutorials Index</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
