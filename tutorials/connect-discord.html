@@ -665,6 +665,19 @@
     </details>
 
     <details class="trouble-card">
+      <summary>I enabled intents and bot permissions, but it still won't respond</summary>
+      <div class="answer">
+        <p>This is usually a <strong>Discord integration restriction</strong>, stale session, or channel override issue.</p>
+        <p>Run this fast isolation flow:</p>
+        <p>1) In Discord: <strong>Server Settings → Integrations → your bot</strong> and confirm commands are allowed for your role/channel.<br>
+           2) In heyron dashboard, start fresh with <code>/new</code> and ask your agent: <em>"Restart the gateway and verify Discord is connected."</em><br>
+           3) Create a brand-new channel with default permissions and test one message that <strong>@mentions the bot</strong>.<br>
+           4) If mention works there but not elsewhere, fix per-channel overrides. If mention fails everywhere, regenerate token (Bot → Reset Token) and reconnect in dashboard.</p>
+        <p>Community pattern: many "bot won't reply" reports are not bad intents — they're integration restrictions or channel-level permission drift.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
       <summary>How do I connect to a server I don't own?</summary>
       <div class="answer">
         <p>You need admin permissions on the server to add a bot. If you're a regular member, ask the server owner to add your bot using the invite URL from Step 5.</p>
