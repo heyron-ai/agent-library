@@ -18,6 +18,16 @@ Step-by-step guides for getting the most out of your agent:
 | [How Memory Works](https://heyron-ai.github.io/agent-library/tutorials/how-memory-works.html) | Why your agent forgets and how to fix it | 5 min |
 | [Working with Files](https://heyron-ai.github.io/agent-library/tutorials/working-with-files.html) | Sending photos, documents, and more | 3 min |
 
+## 🎭 Agent Personas (52 ready-to-use SOUL.md files)
+
+**[Browse all personas →](https://heyron-ai.github.io/agent-library/tutorials/personas.html)**
+
+Pre-built personalities for every use case — personal, business, creative, marketing, real estate, education, and more. Copy, paste, go. Free forever.
+
+Categories: Personal Life · Productivity · Creative · Marketing · Business · Finance · Real Estate · Education · Development · Freelance · Health & Wellness · Automation
+
+See [personas/README.md](personas/README.md) for the full catalog.
+
 ## 🧩 Skills Library
 
 **[Browse all skills →](https://heyron-ai.github.io/agent-library/tutorials/skills.html)**
