@@ -46,6 +46,7 @@ Battle-tested workspace files to get started fast:
 - **[AGENTS.md](templates/AGENTS.md)** — Operating manual for your agent
 - **[SOUL.md](templates/SOUL.md)** — Personality template
 - **[TOOLS.md](templates/TOOLS.md)** — Environment-specific notes
+- **[HEARTBEAT.md](templates/HEARTBEAT.md)** — Proactive heartbeat checklist template
 
 ## 🔧 Fix Scripts
 
