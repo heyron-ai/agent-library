@@ -190,6 +190,29 @@ Return:
       <p><strong>Tip:</strong> avoid sending the same request repeatedly while one run is still in progress. That can create overlap and make things look slower.</p>
     </div>
 
+    <h2>Common confusion: “Context limit exceeded”</h2>
+    <p>If you see a context-limit error, the model isn't frozen — your request payload got too large.</p>
+    <div class="card">
+      <ul>
+        <li><strong>What causes it:</strong> huge pasted logs, long chat history, multiple large files, or asking for too many things at once.</li>
+        <li><strong>Fast fix:</strong> start a fresh chat/session for the task and send only the minimum required context.</li>
+        <li><strong>Better pattern:</strong> break work into stages (analyze → decide → generate output) instead of one mega prompt.</li>
+        <li><strong>If sharing logs:</strong> send only the relevant excerpt + exact error line, not the entire file.</li>
+      </ul>
+    </div>
+
+    <h2>Common confusion: Discord shows offline or stops replying</h2>
+    <p>Offline presence does not always mean your container is dead, but if your agent stops replying, run this quick check:</p>
+    <div class="card">
+      <ul>
+        <li>Confirm you are testing in the same server/channel where the app is installed.</li>
+        <li>Check channel-level permission overrides for <strong>View Channel</strong>, <strong>Send Messages</strong>, and <strong>Use Application Commands</strong>.</li>
+        <li>Try a direct @mention with a tiny prompt first before sending a long request.</li>
+        <li>If slash commands disappeared, re-check server <strong>Integrations</strong> restrictions.</li>
+        <li>If still unresponsive across channels, collect exact symptoms and escalate to #help.</li>
+      </ul>
+    </div>
+
     <h2>When to treat it as a real issue</h2>
     <div class="card">
       <ul>
