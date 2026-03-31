@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEARTBEAT.md Errors? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-danger {
+      border-left-color: var(--danger);
+      background: rgba(240,71,71,0.08);
+    }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>HEARTBEAT.md Errors?</h1>
+      <p>Fix the most common heartbeat file mistakes in minutes so your agent stops repeating errors and starts doing useful check-ins.</p>
+    </div>
+
+    <p>If your agent keeps saying there is a <em>HEARTBEAT.md error</em>, you are not alone. This is a common setup issue and usually comes down to file location, formatting, or stale instructions.</p>
+
+    <div class="callout">
+      <p><strong>Good news:</strong> you usually do <em>not</em> need to reinstall anything. A small file fix solves this most of the time.</p>
+    </div>
+
+    <h2>What HEARTBEAT.md is for</h2>
+    <div class="card">
+      <ul>
+        <li>A short checklist for periodic heartbeat runs</li>
+        <li>What the agent should check (email, calendar, mentions, etc.)</li>
+        <li>When to notify you vs stay quiet</li>
+        <li>How to avoid repeating old tasks forever</li>
+      </ul>
+    </div>
+
+    <h2>Quick fix checklist (in order)</h2>
+
+    <div class="step">
+      <div class="step-title">1) Confirm the file path is exactly right</div>
+      <p>The file should be in your workspace root, named exactly <code>HEARTBEAT.md</code> (all caps, no extra extension).</p>
+      <div class="code">✅ HEARTBEAT.md
+❌ heartbeat.md
+❌ HEARTBEAT.md.txt
+❌ /memory/HEARTBEAT.md</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Keep it short and explicit</div>
+      <p>Overly long heartbeat instructions can create confusion and repeated loops. Keep it to a tight checklist.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Remove stale “always do X” language</div>
+      <p>If your file says to always run old tasks, the agent may keep doing them forever. Use conditional rules instead.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Add a clear no-op rule</div>
+      <p>Tell the agent what to do when nothing needs attention (for example: return <code>HEARTBEAT_OK</code>).</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) Run one heartbeat test</div>
+      <p>After edits, trigger one heartbeat and confirm behavior before adding more complexity.</p>
+    </div>
+
+    <h2>Known-good HEARTBEAT.md starter</h2>
+    <div class="code"># HEARTBEAT.md
+
+Check only these items:
+1) Calendar events in next 24h
+2) Urgent unread email
+3) New direct mentions
+
+Rules:
+- If nothing important changed since last check, reply HEARTBEAT_OK.
+- Do not repeat the same suggestion twice in a row.
+- Keep responses to 3 bullets max unless urgent.
+- Quiet hours: 11pm-8am local time unless urgent.</div>
+
+    <div class="callout-warning">
+      <p><strong>Tip:</strong> if your heartbeat keeps revisiting old tasks, also track simple state in a small JSON file (last check timestamps). That prevents repetitive behavior.</p>
+    </div>
+
+    <h2>Common error patterns and fixes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>“File not found”</strong> → HEARTBEAT.md is in the wrong folder or wrong filename case.</li>
+        <li><strong>Repeats the same message every run</strong> → missing “do not repeat” rule and no state tracking.</li>
+        <li><strong>Runs too many checks every heartbeat</strong> → checklist is too broad; trim to 3-5 items max.</li>
+        <li><strong>Noisy messages at night</strong> → add explicit quiet hours with an urgency exception.</li>
+      </ul>
+    </div>
+
+    <div class="callout-danger">
+      <p><strong>Avoid this anti-pattern:</strong> “Check everything all the time and summarize everything.” That instruction guarantees noisy, expensive, low-signal output.</p>
+    </div>
+
+    <h2>When to ask for help</h2>
+    <p>If the issue continues after this checklist, include these details in #help:</p>
+    <ul>
+      <li>Your current HEARTBEAT.md content</li>
+      <li>The exact error text</li>
+      <li>One example of unexpected heartbeat output</li>
+      <li>What changed right before the issue started</li>
+    </ul>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> a clean, short HEARTBEAT.md gives calm, useful check-ins. Keep it simple, conditional, and test once after every edit.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related read: <a href="heartbeat-old-tasks.html">Heartbeat Keeps Repeating Old Tasks?</a></p>
+    </div>
+  </div>
+</body>
+</html>
