@@ -580,6 +580,39 @@
 
     <hr>
 
+    <!-- Quick Troubleshooting -->
+    <h2>Quick Troubleshooting (Billing &amp; Access)</h2>
+    <div class="callout callout-info">
+      <div class="callout-label">Seeing errors? Start here.</div>
+      <p style="margin:0">Most model errors are account limits, missing provider credits, or key/provider mismatch. Use this checklist before opening a support ticket.</p>
+    </div>
+
+    <div class="step" style="margin-top: 16px;">
+      <div class="step-number">✓</div>
+      <h3>"Insufficient credits" / "quota exceeded"</h3>
+      <p>Add funds (or free credits) in your model provider account and confirm a spending limit is set above $0. If you're using your own API key, this error comes from the provider account attached to that key.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
+      <h3>"Invalid API key"</h3>
+      <p>Regenerate the key in the provider dashboard, then re-add it in heyron. Watch for copy/paste issues (leading/trailing spaces are common). Make sure the key matches the provider (OpenAI key with OpenAI model, Anthropic key with Claude, etc.).</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
+      <h3>Model works for a while, then starts failing</h3>
+      <p>You likely hit rate limits or monthly caps. Either lower traffic, switch to a cheaper/faster model for routine tasks, or raise your provider spend/rate limits. Keep a fallback model configured so your agent stays responsive.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
+      <h3>"Do I need an API key or not?"</h3>
+      <p>For most users: no, not at first. heyron subscription usage covers getting started. Add your own key when you need higher-volume premium usage, custom provider routing, or you're hitting included-usage limits.</p>
+    </div>
+
+    <hr>
+
     <!-- What's Next -->
     <h2>What's Next?</h2>
 
