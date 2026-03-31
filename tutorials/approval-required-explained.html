@@ -162,7 +162,12 @@
     </div>
 
     <div class="step">
-      <div class="step-title">3) Prefer allow-once unless you're sure</div>
+      <div class="step-title">3) Preserve the full command (including <code>&amp;&amp;</code>, pipes, and flags)</div>
+      <p>A common mistake is approving a shortened or rewritten version. If the prompt includes command chains, pipes, semicolons, or multiline script text, approve the full command exactly as shown so the system can match it safely.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Prefer allow-once unless you're sure</div>
       <p>One-time approval is safer than broad approval. It's usually enough to finish the task while keeping guardrails strong.</p>
     </div>
 
@@ -184,10 +189,21 @@
     <div class="card">
       <ol>
         <li>Confirm the command shown matches your request</li>
+        <li>Use the exact <code>/approve ...</code> line from the agent output (don't paraphrase)</li>
+        <li>If the command includes <code>&amp;&amp;</code>, <code>|</code>, <code>;</code>, or multiline text, approve the complete version exactly as shown</li>
         <li>Approve once (not always) for the immediate action</li>
         <li>If it asks again, review the new command — don't assume it's identical</li>
-        <li>If it keeps looping on approvals, ask the agent to use a safer non-elevated approach</li>
+        <li>If it keeps looping on approvals, ask the agent to switch to a safer non-elevated approach or split work into smaller commands</li>
       </ol>
+    </div>
+
+    <h2>Common real-world gotchas</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Copied the wrong line:</strong> In busy chats, users sometimes copy explanatory text instead of the approval command. Only run the <code>/approve ...</code> command line.</li>
+        <li><strong>Edited the command before approving:</strong> Even small edits can cause mismatch and another approval request. Re-copy the original approval line and retry.</li>
+        <li><strong>Second approval appears later:</strong> This is normal when the first approved step leads to another sensitive step. Review and approve each one intentionally.</li>
+      </ul>
     </div>
 
     <h2>Example: good vs risky</h2>
