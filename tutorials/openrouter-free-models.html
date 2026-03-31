@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get an OpenRouter Key for Free Models — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #6366f1;
+      --accent-light: #8b8df8;
+      --accent-dim: rgba(99, 102, 241, 0.12);
+      --success: #43b581;
+      --success-dim: rgba(67, 181, 129, 0.12);
+      --warning: #faa61a;
+      --danger: #f04747;
+      --danger-dim: rgba(240, 71, 71, 0.1);
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.88em;
+      color: var(--accent-light);
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .callout-info {
+      background: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+    }
+    .callout-success {
+      background: var(--success-dim);
+      border-left: 3px solid var(--success);
+    }
+    .callout-warning {
+      background: rgba(250, 166, 26, 0.08);
+      border-left: 3px solid var(--warning);
+    }
+    .callout-danger {
+      background: var(--danger-dim);
+      border-left: 3px solid var(--danger);
+    }
+    .callout-label {
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .callout-info .callout-label { color: var(--accent-light); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 16px 0;
+      position: relative;
+      padding-left: 64px;
+    }
+    .step-number {
+      position: absolute;
+      left: 20px;
+      top: 22px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .model-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .model-card h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .model-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .prompt-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+    .prompt-list li {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .footer a { color: var(--accent-light); }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .step { padding-left: 24px; }
+      .step-number { position: static; margin-bottom: 12px; }
+      .model-grid { grid-template-columns: 1fr; }
+      .container { padding: 24px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Setup</div>
+      <h1>Get an OpenRouter Key for Free Models</h1>
+      <p>Want your agent to use free models and try a huge menu of options through one API key? This guide shows you how to get an OpenRouter key, add it to heyron, and pick a few free models worth trying first.</p>
+      <div class="time-badge">⏱ 6 minute setup</div>
+    </div>
+
+    <h2>Why OpenRouter?</h2>
+    <p>OpenRouter gives you <strong>one API key</strong> that can access <strong>300+ models</strong> through a single service. That includes paid models and a rotating set of <strong>free models</strong>.</p>
+    <p>For a heyron user, that means:</p>
+
+    <ul class="prompt-list">
+      <li><strong>One key, lots of models</strong> — you don't need separate accounts for every provider just to experiment.</li>
+      <li><strong>Free options exist</strong> — great for learning, testing, and low-volume usage.</li>
+      <li><strong>Easy model switching</strong> — if one free model feels weak, you can try another fast.</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Important context</div>
+      <p style="margin:0"><strong>You do not need this to start using heyron.</strong> Your heyron subscription already includes AI usage. This tutorial is for people who want their <em>own</em> OpenRouter key so they can experiment with OpenRouter's free models and wider model catalog.</p>
+    </div>
+
+    <hr>
+
+    <h2>What You'll End Up With</h2>
+    <div class="callout callout-success">
+      <div class="callout-label">By the end</div>
+      <p style="margin:0">You'll have an OpenRouter API key, you'll know where to paste it in heyron, and you'll have a short list of free models to try without getting lost in a giant model menu.</p>
+    </div>
+
+    <hr>
+
+    <h2>Step 1: Create an OpenRouter Account</h2>
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Sign up</h3>
+      <p>Go to <a href="https://openrouter.ai" target="_blank">openrouter.ai</a> and create an account.</p>
+      <p>If you're already signed in, great — move to the next step.</p>
+    </div>
+
+    <h2>Step 2: Generate Your API Key</h2>
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Make the key</h3>
+      <p>Open the API keys page on OpenRouter and create a new key.</p>
+      <p>Direct link: <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a></p>
+      <p>Your key will look like a long secret string. Copy it somewhere safe right away.</p>
+    </div>
+
+    <div class="callout callout-danger">
+      <div class="callout-label">Treat it like a password</div>
+      <p style="margin:0"><strong>Do not post your API key in Discord, Telegram, screenshots, GitHub, or any public channel.</strong> If you accidentally leak it, revoke it and create a new one.</p>
+    </div>
+
+    <hr>
+
+    <h2>Step 3: Add It to Your Agent</h2>
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Paste the key into heyron</h3>
+      <p>Open your heyron dashboard and add your OpenRouter key in your agent's model/API key settings.</p>
+      <p>If you prefer, you can also tell your agent what you want in plain English, like:</p>
+      <p style="margin-bottom:0"><code>Use my OpenRouter API key for model access.</code></p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">If you're not sure where to paste it</div>
+      <p style="margin:0">Use the dashboard's model/provider settings area. If heyron's UI wording changes, the idea stays the same: add your OpenRouter key as a provider key, then choose an OpenRouter model.</p>
+    </div>
+
+    <hr>
+
+    <h2>Step 4: Pick a Free Model</h2>
+    <p>OpenRouter has a lot of models. Do <strong>not</strong> make this harder than it needs to be.</p>
+    <p>You have two easy options:</p>
+
+    <ul class="prompt-list">
+      <li><strong>Option A: use the free router</strong> — OpenRouter supports <code>openrouter/free</code>, which automatically chooses an available free model.</li>
+      <li><strong>Option B: choose a specific free model</strong> — look for models marked <strong>(free)</strong> in OpenRouter's list.</li>
+    </ul>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Simple recommendation</div>
+      <p style="margin:0">If you are new, start with the <strong>free router</strong> or one of the suggested models below. Don't spend 45 minutes comparing model names before you even start using your agent.</p>
+    </div>
+
+    <h2>Free Models Worth Trying First</h2>
+    <p>Free models change over time, but these are solid types of picks to try first on OpenRouter:</p>
+
+    <div class="model-grid">
+      <div class="model-card">
+        <h4>OpenRouter Free Router</h4>
+        <p><strong>Best for:</strong> beginners. Lets OpenRouter choose an available free model for you. Lowest-friction place to start.</p>
+      </div>
+      <div class="model-card">
+        <h4>DeepSeek R1 (free)</h4>
+        <p><strong>Best for:</strong> reasoning, problem-solving, step-by-step thinking. Good when you want the model to "think through" something.</p>
+      </div>
+      <div class="model-card">
+        <h4>Trinity Large Preview (free)</h4>
+        <p><strong>Best for:</strong> general chat, experimentation, trying a stronger open-weight model without paying.</p>
+      </div>
+      <div class="model-card">
+        <h4>Trinity Mini (free)</h4>
+        <p><strong>Best for:</strong> faster, lighter everyday use when you want speed over depth.</p>
+      </div>
+      <div class="model-card">
+        <h4>Llama models (free)</h4>
+        <p><strong>Best for:</strong> general purpose chatting and trying popular open models. Good backup option if another free model is busy or weak.</p>
+      </div>
+      <div class="model-card">
+        <h4>Any model marked “(free)”</h4>
+        <p><strong>Best for:</strong> experimenting. If one free model feels weird, slow, or weak, switch. That is normal.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>What to Expect From Free Models</h2>
+    <p>Free models are great for learning and light use, but set expectations correctly:</p>
+
+    <ul class="prompt-list">
+      <li><strong>They may be slower</strong> than paid models.</li>
+      <li><strong>They may have lower limits</strong> or temporary availability issues.</li>
+      <li><strong>Quality can vary more</strong> from one model to another.</li>
+      <li><strong>They are perfect for experimenting</strong>, not always ideal for your most important production work.</li>
+    </ul>
+
+    <div class="callout callout-warning">
+      <div class="callout-label">Do not overthink the first choice</div>
+      <p style="margin:0">The goal is not to find the perfect free model on day one. The goal is to get your agent chatting successfully, then swap models if needed.</p>
+    </div>
+
+    <hr>
+
+    <h2>Best Beginner Setup</h2>
+    <p>If you want the easiest path, do this:</p>
+
+    <ul class="prompt-list">
+      <li><strong>Use OpenRouter</strong> for variety.</li>
+      <li><strong>Start with the free router</strong> or a clearly marked free model.</li>
+      <li><strong>Use your agent for real tasks</strong> for 10–15 minutes.</li>
+      <li><strong>If it feels weak, switch models</strong> instead of assuming your agent is broken.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Troubleshooting</h2>
+
+    <h3>“My OpenRouter key doesn't work”</h3>
+    <p>Double-check that you copied the whole key and pasted it correctly. If needed, create a new key and try again.</p>
+
+    <h3>“I added the key but can't tell which model to use”</h3>
+    <p>Start with the free router or any model marked <strong>(free)</strong>. Don't wait for a perfect choice.</p>
+
+    <h3>“The free model is bad / weird / slow”</h3>
+    <p>That's not unusual. Switch to another free model. Free models are for experimentation, so some will feel better than others.</p>
+
+    <h3>“Can I stay free forever?”</h3>
+    <p>Maybe for light use. But free models can change, rotate, or have limitations. If you start depending on your agent heavily, a paid model may eventually make more sense.</p>
+
+    <hr>
+
+    <h2>The Short Version</h2>
+    <div class="callout callout-success">
+      <div class="callout-label">If you only remember 3 things</div>
+      <p style="margin:0">
+        1. OpenRouter gives you <strong>one key for 300+ models</strong>.<br>
+        2. Some of those are <strong>free</strong>.<br>
+        3. Start simple: use the <strong>free router</strong> or a model marked <strong>(free)</strong> and begin chatting.
+      </p>
+    </div>
+
+    <hr>
+
+    <h2>What's Next?</h2>
+    <div style="margin: 12px 0;">
+      <p>🧠 <strong>Understand providers and model choices</strong> — <a href="api-keys-and-models.html">API Keys &amp; Models →</a></p>
+      <p>💬 <strong>Learn how to prompt your agent better</strong> — <a href="prompting-your-agent-like-a-pro.html">Prompting Your Agent Like a Pro →</a></p>
+      <p>📁 <strong>Learn what to save so good work doesn't disappear</strong> — <a href="how-memory-works.html">How Agent Memory Works →</a></p>
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — <a href="https://heyron.ai">heyron</a></p>
+      <p style="margin-top: 8px;"><a href="index.html">All Tutorials</a> · <a href="https://github.com/heyron-ai/agent-library">GitHub</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
+    </div>
+  </div>
+</body>
+</html>
