@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whambulance Couldn't Send You a DM? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-danger {
+      border-left-color: var(--danger);
+      background: rgba(240,71,71,0.08);
+    }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>“I couldn't send you a DM” in #help?</h1>
+      <p>Fix Discord DM privacy settings so Whambulance can open your support flow and your ticket doesn't stall.</p>
+    </div>
+
+    <p>If you see this in #help:</p>
+    <div class="code">❌ I couldn't send you a DM. Please enable DMs from server members, then post again.</div>
+    <p>your setup is usually fine — Discord is just blocking the bot's direct message.</p>
+
+    <div class="callout-warning">
+      <p><strong>Why this matters:</strong> if DMs are blocked, support automation can't start your thread correctly, and your issue can sit unresolved longer.</p>
+    </div>
+
+    <h2>Quick fix (2 minutes)</h2>
+
+    <div class="step">
+      <div class="step-title">1) Enable DMs from server members</div>
+      <p>In Discord, open <strong>User Settings → Privacy &amp; Safety</strong> and turn on:</p>
+      <ul>
+        <li><strong>Allow direct messages from server members</strong></li>
+      </ul>
+      <p>If you're on mobile, open server settings and check the server-level privacy toggle too.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Check per-server overrides</div>
+      <p>Discord lets each server override DM behavior. In the heyron server:</p>
+      <ul>
+        <li>Open server name → <strong>Privacy Settings</strong></li>
+        <li>Ensure DMs are allowed for this server</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Post in #help again</div>
+      <p>After enabling DMs, send a fresh message in #help. This retriggers the support flow.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) If prompted, provide your signup email</div>
+      <p>For server-side checks (like 502/container issues), support may ask for the signup email tied to your Heyron account.</p>
+    </div>
+
+    <h2>If it still fails</h2>
+    <div class="card">
+      <ul>
+        <li>Close/reopen Discord (desktop and mobile can cache privacy changes)</li>
+        <li>Leave and re-enter #help thread flow with a new message</li>
+        <li>Confirm you didn't block the bot account</li>
+        <li>Temporarily disable strict DM filters if enabled</li>
+      </ul>
+    </div>
+
+    <h2>Known-good test message</h2>
+    <p>Paste this in #help after changing settings:</p>
+    <div class="code">Test: I enabled DMs from server members. Please open my support flow again.</div>
+
+    <div class="callout-danger">
+      <p><strong>Don't post secrets publicly:</strong> API keys, tokens, and passwords should never go in #help. Share only what support asks for, and prefer ticket threads/DM when available.</p>
+    </div>
+
+    <h2>Why this keeps happening</h2>
+    <p>Discord privacy defaults are different across desktop/mobile and can be overridden per server. Many users think DMs are on globally, but they're still off for one server.</p>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> turn on DMs, retrigger #help, and your support flow should recover quickly.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="connect-discord.html">Connect Your Agent to Discord</a> · <a href="discord-slash-commands-missing.html">Discord Slash Commands Missing?</a></p>
+    </div>
+  </div>
+</body>
+</html>
