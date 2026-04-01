@@ -162,6 +162,31 @@ Every weekday at 9:00 AM America/New_York, remind me: "Review #help backlog."</d
       <p><strong>Avoid vague phrasing:</strong> “remind me this afternoon” is human-friendly but less deterministic than explicit date/time + timezone.</p>
     </div>
 
+
+    <h2>Delivery context gotcha (most missed)</h2>
+    <p>Many "missing" reminders actually fired in a <em>different context</em> than the user was watching.</p>
+    <div class="card">
+      <ul>
+        <li><strong>Dashboard vs Discord:</strong> these are separate conversation surfaces.</li>
+        <li><strong>DM vs server channel:</strong> same agent identity, different destinations.</li>
+        <li><strong>Thread-specific reminders:</strong> if created in one thread/session, they may not appear in another.</li>
+        <li><strong>Cron/session-target mismatch:</strong> reminders bound to isolated runs can announce differently than expected.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Quick check:</strong> look in the exact place where you scheduled the reminder first, then check nearby surfaces (same server, DM, dashboard thread).</p>
+    </div>
+
+    <h2>Timezone and DST edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Include the timezone name</strong> (e.g., <code>America/New_York</code>) for exact-time reminders.</li>
+        <li><strong>DST shifts can move expectations by an hour</strong> if timezone is omitted and UTC is assumed.</li>
+        <li><strong>When testing, always include both “now” and expected fire time</strong> in your note so support can compare intent vs execution.</li>
+      </ul>
+    </div>
+
     <h2>2-minute verification flow</h2>
     <div class="card">
       <ol>
