@@ -188,8 +188,22 @@ Can you read from the sheet in same session? [yes/no]</div>
       <p><strong>Avoid this loop:</strong> "Agent can read Gmail/Drive so Sheets write must work." Read and write permissions can differ. Always test write explicitly.</p>
     </div>
 
+    <h2>Advanced gotchas that look like "write failed"</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong tab target:</strong> the sheet file is right, but the write is sent to a different worksheet/tab.</li>
+        <li><strong>Protected ranges:</strong> account is an Editor but specific columns/cells are locked.</li>
+        <li><strong>Header mismatch:</strong> automation expects exact column names; renamed headers can cause skipped writes.</li>
+        <li><strong>Filter/sort confusion:</strong> row appears "missing" because filtered view hides it.</li>
+      </ul>
+      <p style="margin-top:10px;">Use this verification prompt:</p>
+      <div class="code">Write to sheet [URL], tab name exactly "[TAB NAME]", append one row with values:
+A="heyron-verify", B=current timestamp.
+Then read back the <em>last 3 rows</em> from that same tab and print them verbatim.</div>
+    </div>
+
     <div class="callout-success">
-      <p><strong>Bottom line:</strong> treat "install a CLI" as optional unless the agent proves no connector/API path exists. Most users can solve this with connector auth + sheet permissions + a tiny write test.</p>
+      <p><strong>Bottom line:</strong> treat "install a CLI" as optional unless the agent proves no connector/API path exists. Most users can solve this with connector auth + sheet permissions + explicit tab targeting + a tiny write-readback test.</p>
     </div>
 
     <div class="footer">
