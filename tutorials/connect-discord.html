@@ -706,6 +706,19 @@
     </details>
 
     <details class="trouble-card">
+      <summary>Can I make two bots talk to each other in Discord?</summary>
+      <div class="answer">
+        <p>Short answer: <strong>not reliably, and usually not recommended</strong>.</p>
+        <p>Most users mean "my Heyron bot + another bot should auto-chat." In practice, this creates loops, mention failures, and moderation/rate-limit issues. Many bots also ignore other bots by design.</p>
+        <p>If your goal is automation, better pattern:</p>
+        <p>1) Keep one primary Heyron bot for conversation.<br>
+           2) Use connectors/tools for data handoff instead of bot-to-bot chatting.<br>
+           3) Test with a human message + @mention first to confirm your Heyron bot is healthy.</p>
+        <p>If your Heyron bot responds to humans but not other bots, your setup is probably fine — that's expected behavior, not a broken connection.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
       <summary>How do I connect to a server I don't own?</summary>
       <div class="answer">
         <p>You need admin permissions on the server to add a bot. If you're a regular member, ask the server owner to add your bot using the invite URL from Step 5.</p>
