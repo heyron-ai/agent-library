@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Offline? Container Might Be Down — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Offline? Your Runtime/Container May Be Down</h1>
+      <p>A practical recovery flow for when your agent goes silent, keeps typing forever, or suddenly stops executing tasks.</p>
+    </div>
+
+    <p>Community reports often look like this: <em>"My agent is dead," "it keeps typing but never replies,"</em> or <em>"did my container go down?"</em> The good news: this is usually an environment/runtime issue, not permanent data loss.</p>
+
+    <div class="callout">
+      <p><strong>Fast mental model:</strong> If chat exists but tools/actions stop working, the execution layer may be unhealthy. If nothing responds at all, the runtime may be offline.</p>
+    </div>
+
+    <h2>3-minute triage checklist</h2>
+
+    <div class="step">
+      <div class="step-title">1) Run a tiny liveness prompt</div>
+      <p>Use one short message first:</p>
+      <div class="code">Reply with exactly: OK-ALIVE</div>
+      <p>If this fails repeatedly, treat it as runtime outage instead of prompt quality.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Separate chat health from execution health</div>
+      <p>Send two tests in order:</p>
+      <ol>
+        <li><code>Reply with: CHAT-OK</code> (no tools)</li>
+        <li><code>Create a file named healthcheck.txt with content "runtime check"</code></li>
+      </ol>
+      <p>If test #1 passes but #2 hangs/fails, your execution layer is the likely problem.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Start one fresh session and retest</div>
+      <p>Open a clean session and repeat the tiny liveness prompt. This rules out a bloated or stuck chat thread.</p>
+    </div>
+
+    <h2>Common causes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Runtime/container restart required</strong> after config or connector changes.</li>
+        <li><strong>Temporary host outage</strong> (execution plane unavailable, chat still appears alive).</li>
+        <li><strong>Context overflow side effects</strong> leading to stalled responses.</li>
+        <li><strong>Network/browser path instability</strong> causing apparent hangs.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Don’t burn time debugging giant prompts first.</strong> Always validate basic liveness before rewriting your instructions.</p>
+    </div>
+
+    <h2>Known-good recovery flow</h2>
+    <div class="card">
+      <ol>
+        <li>Run tiny liveness prompt (<code>OK-ALIVE</code>).</li>
+        <li>Run no-tool vs tool test pair (chat health vs execution health).</li>
+        <li>Start one fresh session and repeat test.</li>
+        <li>If still failing, restart runtime/container from your control surface.</li>
+        <li>Retest with one tiny task before resuming normal work.</li>
+      </ol>
+    </div>
+
+    <h2>Escalation packet (copy/paste)</h2>
+    <div class="code">Issue: Agent appears offline / container possibly down
+Where tested: [dashboard | Discord DM | channel]
+Liveness prompt used: "Reply with exactly: OK-ALIVE"
+Result: [no reply | typing forever | partial reply]
+Execution test result: [chat-only works / tool step fails]
+What I already tried: [fresh session, restart, browser refresh]
+Time started: [timestamp + timezone]</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> Most “my agent died” cases are recoverable. A tiny liveness test + execution isolation + controlled restart resolves the majority quickly.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="agent-feels-slow-or-stuck.html">Agent Feels Slow or Stuck?</a>, <a href="new-session-bot-not-responding.html">Used /new and Now Your Bot Won’t Respond?</a>, and <a href="fix-502-agent-not-loading.html">Seeing a 502 Error? Agent Not Loading?</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
