@@ -146,7 +146,17 @@ GUILD_ID=1478816095941955779   # this is actually a channel ID</div>
 
     <p>Even if role permissions look correct, a <strong>channel-level deny override</strong> can still block the bot.</p>
 
-    <h2>Step 3) Run a known-good validation test</h2>
+    <h2>Step 3) Check advanced Discord edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Forum channels:</strong> make sure the bot can view the forum <em>and</em> create/view posts. A parent forum can be visible while post-level access still fails.</li>
+        <li><strong>Private threads:</strong> thread IDs require explicit thread access. If your config expects channels, use the parent channel ID instead.</li>
+        <li><strong>Category sync drift:</strong> if a channel is no longer synced to its category, old deny overrides can silently block the bot.</li>
+        <li><strong>Role hierarchy:</strong> ensure your bot role is not effectively restricted by server role structure or integration restrictions.</li>
+      </ul>
+    </div>
+
+    <h2>Step 4) Run a known-good validation test</h2>
     <ol>
       <li>Create or choose one simple text channel</li>
       <li>Grant explicit permissions to the bot role there</li>
@@ -164,7 +174,9 @@ GUILD_ID=1478816095941955779   # this is actually a channel ID</div>
       <ul>
         <li>Mixing up IDs after re-inviting the bot to multiple servers</li>
         <li>Using private thread IDs when only parent channels are configured</li>
+        <li>Using forum post links/IDs instead of the parent forum channel ID</li>
         <li>Bot appears online but cannot read due to hidden channel override</li>
+        <li>Channel permissions unsynced from category after manual edits</li>
         <li>Copy/paste added spaces or punctuation around comma-separated IDs</li>
       </ul>
     </div>
