@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Does My Agent Know About Me? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Privacy &amp; Security</div>
+      <h1>What Does My Agent Know About Me?</h1>
+      <p>A plain-English way to audit what your agent can access, what it remembers, and how to avoid oversharing.</p>
+    </div>
+
+    <p>This is a recurring community question: <em>"How much does my agent know about me?"</em> The good news: your agent is not magically reading your private life. It only knows what you give it through your chats, files, and connected tools.</p>
+
+    <div class="callout">
+      <p><strong>Short version:</strong> if you never shared it (or connected it), the agent usually can’t access it.</p>
+    </div>
+
+    <h2>What your agent can know</h2>
+    <div class="card">
+      <ul>
+        <li>What you typed in current and past chats in that context.</li>
+        <li>What was saved into workspace files (for example, memory files).</li>
+        <li>Data from tools/connectors you explicitly configured and authorized.</li>
+      </ul>
+    </div>
+
+    <h2>What it usually can’t know</h2>
+    <div class="card">
+      <ul>
+        <li>Your passwords unless you pasted them (don’t do this).</li>
+        <li>Your bank/account data unless you gave access via a connector and permissions.</li>
+        <li>Private device data that was never shared into the workspace or tools.</li>
+      </ul>
+    </div>
+
+    <h2>Run this 3-minute privacy audit</h2>
+
+    <div class="step">
+      <div class="step-title">1) Ask for an access inventory</div>
+      <div class="code">List exactly what data sources you can currently use for my requests.
+For each source: why you have access, and whether I explicitly granted it.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Ask for memory inventory</div>
+      <div class="code">List files where personal details about me may be stored.
+Show file paths and a short summary of what each contains (no secrets in full).</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Reduce exposure</div>
+      <div class="code">Suggest a minimum-access setup for my use case.
+Include what to disconnect, what to keep, and any redaction rules I should use.</div>
+    </div>
+
+    <h2>Safe prompt pattern when discussing sensitive topics</h2>
+    <div class="code">Treat this as sensitive.
+Do not store personally identifying details unless I explicitly say "save this".
+If storage is required, save only a redacted summary.
+Before using external tools, ask for confirmation first.</div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> avoid pasting full API keys, passwords, banking details, or private IDs directly into chat. Use redacted placeholders whenever possible.</p>
+    </div>
+
+    <h2>If you’re unsure whether you overshared</h2>
+    <div class="card">
+      <ol>
+        <li>Ask the agent for an access + memory inventory (prompts above).</li>
+        <li>Rotate any credentials you previously pasted.</li>
+        <li>Remove or redact sensitive files and reconnect tools with least privilege.</li>
+      </ol>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> your agent is powerful, not psychic. Keep permissions tight, share intentionally, and run periodic audits.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="how-memory-works.html">How Agent Memory Works</a>, <a href="api-keys-and-models.html">API Keys &amp; Models</a>, and <a href="what-your-agent-can-do.html">What Your Agent Can (and Can’t) Do</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
