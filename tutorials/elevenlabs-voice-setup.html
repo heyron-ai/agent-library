@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set Up ElevenLabs Voice for Your Agent — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 26px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Setup</div>
+      <h1>Set Up ElevenLabs Voice for Your Agent</h1>
+      <p>A practical guide for the most common voice setup failures: wrong voice ID, free-tier limits, and “it works but no audio file” confusion.</p>
+    </div>
+
+    <p>Voice setup is one of the most requested upgrades in the community right now. The good news: once your key + voice ID are correct, it usually works fast.</p>
+
+    <div class="callout warning">
+      <strong>Important expectation:</strong> your agent usually sends voice as an audio file/message output (not always real-time spoken conversation in every interface).
+    </div>
+
+    <h2>Before you start</h2>
+    <div class="card">
+      <ul>
+        <li>An ElevenLabs account</li>
+        <li>An ElevenLabs API key</li>
+        <li>A valid voice ID you can actually use on your plan</li>
+        <li>Your agent connected and responding in chat</li>
+      </ul>
+    </div>
+
+    <h2>Step-by-step setup</h2>
+    <h3>1) Add your ElevenLabs API key</h3>
+    <p>Store the key where your agent can access it as a secret/environment variable. Ask your agent to confirm the key is present without printing it.</p>
+
+    <h3>2) Pick a voice you can use</h3>
+    <p>Many failures come from choosing a voice that isn’t available to your account tier. On free plans, your voice choices are limited.</p>
+
+    <h3>3) Save the exact voice ID</h3>
+    <p>Do not use only the display name. Use the actual voice ID string from ElevenLabs.</p>
+    <div class="code">Example variable names (your setup may differ):
+ELEVENLABS_API_KEY=...
+ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM</div>
+
+    <h3>4) Run a tiny smoke test</h3>
+    <p>Ask your agent:</p>
+    <div class="code">Create a 1-sentence voice reply saying: "Voice test successful." Use my ElevenLabs settings and send the audio file.</div>
+
+    <h3>5) If it works, then format/style tune</h3>
+    <p>Only after successful output should you tweak tone, pacing, or style prompts.</p>
+
+    <h2>Quick troubleshooting checklist</h2>
+    <div class="card">
+      <ul>
+        <li><strong>No audio returned:</strong> key missing/invalid, or provider tool not configured.</li>
+        <li><strong>Error about voice:</strong> invalid voice ID or voice not available on your tier.</li>
+        <li><strong>It worked once then stopped:</strong> quota/credits limit reached.</li>
+        <li><strong>Agent says it did it, but no file appears:</strong> wrong output channel/context or attachment delivery issue.</li>
+        <li><strong>Voice sounds wrong:</strong> you updated the display name, not the actual voice ID variable.</li>
+      </ul>
+    </div>
+
+    <div class="callout danger">
+      <strong>Common mistake:</strong> copying a public/library voice and assuming your account can use it immediately. Verify availability in your ElevenLabs dashboard first.
+    </div>
+
+    <h2>Known-good recovery flow (2 minutes)</h2>
+    <ol>
+      <li>Regenerate API key in ElevenLabs</li>
+      <li>Select one default voice that is definitely available to your account</li>
+      <li>Update key + voice ID in agent config</li>
+      <li>Start a fresh chat/session</li>
+      <li>Run the 1-sentence smoke test again</li>
+    </ol>
+
+    <div class="callout success">
+      <strong>Bottom line:</strong> most setup failures are not “voice is broken” — they’re key/voice-ID mismatch or plan limits. Validate those first and you’ll save a lot of time.
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="working-with-files.html">Working with Files</a> · <a href="what-your-agent-can-do.html">What Your Agent Can (and Can't) Do</a></p>
+    </div>
+  </div>
+</body>
+</html>
