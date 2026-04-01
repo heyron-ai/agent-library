@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminders Not Firing? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Reminders Not Firing? Fix It in 5 Minutes</h1>
+      <p>If your reminder never arrived, arrived late, or showed up in the wrong place, this checklist will isolate the cause fast.</p>
+    </div>
+
+    <p>A common support pattern is: <em>“I asked for a reminder, then nothing happened.”</em> Most cases are one of three issues: wrong timing syntax, timezone mismatch, or delivery/context mismatch.</p>
+
+    <div class="callout">
+      <p><strong>Important:</strong> reminders are schedule-dependent. If the schedule is invalid, timezone is off, or destination context changed, the reminder may not appear where you expect.</p>
+    </div>
+
+    <h2>Fast triage checklist</h2>
+    <div class="card">
+      <ol>
+        <li>Confirm the reminder was actually scheduled (not just discussed).</li>
+        <li>Verify timezone assumptions (your local vs UTC).</li>
+        <li>Check where the reminder should deliver (same thread/session vs another context).</li>
+        <li>Check if the reminder time already passed when it was created.</li>
+        <li>Retry with a short known-good test: <strong>"Remind me in 2 minutes to say test"</strong>.</li>
+      </ol>
+    </div>
+
+    <h2>Most common failure modes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Ambiguous time wording:</strong> “later tonight” without a precise time can misalign expectations.</li>
+        <li><strong>Timezone drift:</strong> reminder interpreted in UTC while user expects local time.</li>
+        <li><strong>Wrong destination:</strong> reminder fires in a different surface/session than expected.</li>
+        <li><strong>One-shot confusion:</strong> recurring phrasing used when a one-time reminder was needed (or vice versa).</li>
+        <li><strong>Past-time scheduling:</strong> date/time entered in the past, so job never behaves as expected.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good reminder prompts</h2>
+    <p>Use clear, explicit prompts when reliability matters:</p>
+    <div class="code">Remind me in 20 minutes: "Stretch and drink water."
+
+Remind me today at 3:30 PM America/New_York: "Join product sync."
+
+Every weekday at 9:00 AM America/New_York, remind me: "Review #help backlog."</div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid vague phrasing:</strong> “remind me this afternoon” is human-friendly but less deterministic than explicit date/time + timezone.</p>
+    </div>
+
+    <h2>2-minute verification flow</h2>
+    <div class="card">
+      <ol>
+        <li>Set a reminder for 2 minutes from now using explicit language.</li>
+        <li>Stay in the same conversation surface where you set it.</li>
+        <li>If it fires, your core pipeline works. The earlier failure was likely wording/timezone/context mismatch.</li>
+        <li>If it does not fire, capture details and escalate with the packet below.</li>
+      </ol>
+    </div>
+
+    <h2>Support-ready escalation packet</h2>
+    <div class="code">Reminder issue report
+
+Prompt used:
+Expected fire time + timezone:
+Where I expected delivery (DM/server/dashboard + channel/thread):
+Actual behavior:
+Current local time + timezone:
+Short 2-minute test result (pass/fail):</div>
+
+    <div class="callout-success">
+      <p><strong>Best practice:</strong> for important reminders, include exact time + timezone + message body in one line.</p>
+    </div>
+
+    <div class="footer">
+      <p>If reminders still fail after the 2-minute test, share the escalation packet in <strong>#help</strong> for faster diagnosis.</p>
+    </div>
+  </div>
+</body>
+</html>
