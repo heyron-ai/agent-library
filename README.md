@@ -2,6 +2,8 @@
 
 Everything your AI agent needs to be great. Tutorials, personas, skills, templates, and fix scripts — curated for heyron containers.
 
+> **New here?** Ignore the folders if you want. Start with the tutorials site: **https://heyron-ai.github.io/agent-library/tutorials/**
+
 ## 📚 Tutorials (35+ guides)
 
 **[Browse all tutorials →](https://heyron-ai.github.io/agent-library/tutorials/)**
