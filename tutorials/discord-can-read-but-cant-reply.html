@@ -102,7 +102,7 @@
       <p>If your agent sees messages but stays silent, this is usually a channel policy or integration restriction — not a broken token. Here’s the fastest way to isolate it.</p>
     </div>
 
-    <p>This is one of the most common Discord setup traps: your bot is online, can read history, maybe even logs messages — but sends nothing back. The fix is usually permission scope, channel type, or integration settings.</p>
+    <p>This is one of the most common Discord setup traps: your bot is online, can read history, maybe even logs messages — but sends nothing back. The fix is usually permission scope, channel type, mention policy, or stale gateway config.</p>
 
     <div class="callout warning">
       <strong>Important:</strong> "All permissions" on the role is not always enough. Channel overrides and integration restrictions can still block replies.
@@ -113,8 +113,9 @@
       <ul>
         <li>Bot appears online and responds in DM, but not in server channels.</li>
         <li>Bot can read channel content but never posts a reply.</li>
+        <li>Bot shows <em>typing…</em> for a while, then posts nothing.</li>
+        <li>Works only when you @mention the bot (or only fails without mention).</li>
         <li>Works in one channel, fails in another.</li>
-        <li>Slash commands exist, but normal @mention replies fail.</li>
       </ul>
     </div>
 
@@ -129,9 +130,27 @@
       </ol>
     </div>
 
+    <h2>If the bot types but posts nothing</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Confirm mention policy:</strong> ask your agent to verify whether it is configured to require @mentions in channels.</li>
+        <li><strong>Confirm bot-response policy:</strong> ensure your config allows responding in regular channel messages (not only DMs).</li>
+        <li><strong>If your setup uses allow-bot-message gates:</strong> verify they are enabled where intended.</li>
+        <li><strong>Restart gateway after config changes:</strong> config edits often do nothing until gateway restart.</li>
+        <li><strong>Retest with one deterministic prompt:</strong> avoid long prompts while debugging.</li>
+      </ol>
+    </div>
+
+    <div class="callout">
+      <strong>Why this matters:</strong> A lot of "typing then silence" reports are not model failures. They are policy/config mismatches where the bot starts work but cannot legally post in that context.
+    </div>
+
     <h2>Known-good test message</h2>
     <div class="code">@YourBot Reply with exactly: CHANNEL_REPLY_OK
-Then include the channel name and current timestamp.</div>
+Then include:
+1) channel name
+2) whether mention was required
+3) current timestamp</div>
 
     <div class="callout success">
       <strong>Expected result:</strong> You receive a direct reply in that same channel. If this passes in clean-room but fails elsewhere, your issue is channel-level policy, not global bot config.
@@ -142,14 +161,15 @@ Then include the channel name and current timestamp.</div>
       <ul>
         <li><strong>Category sync drift:</strong> child channel permissions drifted from category defaults.</li>
         <li><strong>Forum/thread mismatch:</strong> bot can read parent forum but cannot post in the thread itself.</li>
+        <li><strong>Mention mismatch:</strong> config requires @mention, but user expects normal free chat.</li>
+        <li><strong>Config changed, gateway not restarted:</strong> settings are correct on disk but old behavior still running.</li>
         <li><strong>Role hierarchy confusion:</strong> admin role granted, but channel override explicitly denies bot role.</li>
         <li><strong>Moderation gates:</strong> slowmode, anti-spam, or mention policies silently block bot output.</li>
-        <li><strong>Testing in a crowded channel:</strong> hard to tell if bot ignored, rate-limited, or constrained by another app rule.</li>
       </ul>
     </div>
 
     <div class="callout danger">
-      <strong>Avoid this trap:</strong> Don’t rotate tokens/reinstall the bot first. If DM works and clean-room works, reinstalling won’t fix a channel override problem.
+      <strong>Avoid this trap:</strong> Don’t rotate tokens/reinstall the bot first. If DM works and clean-room works, reinstalling won’t fix a channel override or mention-policy problem.
     </div>
 
     <h2>Copy/paste support packet</h2>
@@ -157,8 +177,11 @@ Then include the channel name and current timestamp.</div>
 - Works in DM: yes/no
 - Works in clean-room channel: yes/no
 - Failing channel type: text/forum/thread
+- Bot types then stops: yes/no
 - Send Messages permission in failing channel: allowed/denied
 - Send Messages in Threads (if applicable): allowed/denied
+- Mention required to get response: yes/no
+- Gateway restarted after config edits: yes/no
 - Integrations restrictions checked: yes/no
 - Fresh /new session test done: yes/no
 - Exact failing test prompt + timestamp: [paste]</div>
