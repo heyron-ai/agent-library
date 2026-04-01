@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Can’t Read Discord Channels? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 26px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Can’t Read Discord Channels?</h1>
+      <p>A fast fix for one of the most common setup traps: wrong guild ID, wrong channel ID, or channel permissions that silently block access.</p>
+    </div>
+
+    <p>If your agent says it can't read a channel (or keeps claiming a channel doesn't exist), this is usually an ID or permission issue — not an AI issue.</p>
+
+    <div class="callout warning">
+      <strong>Most common failure:</strong> using a channel ID where a guild/server ID is expected, or copying IDs from the wrong server.
+    </div>
+
+    <h2>Quick 3-minute checklist</h2>
+    <div class="card">
+      <ol>
+        <li>Confirm your <strong>guild ID</strong> is the server ID, not a channel/thread ID.</li>
+        <li>Confirm your <strong>channel IDs</strong> are from channels where the bot has access.</li>
+        <li>Verify permissions at both role level and channel override level.</li>
+        <li>Run one known-good test in a clean channel.</li>
+      </ol>
+    </div>
+
+    <h2>Step 1) Copy the correct IDs (exactly)</h2>
+    <p>In Discord, enable Developer Mode, then right-click and copy IDs carefully:</p>
+    <ul>
+      <li><strong>Guild ID:</strong> right-click the server icon/title → Copy Server ID</li>
+      <li><strong>Channel ID:</strong> right-click the channel name → Copy Channel ID</li>
+      <li><strong>Thread ID:</strong> not the same as channel ID — avoid this unless your setup explicitly requires threads</li>
+    </ul>
+
+    <div class="code">Good example
+GUILD_ID=1471924346120568852
+DISCORD_CHANNELS=1478816095941955779,1486377469715153121
+
+Bad example
+GUILD_ID=1478816095941955779   # this is actually a channel ID</div>
+
+    <h2>Step 2) Verify bot permissions in that exact channel</h2>
+    <div class="card">
+      <ul>
+        <li>View Channel</li>
+        <li>Read Message History</li>
+        <li>Send Messages (if you want replies there)</li>
+        <li>Use Application Commands (for slash commands)</li>
+      </ul>
+    </div>
+
+    <p>Even if role permissions look correct, a <strong>channel-level deny override</strong> can still block the bot.</p>
+
+    <h2>Step 3) Run a known-good validation test</h2>
+    <ol>
+      <li>Create or choose one simple text channel</li>
+      <li>Grant explicit permissions to the bot role there</li>
+      <li>Use only that channel ID in your config</li>
+      <li>Restart/reload the agent session</li>
+      <li>@mention your agent with a short prompt</li>
+    </ol>
+
+    <div class="callout success">
+      <strong>If this works:</strong> your model and core setup are fine. The problem is in ID mapping or channel-specific permissions in your original channels.
+    </div>
+
+    <h2>High-friction mistakes we keep seeing</h2>
+    <div class="card">
+      <ul>
+        <li>Mixing up IDs after re-inviting the bot to multiple servers</li>
+        <li>Using private thread IDs when only parent channels are configured</li>
+        <li>Bot appears online but cannot read due to hidden channel override</li>
+        <li>Copy/paste added spaces or punctuation around comma-separated IDs</li>
+      </ul>
+    </div>
+
+    <div class="callout danger">
+      <strong>Don’t rotate everything at once:</strong> change one variable at a time (guild ID, then one channel ID, then permissions) so you can isolate the exact failure.
+    </div>
+
+    <h2>Support packet (if still broken)</h2>
+    <p>Post this in #help:</p>
+    <div class="code">Discord channel access issue:
+- Guild ID used: [paste]
+- Channel IDs used: [paste]
+- Bot role perms checked: yes/no
+- Channel overrides checked: yes/no
+- Clean-channel test result: pass/fail
+- Error text from agent (exact): [paste]</div>
+
+    <div class="footer">
+      <p>Related reads: <a href="connect-discord.html">Connect Your Agent to Discord</a> · <a href="discord-slash-commands-missing.html">Discord Slash Commands Missing?</a> · <a href="agent-offline-in-discord.html">Agent Offline in Discord?</a></p>
+    </div>
+  </div>
+</body>
+</html>
