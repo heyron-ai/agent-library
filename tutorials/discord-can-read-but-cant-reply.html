@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Bot Can Read But Can’t Reply? Fast Fix Guide — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Discord Bot Can Read But Can’t Reply?</h1>
+      <p>If your agent sees messages but stays silent, this is usually a channel policy or integration restriction — not a broken token. Here’s the fastest way to isolate it.</p>
+    </div>
+
+    <p>This is one of the most common Discord setup traps: your bot is online, can read history, maybe even logs messages — but sends nothing back. The fix is usually permission scope, channel type, or integration settings.</p>
+
+    <div class="callout warning">
+      <strong>Important:</strong> "All permissions" on the role is not always enough. Channel overrides and integration restrictions can still block replies.
+    </div>
+
+    <h2>Quick symptom check</h2>
+    <div class="card">
+      <ul>
+        <li>Bot appears online and responds in DM, but not in server channels.</li>
+        <li>Bot can read channel content but never posts a reply.</li>
+        <li>Works in one channel, fails in another.</li>
+        <li>Slash commands exist, but normal @mention replies fail.</li>
+      </ul>
+    </div>
+
+    <h2>5-minute isolation flow</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Run a clean-room test:</strong> create a new text channel with no custom overrides.</li>
+        <li><strong>Check Send permissions:</strong> ensure bot role has <em>Send Messages</em>, <em>View Channel</em>, and <em>Read Message History</em>.</li>
+        <li><strong>Check thread/forum permissions:</strong> if testing in threads/forums, allow <em>Send Messages in Threads</em> too.</li>
+        <li><strong>Check Integrations restrictions:</strong> Server Settings → Integrations → bot commands/usage restrictions.</li>
+        <li><strong>Retest from a fresh agent session:</strong> start <code>/new</code>, then @mention in the clean test channel.</li>
+      </ol>
+    </div>
+
+    <h2>Known-good test message</h2>
+    <div class="code">@YourBot Reply with exactly: CHANNEL_REPLY_OK
+Then include the channel name and current timestamp.</div>
+
+    <div class="callout success">
+      <strong>Expected result:</strong> You receive a direct reply in that same channel. If this passes in clean-room but fails elsewhere, your issue is channel-level policy, not global bot config.
+    </div>
+
+    <h2>High-friction failure patterns</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Category sync drift:</strong> child channel permissions drifted from category defaults.</li>
+        <li><strong>Forum/thread mismatch:</strong> bot can read parent forum but cannot post in the thread itself.</li>
+        <li><strong>Role hierarchy confusion:</strong> admin role granted, but channel override explicitly denies bot role.</li>
+        <li><strong>Moderation gates:</strong> slowmode, anti-spam, or mention policies silently block bot output.</li>
+        <li><strong>Testing in a crowded channel:</strong> hard to tell if bot ignored, rate-limited, or constrained by another app rule.</li>
+      </ul>
+    </div>
+
+    <div class="callout danger">
+      <strong>Avoid this trap:</strong> Don’t rotate tokens/reinstall the bot first. If DM works and clean-room works, reinstalling won’t fix a channel override problem.
+    </div>
+
+    <h2>Copy/paste support packet</h2>
+    <div class="code">Discord can-read/can't-reply report:
+- Works in DM: yes/no
+- Works in clean-room channel: yes/no
+- Failing channel type: text/forum/thread
+- Send Messages permission in failing channel: allowed/denied
+- Send Messages in Threads (if applicable): allowed/denied
+- Integrations restrictions checked: yes/no
+- Fresh /new session test done: yes/no
+- Exact failing test prompt + timestamp: [paste]</div>
+
+    <div class="footer">
+      <p>Related reads: <a href="connect-discord.html">Connect Your Agent to Discord</a> · <a href="discord-channel-access-not-working.html">Agent Can’t Read Discord Channels?</a> · <a href="discord-slash-commands-missing.html">Slash Commands Missing?</a></p>
+    </div>
+  </div>
+</body>
+</html>
