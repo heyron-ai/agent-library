@@ -213,6 +213,22 @@ Return:
       </ul>
     </div>
 
+    <h2>Common confusion: “Environment frozen” / command layer appears dead</h2>
+    <p>Sometimes the model is responsive but tool execution is not. You may see messages like <em>"I can’t run commands right now"</em> or notice that every command hangs/times out.</p>
+    <div class="card">
+      <ul>
+        <li><strong>Symptom pattern:</strong> chat still works, but file/tool actions never complete (e.g., can’t run git status, can’t read files, searches stall).</li>
+        <li><strong>Quick isolation test:</strong> send one tiny task (for example: "run a minimal status check and return only pass/fail").</li>
+        <li><strong>If tiny tasks also hang:</strong> treat this as execution-layer trouble, not prompt quality.</li>
+        <li><strong>First recovery step:</strong> restart the gateway/session cleanly, then retry the same tiny test before resuming larger work.</li>
+        <li><strong>Avoid thrash:</strong> do not queue many retries while it is unhealthy; that usually worsens delay/confusion.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> this is different from a normal slow response. If command execution is dead, prompt rewrites alone will not fix it.</p>
+    </div>
+
     <h2>When to treat it as a real issue</h2>
     <div class="card">
       <ul>
@@ -220,6 +236,7 @@ Return:
         <li>Repeated tool errors with no progress</li>
         <li>Same failure across multiple channels (Discord + dashboard)</li>
         <li>Consistent slowdown for all tasks, even very small ones</li>
+        <li>Model replies are normal, but command/tool execution consistently hangs</li>
       </ul>
     </div>
 
