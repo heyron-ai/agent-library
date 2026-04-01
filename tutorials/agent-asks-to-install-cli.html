@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Says You Must Install a CLI Tool? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Says You Must Install a CLI Tool?</h1>
+      <p>What to do when your agent insists it needs a random command-line tool before it can continue.</p>
+    </div>
+
+    <p>This is a common confusion pattern in community chat: the agent asks for something like a CLI install, users assume setup is broken, and they get stuck for hours.</p>
+
+    <div class="callout">
+      <p><strong>Short version:</strong> in most Heyron workflows, you should ask for a workaround first. Many tasks can be completed without local CLI installs.</p>
+    </div>
+
+    <h2>Why this happens</h2>
+    <div class="card">
+      <ul>
+        <li>The model may suggest a familiar developer path by default ("install X CLI").</li>
+        <li>Your actual environment may be containerized/headless, so local machine installs are irrelevant.</li>
+        <li>The task may have multiple valid paths, and the CLI path is only one option.</li>
+      </ul>
+    </div>
+
+    <h2>Use this 3-step recovery flow</h2>
+
+    <div class="step">
+      <div class="step-title">1) Ask for a no-install alternative</div>
+      <div class="code">Do not require local CLI installs. Give me a headless/container-safe workaround using built-in tools, APIs, or manual handoff steps.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Force assumptions check</div>
+      <div class="code">Before continuing, list your assumptions about my environment (OS access, package managers, browser automation, API keys). Mark each as confirmed vs unconfirmed.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Request two plans, then pick</div>
+      <div class="code">Give me:
+Plan A: no local installs, fastest path.
+Plan B: requires installs, but only if truly necessary.
+For each plan include risks, time, and success criteria.</div>
+    </div>
+
+    <h2>When installs are actually reasonable</h2>
+    <div class="card">
+      <ul>
+        <li>You explicitly want a local-dev workflow on your own machine.</li>
+        <li>The task truly depends on a binary that has no API/manual alternative.</li>
+        <li>You understand and approve the exact command before running it.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Safety rule:</strong> don’t run install commands blindly. If you see an approval prompt, read the full command exactly as shown (including chained operators like <code>&amp;&amp;</code> and pipes) before approving.</p>
+    </div>
+
+    <h2>Copy/paste self-check before opening #help</h2>
+    <div class="code">Task I wanted: [goal]
+CLI/tool agent asked to install: [name]
+Did I ask for a no-install workaround first? [yes/no]
+Environment assumptions listed by agent: [paste]
+What happened after workaround prompt: [result/error]</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> treat "install this CLI" as a suggestion, not a requirement, unless the agent can prove there is no practical no-install path.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="what-are-skills-really.html">What Skills Are (and Aren’t)</a>, <a href="agent-can-read-but-cant-click.html">Agent Can Read the Web But Can’t Click?</a>, and <a href="approval-required-explained.html">Why Your Agent Says “Approval Required”</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
