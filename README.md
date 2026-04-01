@@ -75,6 +75,7 @@ Battle-tested workspace files to get started fast:
 - **[MCP-CONNECTOR-RECOVERY.md](templates/MCP-CONNECTOR-RECOVERY.md)** — Fast recovery + isolation workflow for “connector installed but unavailable” MCP failures
 - **[TIMEZONE-DRIFT-PLAYBOOK.md](templates/TIMEZONE-DRIFT-PLAYBOOK.md)** — Step-by-step verification and recovery workflow for wrong timezone/day outputs and misfiring reminders
 - **[EXECUTION-EVIDENCE-CHECKLIST.md](templates/EXECUTION-EVIDENCE-CHECKLIST.md)** — Claim→evidence→verification workflow for “agent said done but nothing changed” trust-break incidents
+- **[EXECUTION-LAYER-OUTAGE-PLAYBOOK.md](templates/EXECUTION-LAYER-OUTAGE-PLAYBOOK.md)** — Fast isolation + recovery workflow for “chat still works but tools/commands hang or timeout” execution-plane failures
 
 ## 🔧 Fix Scripts
 
