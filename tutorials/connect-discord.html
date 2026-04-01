@@ -692,6 +692,20 @@
     </details>
 
     <details class="trouble-card">
+      <summary>Bot can read my message but still doesn't send a reply</summary>
+      <div class="answer">
+        <p>This pattern usually means <strong>read permissions are okay, but send permissions are blocked</strong> in that channel.</p>
+        <p>Check these in the exact channel you're testing:</p>
+        <p>1) Channel settings → Permissions: bot role has <strong>Send Messages</strong> allowed (not neutral/denied).<br>
+           2) If channel is a <strong>Thread</strong>, also allow <strong>Send Messages in Threads</strong>.<br>
+           3) If channel is a <strong>Forum</strong>, confirm the bot can create/reply to posts in that forum.<br>
+           4) Server Settings → Integrations → your bot: command and channel restrictions are not blocking this channel.<br>
+           5) Slowmode/mod rules are not preventing immediate replies from newly joined bots.</p>
+        <p>Known-good test: create a fresh text channel with default permissions, @mention the bot once. If it replies there, your core setup is fine and this is a channel-level policy issue.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
       <summary>How do I connect to a server I don't own?</summary>
       <div class="answer">
         <p>You need admin permissions on the server to add a bot. If you're a regular member, ask the server owner to add your bot using the invite URL from Step 5.</p>
