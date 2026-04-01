@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Connected But Still Not Working? Fast Fix Guide — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>MCP Connected But Still Not Working?</h1>
+      <p>If your connector shows as installed but your agent still says it can't access the tool, the issue is usually auth/session state — not the model.</p>
+    </div>
+
+    <p>This is one of the most common setup traps: you installed a connector, but calls still fail with "not available," "not authorized," or "please install MCP first." Usually, one layer is still stale or incomplete.</p>
+
+    <div class="callout warning">
+      <strong>Important:</strong> "Installed" does not always mean "authorized and active in this session." Connector install, OAuth auth, and session context are separate steps.
+    </div>
+
+    <h2>Fast recovery checklist (5 minutes)</h2>
+    <div class="card">
+      <ol>
+        <li>Confirm the connector appears <strong>installed and enabled</strong>.</li>
+        <li>Re-open the connector and confirm OAuth/account auth is fully complete.</li>
+        <li>Start a <strong>fresh chat session</strong> after auth (old sessions can keep stale state).</li>
+        <li>Run a minimal smoke test prompt (example below).</li>
+        <li>If it fails, disconnect/reconnect once, then retest in a fresh session.</li>
+      </ol>
+    </div>
+
+    <h2>Known-good smoke test prompt</h2>
+    <div class="code">Use the [TOOL NAME] connector and do the smallest safe read-only check.
+Return:
+1) whether the connector is available,
+2) whether auth is valid,
+3) the exact error text if it fails.
+Do not perform any write actions.</div>
+
+    <div class="callout success">
+      <strong>Expected result:</strong> The tool confirms availability and returns a small read-only response (or a precise error you can act on).
+    </div>
+
+    <h2>Most common root causes</h2>
+    <div class="card">
+      <ul>
+        <li>OAuth flow started but not fully completed (tab closed early).</li>
+        <li>Connector installed in one workspace/account, tested from another.</li>
+        <li>Old chat session still holding pre-install context.</li>
+        <li>Permissions mismatch (connector has limited scope and can’t access target resource).</li>
+        <li>Provider-side token expired and needs reconnect.</li>
+      </ul>
+    </div>
+
+    <h2>Quick isolation test</h2>
+    <div class="card">
+      <ol>
+        <li>Test with a read-only request on a known resource you definitely own.</li>
+        <li>If possible, test a second resource in the same account.</li>
+        <li>If one works and one fails, it's likely a resource permission issue, not connector install.</li>
+      </ol>
+    </div>
+
+    <div class="callout danger">
+      <strong>Avoid this trap:</strong> Don’t keep retrying in the same long chat. A fresh session after reconnect fixes a surprising number of “still unavailable” loops.
+    </div>
+
+    <h2>Support packet (copy/paste)</h2>
+    <div class="code">Connector issue report:
+- Connector name: [e.g., Dropbox MCP]
+- Installed + enabled: yes/no
+- OAuth reconnected today: yes/no
+- Fresh session tested after reconnect: yes/no
+- Read-only smoke test prompt used: [paste]
+- Exact error text: [paste full text]
+- Workspace/account where connector is installed: [name]
+- Resource tested: [what you tried to access]</div>
+
+    <div class="footer">
+      <p>Related reads: <a href="dropbox-mcp-setup.html">Dropbox Not Working? Install MCP the Right Way</a> · <a href="api-keys-and-models.html">API Keys &amp; Models</a> · <a href="agent-feels-slow-or-stuck.html">Agent Feels Slow or Stuck?</a></p>
+    </div>
+  </div>
+</body>
+</html>
