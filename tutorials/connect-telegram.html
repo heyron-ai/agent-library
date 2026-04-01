@@ -441,6 +441,19 @@
     </details>
 
     <details class="trouble-card">
+      <summary>My bot can send messages to me, but ignores my replies</summary>
+      <div class="answer">
+        <p>This usually means you're not in an active private chat with that exact bot identity, or you're replying in the wrong place (group vs direct chat).</p>
+        <p>Run this quick reset:</p>
+        <p>1) Search for your bot username directly in Telegram and open the private chat.<br>
+           2) Tap <strong>Start</strong> (or send <code>/start</code>) again.<br>
+           3) Send a plain text message like <code>ping</code> (not a forwarded message).<br>
+           4) If you're testing in a group, either mention the bot explicitly or disable privacy mode with <code>/setprivacy</code>.</p>
+        <p>If it still fails, regenerate your token in BotFather and reconnect Telegram from a fresh heyron session before retesting.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
       <summary>I lost my bot token</summary>
       <div class="answer">
         <p>Go back to <strong>@BotFather</strong> in Telegram. Send <code>/mybot</code>, select your bot, then tap <strong>API Token</strong>. You can view the current token or revoke it and generate a new one.</p>
