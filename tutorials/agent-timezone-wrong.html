@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Using the Wrong Time or Day? Fix Timezone Drift — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Using the Wrong Time or Day?</h1>
+      <p>If your agent says “good morning” at night, sends reminders late, or uses the wrong date, this is usually a timezone mismatch — and it’s fixable in minutes.</p>
+    </div>
+
+    <p>Timezone drift is one of those bugs that feels random until you know where to look. Most of the time, your agent is working correctly — just with the wrong timezone context.</p>
+
+    <div class="callout warning">
+      <strong>Important:</strong> You can have the right timezone in one place and the wrong one in another (host machine, app settings, or prompt context). Any mismatch can cause weird behavior.
+    </div>
+
+    <h2>Symptoms of timezone mismatch</h2>
+    <div class="card">
+      <ul>
+        <li>Agent references the wrong day (“tomorrow” when it’s already today for you).</li>
+        <li>Scheduled reminders fire an hour early/late.</li>
+        <li>Greetings feel wrong (“good morning” late at night).</li>
+        <li>Heartbeats trigger during quiet hours.</li>
+      </ul>
+    </div>
+
+    <h2>Fast recovery checklist</h2>
+    <div class="card">
+      <ol>
+        <li>Confirm your expected timezone (example: <strong>America/New_York</strong>).</li>
+        <li>Check your machine timezone and clock are correct.</li>
+        <li>Check your agent/workspace timezone setting, if available.</li>
+        <li>Start a fresh session (<strong>/new</strong>) after changing timezone config.</li>
+        <li>Run a quick verification prompt (below).</li>
+      </ol>
+    </div>
+
+    <h2>Known-good verification prompt</h2>
+    <div class="code">Tell me your current local date, day of week, and time.
+Then tell me the timezone you're using for this session.
+If uncertain, say exactly what setting I should fix.</div>
+
+    <div class="callout success">
+      <strong>Expected result:</strong> The reported day/time matches your real local time. If it doesn’t, fix timezone config first before troubleshooting anything else.
+    </div>
+
+    <h2>Common root causes</h2>
+    <div class="card">
+      <ul>
+        <li>Host OS timezone changed or never set correctly.</li>
+        <li>Running in Docker/container with UTC while expecting local time.</li>
+        <li>Old session context still using previous timezone assumptions.</li>
+        <li>Prompt instructions conflict (example: “act in UTC” left over in SOUL.md/AGENTS.md).</li>
+      </ul>
+    </div>
+
+    <h2>For reminder-heavy workflows</h2>
+    <div class="card">
+      <ul>
+        <li>Always mention timezone when scheduling important reminders.</li>
+        <li>Prefer absolute times with timezone, not vague “later tonight.”</li>
+        <li>After setting a reminder, ask the agent to repeat back: date, time, timezone.</li>
+      </ul>
+    </div>
+
+    <div class="callout danger">
+      <strong>Avoid this trap:</strong> Don’t debug model quality or prompt style until time is correct. Wrong timezone can make good prompts look broken.
+    </div>
+
+    <h2>Support packet (copy/paste)</h2>
+    <div class="code">Timezone issue report:
+- Expected timezone: [e.g., America/New_York]
+- Agent reported time/day: [paste]
+- Your actual local time/day: [paste]
+- Fresh session started after config change: yes/no
+- Is this in Docker/container: yes/no
+- Exact reminder mismatch (if any): [paste]</div>
+
+    <div class="footer">
+      <p>Related reads: <a href="heartbeat-md-errors.html">HEARTBEAT.md Errors?</a> · <a href="approval-required-explained.html">Why Your Agent Says “Approval Required”</a> · <a href="agent-feels-slow-or-stuck.html">Agent Feels Slow or Stuck?</a></p>
+    </div>
+  </div>
+</body>
+</html>
