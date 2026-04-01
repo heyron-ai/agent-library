@@ -148,6 +148,20 @@
       </ul>
     </div>
 
+    <h2>High-friction case: “Approval Required” looked like completion</h2>
+    <div class="card">
+      <p>One of the most common false-"done" scenarios is an approval pause. The agent may describe the intended action, but execution is waiting for you to approve the exact command.</p>
+      <ol>
+        <li>Check whether the run shows an <strong>Approval Required</strong> step.</li>
+        <li>Approve the <strong>exact full command</strong> (including <code>&amp;&amp;</code>, pipes, semicolons, or multiline script content).</li>
+        <li>After approval, ask for fresh execution evidence (not the pre-approval plan).</li>
+      </ol>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Gotcha:</strong> approving a partial command often causes repeat loops. Approve the complete command string exactly as shown, then verify output again.</p>
+    </div>
+
     <h2>Use this “show your work” prompt</h2>
     <div class="code">Do the task now, then return ONLY:
 1) What changed
