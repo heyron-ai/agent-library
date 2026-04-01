@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Used /new and Now Bot Won’t Respond? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Used /new and Now Your Bot Won’t Respond?</h1>
+      <p>A fast recovery flow for the common case where your agent goes silent after resetting or starting a new session.</p>
+    </div>
+
+    <p>Community reports often sound like this: <em>"I hit /new and now my bot won’t respond in Discord or dashboard."</em> Most of the time, this is recoverable and does <strong>not</strong> mean your bot is gone.</p>
+
+    <div class="callout">
+      <p><strong>Key idea:</strong> /new resets chat context. It doesn’t delete your bot. Silence after that usually means a session/channel mismatch or a permission/integration edge case.</p>
+    </div>
+
+    <h2>2-minute recovery checklist</h2>
+
+    <div class="step">
+      <div class="step-title">1) Verify you’re testing in the correct place</div>
+      <p>Test one clean message in the same surface where it previously worked (dashboard chat, Discord DM, or server channel). Don’t switch surfaces while debugging.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Send a tiny ping first</div>
+      <p>Use a minimal prompt such as:</p>
+      <div class="code">Reply with exactly: OK-ALIVE</div>
+      <p>If this works, your bot is alive and your previous request was likely too large or context-heavy.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Re-check Discord channel restrictions</div>
+      <p>If DM works but server channel does not, check channel overrides and Integrations restrictions for:</p>
+      <ul>
+        <li>View Channel</li>
+        <li>Send Messages</li>
+        <li>Use Application Commands</li>
+        <li>Thread/forum reply permissions (if applicable)</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Start a fresh tiny task in a fresh chat</div>
+      <p>If your prior thread was bloated, start clean and ask for one small action only. Long/bloated chats can make agents appear unresponsive.</p>
+    </div>
+
+    <h2>Common root causes after /new</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Context reset confusion:</strong> you expected old context to carry over automatically.</li>
+        <li><strong>Surface mismatch:</strong> dashboard and Discord are separate conversations.</li>
+        <li><strong>Channel override drift:</strong> bot can read but cannot send in one channel.</li>
+        <li><strong>Thread/forum mismatch:</strong> testing in a location with different permissions.</li>
+        <li><strong>Oversized first request:</strong> immediate heavy prompt causes timeout/stall perception.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Don’t do this:</strong> paste massive old chat history into a brand-new session to "restore memory." It usually makes performance worse.</p>
+    </div>
+
+    <h2>Known-good test flow</h2>
+    <div class="card">
+      <ol>
+        <li>Open one surface only (e.g., Discord DM).</li>
+        <li>Send: <code>Reply with OK-ALIVE</code>.</li>
+        <li>Send: <code>What channel/surface are you replying from?</code></li>
+        <li>Send one tiny task (single-step, no tools).</li>
+        <li>Only then move to bigger requests.</li>
+      </ol>
+    </div>
+
+    <h2>If it still fails everywhere</h2>
+    <p>Escalate with a clean packet so support can reproduce quickly:</p>
+    <div class="code">Issue: Bot silent after /new
+Where tested: [dashboard chat | Discord DM | channel name]
+Exact test prompt: "Reply with OK-ALIVE"
+Observed result: [no reply / typing then stop / error text]
+What I already checked: [permissions, integrations, fresh session]
+Started happening: [time + timezone]</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> /new doesn’t kill your bot. In most cases, a clean-surface ping + permission check + fresh small task restores normal behavior quickly.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="dashboard-vs-discord-contexts.html">Dashboard vs Discord: Why Context Doesn’t Carry Over</a>, <a href="discord-can-read-but-cant-reply.html">Bot Can Read But Can’t Reply in Discord?</a>, and <a href="long-chats-and-lost-work.html">Why Your Agent Gets Worse in Long Chats</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
