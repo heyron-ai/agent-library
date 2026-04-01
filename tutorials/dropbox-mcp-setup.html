@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropbox Not Working? Install MCP the Right Way — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Dropbox Not Working? Install MCP the Right Way</h1>
+      <p>If your agent says “Dropbox MCP is required,” that usually means your Dropbox account is fine — but the connector is not installed or authenticated yet.</p>
+    </div>
+
+    <p>This is a common confusion point: your agent can’t directly access every SaaS tool by default. For Dropbox, it usually needs an MCP connector with valid auth.</p>
+
+    <div class="callout warning">
+      <strong>Short version:</strong> Creating a Dropbox account is not the same as connecting Dropbox to your agent.
+    </div>
+
+    <h2>What this error really means</h2>
+    <div class="card">
+      <ul>
+        <li>Your prompt is valid.</li>
+        <li>Your Dropbox files may exist and be fine.</li>
+        <li>But the agent runtime does not currently have a working Dropbox tool connection.</li>
+      </ul>
+    </div>
+
+    <h2>Fast recovery checklist</h2>
+    <div class="card">
+      <ol>
+        <li>Open your agent integrations/connectors settings.</li>
+        <li>Find <strong>Dropbox</strong> (or MCP server that exposes Dropbox tools).</li>
+        <li>Install/enable it.</li>
+        <li>Complete OAuth/auth step (don’t skip the final Allow screen).</li>
+        <li>Restart your agent session (<strong>/new</strong> is often enough).</li>
+        <li>Run a tiny smoke test before your real task.</li>
+      </ol>
+    </div>
+
+    <h2>Known-good smoke test prompt</h2>
+    <div class="code">Check whether Dropbox tools are available.
+If yes, list top-level folders only (no file contents).
+If no, tell me exactly which connector/auth step is missing.</div>
+
+    <div class="callout success">
+      <strong>Expected result:</strong> You get either a folder list or a precise missing-step message. If it still says MCP is missing, the connector likely didn’t save or auth expired.
+    </div>
+
+    <h2>Top mistakes we keep seeing</h2>
+    <div class="card">
+      <ul>
+        <li>Installed connector in one workspace, testing in a different workspace.</li>
+        <li>OAuth opened but final “Allow” permission was never confirmed.</li>
+        <li>Using old session context after enabling connector (start fresh with <strong>/new</strong>).</li>
+        <li>Expecting Dropbox write actions when connector only has read scope.</li>
+        <li>Prompt asks for browser clicking/upload UI actions the agent cannot do directly.</li>
+      </ul>
+    </div>
+
+    <h2>If Dropbox is connected but actions still fail</h2>
+    <div class="card">
+      <ul>
+        <li>Ask for a read-only action first (list folders) before write/edit operations.</li>
+        <li>Use explicit path format in prompts (example: <code>/Apps/ProjectName/</code>).</li>
+        <li>Request exact tool error text from the agent and paste it into support.</li>
+      </ul>
+    </div>
+
+    <div class="callout danger">
+      <strong>Avoid this loop:</strong> Don’t keep retrying full complex tasks while connector status is unknown. Confirm tool availability first, then run the bigger workflow.
+    </div>
+
+    <h2>Support packet (copy/paste)</h2>
+    <div class="code">Dropbox MCP issue:
+- Workspace used: [name]
+- Connector installed: yes/no
+- OAuth completed today: yes/no
+- Fresh session started after install: yes/no
+- Smoke test result: [paste]
+- Exact error text: [paste]</div>
+
+    <div class="footer">
+      <p>Related reads: <a href="what-are-skills-really.html">What Skills Are (and Aren’t)</a> · <a href="agent-feels-slow-or-stuck.html">Agent Feels Slow or Stuck?</a> · <a href="connect-discord.html">Connect Your Agent to Discord</a></p>
+    </div>
+  </div>
+</body>
+</html>
