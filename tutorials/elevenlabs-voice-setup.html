@@ -143,10 +143,21 @@ ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM</div>
     <div class="card">
       <ul>
         <li><strong>No audio returned:</strong> key missing/invalid, or provider tool not configured.</li>
-        <li><strong>Error about voice:</strong> invalid voice ID or voice not available on your tier.</li>
+        <li><strong>Error about voice:</strong> invalid voice ID, voice not added to <em>Your Voices</em>, or voice not available on your plan tier.</li>
         <li><strong>It worked once then stopped:</strong> quota/credits limit reached.</li>
         <li><strong>Agent says it did it, but no file appears:</strong> wrong output channel/context or attachment delivery issue.</li>
         <li><strong>Voice sounds wrong:</strong> you updated the display name, not the actual voice ID variable.</li>
+        <li><strong>Permission confusion:</strong> in ElevenLabs API key settings, make sure required TTS access is enabled for the key you actually stored.</li>
+      </ul>
+    </div>
+
+    <h2>High-friction fixes from community reports</h2>
+    <div class="card">
+      <ul>
+        <li><strong>“I picked a voice from the library but it still fails”:</strong> add that voice to <em>Your Voices</em> first, then use the ID from your own voice list.</li>
+        <li><strong>“I changed key permissions but nothing changed”:</strong> regenerate key, replace the secret in your agent config, and retest in a fresh chat.</li>
+        <li><strong>“Can it talk live in Telegram/Discord?”:</strong> most setups return an audio file/message, not live call-style voice chat.</li>
+        <li><strong>“Still failing with no clear error”:</strong> ask your agent to print only provider error category (not secrets), then test with a default built-in voice ID.</li>
       </ul>
     </div>
 
