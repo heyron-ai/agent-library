@@ -488,6 +488,9 @@
     <h3>"My agent seems to have amnesia every morning"</h3>
     <p>That's actually normal — each new session starts fresh with only the files. This is actually a feature: you get a clean slate. Your agent reads <code>SOUL.md</code>, <code>AGENTS.md</code>, and recent memory files at startup, so anything important should live in those files.</p>
 
+    <h3>"I said ‘remember this’ and it replied ‘saved’, but it still forgot"</h3>
+    <p>This usually means the save never actually made it into a file (or got saved in the wrong context). Use a verification prompt right away: <em>"Show me exactly what you wrote, including the file path and line you added."</em> If it can’t show the saved line in <code>MEMORY.md</code> or <code>memory/YYYY-MM-DD.md</code>, it wasn’t truly persisted.</p>
+
     <hr>
 
     <!-- The mental model -->
@@ -525,6 +528,10 @@
       <li>
         <strong>✅ Check for explicit save instructions</strong><br>
         Tell your agent directly: <em>"Save this to MEMORY.md"</em> or <em>"Write this to today's memory file."</em> Don't assume it will auto-save everything.
+      </li>
+      <li>
+        <strong>✅ Verify the write happened</strong><br>
+        Immediately ask: <em>"Show the exact file path and line you just saved."</em> A real save should point to a concrete file like <code>MEMORY.md</code> or <code>memory/2026-04-01.md</code>.
       </li>
       <li>
         <strong>✅ Run a known-good memory test</strong><br>
