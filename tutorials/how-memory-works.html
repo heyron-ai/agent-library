@@ -488,6 +488,9 @@
     <h3>"My agent seems to have amnesia every morning"</h3>
     <p>That's actually normal — each new session starts fresh with only the files. This is actually a feature: you get a clean slate. Your agent reads <code>SOUL.md</code>, <code>AGENTS.md</code>, and recent memory files at startup, so anything important should live in those files.</p>
 
+    <h3>"The dashboard shows a blank memory file — did I lose everything?"</h3>
+    <p>Usually, no. A blank <code>MEMORY.md</code> just means your long-term file hasn’t been curated yet (or your agent is mostly writing to daily files in <code>memory/</code>). Ask your agent: <em>"List the latest files in memory/ and summarize today + yesterday."</em> If daily files have content, your memory system is working — you just need to promote key items into <code>MEMORY.md</code>.</p>
+
     <h3>"I said ‘remember this’ and it replied ‘saved’, but it still forgot"</h3>
     <p>This usually means the save never actually made it into a file (or got saved in the wrong context). Use a verification prompt right away: <em>"Show me exactly what you wrote, including the file path and line you added."</em> If it can’t show the saved line in <code>MEMORY.md</code> or <code>memory/YYYY-MM-DD.md</code>, it wasn’t truly persisted.</p>
 
@@ -516,6 +519,10 @@
       <li>
         <strong>✅ Check where the fact is stored</strong><br>
         If it's only in chat history, it can be compacted away. Important info should be in <code>MEMORY.md</code> or <code>memory/YYYY-MM-DD.md</code>.
+      </li>
+      <li>
+        <strong>✅ If MEMORY.md looks blank, check daily files</strong><br>
+        A blank long-term file does <em>not</em> always mean lost memory. Ask for a summary of <code>memory/</code> files first, then promote durable facts into <code>MEMORY.md</code>.
       </li>
       <li>
         <strong>✅ Check the conversation context</strong><br>
