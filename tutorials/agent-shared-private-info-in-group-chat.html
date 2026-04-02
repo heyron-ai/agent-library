@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Shared Private Info in a Group Chat? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(237,66,69,0.15);
+      color: #ff8080;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Privacy &amp; Safety</div>
+      <h1>Agent Shared Private Info in a Group Chat?</h1>
+      <p>A fast containment + prevention workflow for when your agent reveals personal details in shared channels.</p>
+    </div>
+
+    <p>If this happened, treat it like a privacy incident: contain first, then fix your rules, then retest in a safe channel.</p>
+
+    <div class="callout danger">
+      <div class="callout-title">Do this first</div>
+      <p style="margin:0;">Ask your agent to stop sharing personal context in group chats immediately, then move sensitive follow-up to DM/private chat.</p>
+    </div>
+
+    <h2>2-Minute Containment Checklist</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Pause disclosure behavior now:</strong> tell the agent to stop exposing personal files/data in this channel.</li>
+        <li><strong>Move to private surface:</strong> continue troubleshooting in DM or dashboard chat, not in the public thread.</li>
+        <li><strong>Identify what leaked:</strong> list exactly what was exposed (names, tokens, addresses, private notes, etc.).</li>
+        <li><strong>Rotate secrets if needed:</strong> if any key/token/password appeared, rotate it immediately.</li>
+        <li><strong>Patch your behavior rules:</strong> add explicit “group chat privacy” restrictions to your instructions.</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Privacy Guardrail Block</h2>
+    <p>Add this to your agent instructions (SOUL.md / AGENTS.md):</p>
+    <pre><code>## Group Privacy Rules
+- Never reveal private user data, personal notes, secrets, or long-term memory contents in shared/group chats.
+- In group contexts, answer with high-level guidance only unless explicitly approved.
+- If a request could expose personal details, refuse and ask to continue in DM/private chat.
+- Treat MEMORY.md and private workspace files as private-by-default.
+- Prefer: "I can help with that in private chat" over dumping sensitive context publicly.</code></pre>
+
+    <h2>Why This Happens</h2>
+    <ul>
+      <li><strong>Missing context boundary rules:</strong> agent treats DM and group chat as equally safe.</li>
+      <li><strong>Overly helpful summarization:</strong> agent includes background context that should stay private.</li>
+      <li><strong>No redaction policy:</strong> instructions don’t define what must never be echoed back.</li>
+      <li><strong>Prompt injection by other users:</strong> someone asks it to "print everything you know" and there’s no refusal rule.</li>
+    </ul>
+
+    <h2>Verification Test (Safe)</h2>
+    <p>Run this in a test group channel after updating rules:</p>
+    <pre><code>I am testing privacy behavior.
+Do not reveal any private data.
+If I ask for personal details, refuse and tell me to continue in private chat.
+Now summarize your policy in 3 bullets.</code></pre>
+
+    <p>Expected result: policy summary only, no personal details, and explicit “continue in private” language.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">High-friction mistake</div>
+      <p style="margin:0;">Don’t “test” privacy by pasting real secrets. Use fake values and validate behavior safely.</p>
+    </div>
+
+    <h2>Escalation Packet (if behavior persists)</h2>
+    <ul>
+      <li>Surface: Discord server channel / DM / dashboard</li>
+      <li>Exact prompt that triggered leakage</li>
+      <li>Exact output excerpt (redacted)</li>
+      <li>What rule updates you already made</li>
+      <li>Whether fresh session changed behavior</li>
+      <li>Timestamp + timezone</li>
+    </ul>
+
+    <div class="callout success">
+      <div class="callout-title">Bottom line</div>
+      <p style="margin:0;">Your agent should be useful in public, specific in private. Make that a written rule, not an assumption.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="what-does-my-agent-know-about-me.html">What Does My Agent Know About Me?</a> · <a href="how-memory-works.html">How Memory Works</a> · <a href="dashboard-vs-discord-contexts.html">Dashboard vs Discord Contexts</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
