@@ -77,6 +77,7 @@ Battle-tested workspace files to get started fast:
 - **[EXECUTION-EVIDENCE-CHECKLIST.md](templates/EXECUTION-EVIDENCE-CHECKLIST.md)** — Claim→evidence→verification workflow for “agent said done but nothing changed” trust-break incidents
 - **[EXECUTION-LAYER-OUTAGE-PLAYBOOK.md](templates/EXECUTION-LAYER-OUTAGE-PLAYBOOK.md)** — Fast isolation + recovery workflow for “chat still works but tools/commands hang or timeout” execution-plane failures
 - **[CONTEXT-HANDOFF-CHECKLIST.md](templates/CONTEXT-HANDOFF-CHECKLIST.md)** — Practical handoff + verification workflow for dashboard/DM/server context-switch confusion (“it forgot everything” across surfaces)
+- **[DISCORD-CHANNEL-SILENCE-PLAYBOOK.md](templates/DISCORD-CHANNEL-SILENCE-PLAYBOOK.md)** — Fast isolation and recovery workflow for “DM works but server channel is silent” and “typing then nothing” Discord failures
 - **[LINK-ACCESS-TRIAGE.md](templates/LINK-ACCESS-TRIAGE.md)** — Fast diagnosis + recovery flow for “this link opens for me but my agent can’t access it” visibility/auth mismatches
 
 ## 🔧 Fix Scripts
