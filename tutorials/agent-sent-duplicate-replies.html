@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Sent Duplicate Replies? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Sent Duplicate Replies?</h1>
+      <p>A fast fix for the "double reply" loop in Discord when your agent posts the same answer twice.</p>
+    </div>
+
+    <p>This usually looks like: one user message, then two near-identical bot responses. It feels random, but it’s often a <strong>policy or routing overlap</strong> problem, not a model-quality issue.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Most common pattern</div>
+      <p style="margin:0;">The bot receives the same event from two paths (or two active responders) and processes both.</p>
+    </div>
+
+    <h2>2-Minute Recovery Checklist</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Confirm scope:</strong> one channel only, or everywhere?</li>
+        <li><strong>Verify single responder:</strong> ensure only one bot/app is active for that conversation.</li>
+        <li><strong>Check mention policy:</strong> if you require mentions, test with one explicit @mention.</li>
+        <li><strong>Restart gateway/session</strong> after policy/config changes.</li>
+        <li><strong>Run clean test:</strong> new channel/thread, one short prompt, observe exactly one response.</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Verification Prompt (Copy/Paste)</h2>
+    <pre><code>I’m seeing duplicate replies. Diagnose before changing anything.
+
+Step 1) Show current response policy settings relevant to Discord replies.
+Step 2) Confirm there is only one active responder path for this channel/thread.
+Step 3) Propose the smallest fix to prevent duplicate responses.
+Step 4) After applying fix, run one clean-room test and return proof:
+- test channel/thread used
+- input message
+- exact output count (must be 1)
+- timestamp + timezone</code></pre>
+
+    <h2>High-Friction Root Causes</h2>
+    <h3>1) Two active bots or integrations in the same channel</h3>
+    <p>If a legacy bot and your current agent both listen to the same messages, users can see what looks like a duplicate answer.</p>
+
+    <h3>2) Policy overlap (open group + mention logic confusion)</h3>
+    <p>Mixed rules can create accidental double-processing in noisy channels. Pick a single clear trigger mode for testing.</p>
+
+    <h3>3) Stale runtime after config edits</h3>
+    <p>Settings can look correct in files/UI while the old runtime behavior is still active. Restart, then retest in a clean channel.</p>
+
+    <h3>4) Cross-thread/session mismatch</h3>
+    <p>If messages are mirrored or forwarded between thread contexts, the same user input can be handled more than once.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Best practice</div>
+      <p style="margin:0;">During diagnosis, force a <strong>single trigger path</strong>: one bot, one channel, one mention policy, one test message.</p>
+    </div>
+
+    <h2>What to Capture for Escalation</h2>
+    <ul>
+      <li>Channel/thread where duplication happened</li>
+      <li>Whether duplication happens with or without @mention</li>
+      <li>Exact timestamp + timezone</li>
+      <li>Screenshot or copied log showing both bot replies</li>
+      <li>Recent config/policy changes made before issue started</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don’t keep changing multiple settings at once. Make one change, restart, run one test. Otherwise you can’t tell what fixed it.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="my-agent-replies-to-everything.html">My Agent Replies to Everything</a> · <a href="bot-typing-then-nothing.html">Bot Typing, Then Nothing</a> · <a href="discord-can-read-but-cant-reply.html">Can Read but Can't Reply</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
