@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Randomly Changed? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Model Randomly Changed?</h1>
+      <p>A fast recovery guide for when your agent suddenly feels "different" and you suspect the model changed mid-project.</p>
+    </div>
+
+    <p>If your outputs suddenly get shorter, more robotic, or just "not like yesterday," don't panic. In most cases this is one of three things:</p>
+    <ul>
+      <li>you switched surfaces/sessions and landed in a different context,</li>
+      <li>the active model changed, or</li>
+      <li>you’re in a stale thread with old behavior instructions.</li>
+    </ul>
+
+    <div class="callout warning">
+      <div class="callout-title">Common symptom</div>
+      <p style="margin:0;">"Yesterday it wrote amazing responses, today it broke my project." This is usually configuration/context drift, not your project being cursed.</p>
+    </div>
+
+    <h2>2-Minute Recovery Checklist</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Ask for current runtime details</strong> in your current chat:<br>
+          <code>Show my active model name and reasoning mode right now.</code>
+        </li>
+        <li><strong>Start a fresh test session</strong> (don’t reuse a long, noisy thread).</li>
+        <li><strong>Run the same prompt twice</strong> using a tiny deterministic test prompt.</li>
+        <li><strong>If model is wrong</strong>, set the model explicitly in dashboard/settings and retest.</li>
+        <li><strong>If still unstable</strong>, restart gateway/session and retry once.</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Verification Prompt</h2>
+    <p>Paste this exactly:</p>
+    <pre><code>Before answering, print:
+1) active model id/name
+2) reasoning mode status
+3) current timezone
+Then write a 5-bullet summary of this sentence in a friendly tone:
+"We are launching a beta feature next week for early users."
+Finally, rate output confidence from 1-10.</code></pre>
+
+    <p>Save the output. If it changes dramatically between runs without your input changing, you likely have a model/config/session mismatch.</p>
+
+    <h2>High-Friction Gotchas</h2>
+    <h3>1) Dashboard chat vs Discord chat</h3>
+    <p>Same agent identity, different conversation surfaces. You can feel like "the model changed" when you actually changed context.</p>
+
+    <h3>2) Long-thread quality collapse</h3>
+    <p>Very long chats can degrade quality and imitate a model change. Test in a clean thread before assuming your model swapped.</p>
+
+    <h3>3) Old tutorials or screenshots</h3>
+    <p>Community docs change quickly. Verify against current settings UI, not old screenshots.</p>
+
+    <h3>4) Team/shared workspace edits</h3>
+    <p>If multiple people edit config, model changes may be real. Lock a known-good model during critical work windows.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Best practice</div>
+      <p style="margin:0;">For important projects, start each session with a one-line runtime check: <code>confirm active model + reasoning mode</code>. It prevents silent drift.</p>
+    </div>
+
+    <h2>Escalation Packet (if still broken)</h2>
+    <p>Share this in #help to get fast support:</p>
+    <ul>
+      <li>Where it fails (Dashboard / Discord DM / server channel)</li>
+      <li>Expected vs actual behavior</li>
+      <li>Current model shown by runtime check</li>
+      <li>Exact verification prompt used</li>
+      <li>Whether fresh-session retest changed results</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don’t keep debugging inside the same giant thread for 50 messages. You’ll mix signal and noise and make diagnosis slower.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="api-keys-and-models.html">API Keys &amp; Models</a> · <a href="long-chats-and-lost-work.html">Long Chats and Lost Work</a> · <a href="did-i-create-a-second-agent-by-accident.html">Second Agent by Accident?</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
