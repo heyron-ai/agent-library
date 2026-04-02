@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Keeps Changing Too Much? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Keeps Changing Too Much?</h1>
+      <p>Fix the “I asked for one small edit and it rewrote everything” loop with a scope-lock workflow that non-technical users can run in minutes.</p>
+    </div>
+
+    <p>A common trust-break moment: you ask for one tweak, then your agent changes tone, structure, or whole sections you didn’t ask for.</p>
+    <p>This is usually a <strong>scope control problem</strong>, not a “bad model” problem.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Most common symptom</div>
+      <p style="margin:0;">“I just wanted one sentence changed, but now my whole doc feels different.”</p>
+    </div>
+
+    <h2>2-Minute Scope-Lock Recovery</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Name the exact target</strong> (file + section heading + line/snippet).</li>
+        <li><strong>Set hard boundaries</strong>: “change only X, keep everything else identical.”</li>
+        <li><strong>Require a change plan first</strong> (no edits yet).</li>
+        <li><strong>Approve the plan</strong>, then request edits.</li>
+        <li><strong>Ask for a diff summary</strong>: what changed and what did not.</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Prompt (Copy/Paste)</h2>
+    <pre><code>You are editing with strict scope control.
+Task: Change only [exact sentence/section].
+Target file: [path]
+Boundaries:
+- Do NOT rewrite structure
+- Do NOT change tone/voice
+- Do NOT edit any other section
+Step 1: Show a 3-bullet edit plan only (no edits yet).
+Step 2: Wait for my approval.
+Step 3: Apply only approved changes.
+Step 4: Return:
+  a) exact changed lines/snippets
+  b) “unchanged sections” confirmation list.</code></pre>
+
+    <h2>High-Friction Mistakes</h2>
+    <h3>1) Vague requests like “clean this up”</h3>
+    <p>That invites broad rewriting. Use concrete change requests with explicit “do not touch” constraints.</p>
+
+    <h3>2) Editing in a long/noisy thread</h3>
+    <p>Old context can push style drift. Start a fresh thread for high-precision edits.</p>
+
+    <h3>3) No preview/plan step</h3>
+    <p>If you skip plan approval, you lose control early. Plan-first dramatically reduces over-editing.</p>
+
+    <h3>4) No verification after edit</h3>
+    <p>Always ask for changed snippets + unchanged confirmation so you can validate quickly.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Best practice</div>
+      <p style="margin:0;">For critical docs, do edits in micro-batches: one section at a time. You’ll get better control and fewer surprises.</p>
+    </div>
+
+    <h2>Escalation Packet (if it still over-edits)</h2>
+    <ul>
+      <li>Where you ran it (Dashboard / Discord DM / server channel)</li>
+      <li>Exact prompt used</li>
+      <li>What should have changed vs what changed</li>
+      <li>Whether you used a plan-first step</li>
+      <li>Before/after snippets (small redacted samples)</li>
+      <li>Timestamp + timezone</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don’t paste a full 200-message history and ask for “one quick edit.” Large context increases drift risk and makes precision harder.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="prompting-your-agent-like-a-pro.html">Prompting Your Agent Like a Pro</a> · <a href="updated-file-but-agent-uses-old-version.html">Updated File But Old Version?</a> · <a href="restarting-chat-without-pasting-everything.html">Start Fresh Without Pasting Everything</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
