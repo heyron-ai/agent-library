@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Updated File But Agent Uses Old Version? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Updated File But Agent Uses an Old Version?</h1>
+      <p>A fast diagnosis flow for when you upload or edit a file, but the agent keeps referencing stale content.</p>
+    </div>
+
+    <p>This is one of the most common trust-break loops: you fix the document, ask again, and the answer still sounds like the old draft. Usually the file didn’t actually reach the active context (or the wrong copy is being used).</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Common symptom</div>
+      <p style="margin:0;">“I changed section 3, but it still quotes the old text.” Most cases are upload/context mismatch, not model quality.</p>
+    </div>
+
+    <h2>2-Minute Recovery Checklist</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Re-upload the updated file in the same chat/thread</strong> where you want work to continue.</li>
+        <li><strong>Rename the file with a version suffix</strong> (example: <code>proposal-v3.docx</code>) so old and new copies are obvious.</li>
+        <li><strong>Ask for proof</strong>: request a direct quote from a line you changed.</li>
+        <li><strong>If proof fails</strong>, start a fresh thread and upload only the newest file.</li>
+        <li><strong>If still wrong</strong>, share a tiny escalation packet in #help (template below).</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Verification Prompt</h2>
+    <p>Paste this exactly after uploading your latest file:</p>
+    <pre><code>Before doing any analysis:
+1) confirm the exact filename you are using
+2) quote one sentence that includes this marker: "[NEW-VERSION-MARKER]"
+3) state whether any older similarly named files are also in context
+If you cannot find that marker, stop and ask me to re-upload.</code></pre>
+
+    <p>Add a unique marker like <code>[NEW-VERSION-MARKER]</code> to the updated file once, then remove it later. This instantly proves whether the agent can see the right copy.</p>
+
+    <h2>Why This Happens</h2>
+    <h3>1) Same filename, multiple versions</h3>
+    <p>If you keep reusing <code>notes.docx</code>, it’s easy to lose track of which version is active.</p>
+
+    <h3>2) Different surface/context</h3>
+    <p>You uploaded in dashboard chat, then asked in Discord (or another thread). Same agent identity, different conversation context.</p>
+
+    <h3>3) Old thread inertia</h3>
+    <p>Very long chats can carry stale assumptions. A fresh thread + single latest file often resolves this immediately.</p>
+
+    <h3>4) Wrong attachment actually uploaded</h3>
+    <p>Easy mistake: local folder has multiple drafts with similar names and dates.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Best practice</div>
+      <p style="margin:0;">Use explicit versioning every time: <code>project-brief-v1</code>, <code>project-brief-v2</code>, <code>project-brief-v3</code>. Ask for one changed-line quote before deeper work.</p>
+    </div>
+
+    <h2>Escalation Packet (if still broken)</h2>
+    <ul>
+      <li>Surface used (Dashboard / Discord DM / server channel)</li>
+      <li>Exact filename uploaded + timestamp</li>
+      <li>One line that changed in the new version</li>
+      <li>Agent response showing stale content</li>
+      <li>Whether fresh-thread + single-file retest was done</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don’t continue for 20 messages assuming it will “eventually pick up” the new file. Verify with a changed-line quote first.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="working-with-files.html">Working with Files</a> · <a href="agent-says-it-saw-image-but-didnt.html">Agent Says It Saw Your Image?</a> · <a href="dashboard-vs-discord-contexts.html">Dashboard vs Discord Contexts</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
