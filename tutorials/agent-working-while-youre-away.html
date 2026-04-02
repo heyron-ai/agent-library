@@ -162,12 +162,22 @@ Include the word "REMINDER" in the delivery message title.</div>
       </ul>
     </div>
 
+    <h2>High-friction gotcha: it ran, but in the wrong place</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Session-target mismatch:</strong> scheduler may run in an isolated session while you expected the current chat thread.</li>
+        <li><strong>DM vs server mismatch:</strong> in Discord, output can land in DMs when you expected a channel (or vice versa).</li>
+        <li><strong>Thread mismatch:</strong> output can appear in a different thread than the one you were watching.</li>
+      </ul>
+      <p><strong>Fast fix:</strong> always include explicit destination text like: “Deliver to this exact channel/thread,” and ask for immediate confirmation of target before the job starts.</p>
+    </div>
+
     <h2>Known-good test prompt (copy/paste)</h2>
     <div class="code">Set a reminder for 10 minutes from now.
 Timezone: America/New_York.
-Send delivery to: this same conversation.
+Send delivery to: this exact conversation thread only.
 Message title must start with: REMINDER TEST.
-After scheduling, confirm the exact fire time and destination.</div>
+Before finishing, confirm: exact fire time, timezone, and exact destination thread/channel.</div>
 
     <h2>Escalation packet for #help</h2>
     <div class="code">Background-work verification issue
