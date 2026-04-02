@@ -191,6 +191,39 @@ Rules:
       <p style="margin:0;">Use sub-agents for depth and speed — but keep one accountable owner for quality. Manager-led merges are what make the workflow reliable.</p>
     </div>
 
+    <h2>Advanced Troubleshooting (Real-World Failure Modes)</h2>
+
+    <h3>1) “The workers finished, but I can’t find the output”</h3>
+    <p>This is usually a <strong>destination mismatch</strong> (different thread/session/surface), not failed work.</p>
+    <ul>
+      <li>Confirm where the manager is supposed to post final output (same thread vs another channel).</li>
+      <li>Require the manager to echo: <code>destination + session/thread id + timestamp</code> before final delivery.</li>
+      <li>If using scheduled/background runs, verify delivery target explicitly.</li>
+    </ul>
+
+    <h3>2) “I keep getting duplicate final answers”</h3>
+    <p>You likely have multiple managers or stale workers still active.</p>
+    <ul>
+      <li>Enforce exactly one manager role.</li>
+      <li>Ask the manager to list active workers, then stop duplicates.</li>
+      <li>Add a strict rule: <strong>only manager can publish final answer</strong>.</li>
+    </ul>
+
+    <h3>3) “Workers time out or return partial work”</h3>
+    <p>Large tasks fail when each worker is too broad.</p>
+    <ul>
+      <li>Split work into smaller chunks with explicit limits (<code>max 5 sources</code>, <code>max 10 bullets</code>).</li>
+      <li>Require each worker to return a <strong>blocked reason</strong> if incomplete.</li>
+      <li>Have manager run a gap-check pass before merging.</li>
+    </ul>
+
+    <h3>4) “Manager says merged, but key details vanished”</h3>
+    <p>This is a merge-quality issue.</p>
+    <ul>
+      <li>Force a merge checklist: <strong>dedupe, conflict resolution, missing-step scan, citation carry-over</strong>.</li>
+      <li>Require manager to include a short <strong>what changed during merge</strong> section.</li>
+    </ul>
+
     <h2>If It Still Feels Messy</h2>
     <p>Run this reset workflow:</p>
     <ol>
