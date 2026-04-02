@@ -155,6 +155,17 @@ Do not perform any write actions.</div>
       <strong>Avoid this trap:</strong> Don’t keep retrying in the same long chat. A fresh session after reconnect fixes a surprising number of “still unavailable” loops.
     </div>
 
+    <h2>“It keeps forgetting I installed it” — what’s actually happening</h2>
+    <div class="card">
+      <p>Users often describe this as the connector being "forgotten," but it’s usually one of these context mismatches:</p>
+      <ul>
+        <li><strong>Different surface, different session:</strong> You installed in dashboard chat, then tested in Discord (or the reverse) without a clean handoff.</li>
+        <li><strong>Different account/workspace:</strong> You authenticated the connector under one account, but your active agent/chat is in another.</li>
+        <li><strong>Session pre-dates install:</strong> The chat was opened before install/auth completed and still has stale tool state.</li>
+      </ul>
+      <p><strong>Fast fix:</strong> After install + OAuth, start a brand-new session in the <em>same</em> surface you plan to use, then run the read-only smoke test once before doing real work.</p>
+    </div>
+
     <h2>Support packet (copy/paste)</h2>
     <div class="code">Connector issue report:
 - Connector name: [e.g., Dropbox MCP]
