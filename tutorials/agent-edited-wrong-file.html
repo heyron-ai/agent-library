@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Edited the Wrong File? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Edited the Wrong File?</h1>
+      <p>A fast recovery workflow for the "I asked for one file, but it changed another one" trust-break.</p>
+    </div>
+
+    <p>This happens more than people think, especially when file names are similar (like <code>draft-final.md</code> vs <code>draft-final-v2.md</code>) or when work happens across multiple sessions.</p>
+    <p>Good news: this is usually fixable in minutes if you switch to a <strong>path-proof workflow</strong>.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Most common symptom</div>
+      <p style="margin:0;">“The change looks right… but it’s in the wrong file or wrong folder.”</p>
+    </div>
+
+    <h2>2-Minute Recovery Checklist</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Stop further edits</strong> until file identity is confirmed.</li>
+        <li><strong>Ask for proof of target</strong>: exact full path + first 3 lines before editing.</li>
+        <li><strong>Require dry-run mode</strong>: show planned patch only, no write yet.</li>
+        <li><strong>Approve one file only</strong> with a do-not-touch list for everything else.</li>
+        <li><strong>After edit, require proof</strong>: path + changed lines + unchanged file list.</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Prompt (Copy/Paste)</h2>
+    <pre><code>Before editing anything, verify file identity.
+
+Target file (only this one): [full path]
+Do not edit any other file.
+
+Step 1) Read and show:
+- exact full path
+- first 3 lines
+- last modified timestamp (if available)
+
+Step 2) Show a dry-run patch (no writes yet).
+Wait for my approval.
+
+Step 3) After approval, edit only target file.
+
+Step 4) Return proof:
+- edited file full path
+- exact changed lines/snippets
+- explicit list of files NOT touched.</code></pre>
+
+    <h2>Why This Happens</h2>
+    <ul>
+      <li><strong>Similar filenames</strong> in different folders.</li>
+      <li><strong>Stale context</strong> from a long thread where earlier file paths are still in memory.</li>
+      <li><strong>Vague instructions</strong> like “update the report” without path.</li>
+      <li><strong>Cross-surface mismatch</strong> (dashboard vs Discord) where a different workspace/session was active.</li>
+    </ul>
+
+    <h2>High-Friction Mistakes to Avoid</h2>
+    <h3>1) “Use the latest file” with no path</h3>
+    <p>“Latest” is ambiguous. Always specify a full path or unique filename.</p>
+
+    <h3>2) Batch edits across many files without checkpoints</h3>
+    <p>If precision matters, run one file at a time and verify after each write.</p>
+
+    <h3>3) No unchanged-file confirmation</h3>
+    <p>If you don’t request a not-touched list, silent collateral edits can be missed.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Best practice</div>
+      <p style="margin:0;">For critical docs, include a <strong>Do Not Touch</strong> block naming protected files before any edit begins.</p>
+    </div>
+
+    <h2>Escalation Packet (if it keeps happening)</h2>
+    <ul>
+      <li>Where you ran it (Dashboard / Discord DM / server channel)</li>
+      <li>Exact prompt used</li>
+      <li>Expected target file path</li>
+      <li>Actual edited file path(s)</li>
+      <li>Before/after snippets (small redacted samples)</li>
+      <li>Timestamp + timezone</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don’t keep issuing “one more quick fix” after a wrong-file edit. Pause, verify path identity, then continue.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="where-did-my-files-go.html">Where Did My Files Go?</a> · <a href="updated-file-but-agent-uses-old-version.html">Updated File But Old Version?</a> · <a href="agent-keeps-changing-too-much.html">Agent Keeps Changing Too Much?</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
