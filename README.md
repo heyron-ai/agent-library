@@ -83,6 +83,9 @@ Battle-tested workspace files to get started fast:
 - **[SOUL-CHANGE-VERIFICATION.md](templates/SOUL-CHANGE-VERIFICATION.md)** — Deterministic verification flow for “I updated SOUL.md but behavior didn’t change” (file/path proof, fresh-session test, and escalation packet)
 - **[BACKGROUND-TASK-DELIVERY-CHECKLIST.md](templates/BACKGROUND-TASK-DELIVERY-CHECKLIST.md)** — Fast diagnosis workflow for “task ran but I can’t find the output,” focused on schedule/timezone + destination routing mismatches
 - **[DEN-COMMAND-CENTER-AIRTABLE-BRIEF.md](templates/DEN-COMMAND-CENTER-AIRTABLE-BRIEF.md)** — Claude-ready build brief for a community + support + founder Airtable operating system
+- **[DEN-COMMAND-CENTER-SCHEMA.md](templates/DEN-COMMAND-CENTER-SCHEMA.md)** — Pickup-ready table-by-table Airtable schema for The Den Command Center
+- **[DEN-COMMAND-CENTER-VIEWS-AND-AUTOMATIONS.md](templates/DEN-COMMAND-CENTER-VIEWS-AND-AUTOMATIONS.md)** — Recommended views, workflows, and automations so the base is actually operational
+- **[DEN-COMMAND-CENTER-WEBHOOK-SAMPLES.json](templates/DEN-COMMAND-CENTER-WEBHOOK-SAMPLES.json)** — Normalized sample payloads for Discord, triage, content, and community events
 
 ## 🔧 Fix Scripts
 
