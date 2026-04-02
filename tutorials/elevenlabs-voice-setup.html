@@ -165,6 +165,25 @@ ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM</div>
       <strong>Common mistake:</strong> copying a public/library voice and assuming your account can use it immediately. Verify availability in your ElevenLabs dashboard first.
     </div>
 
+    <h2>“Voice conversation” vs “voice output” (important)</h2>
+    <p>Recent community threads show people mixing up two different goals. If you choose the wrong goal, setup will feel broken even when it's working exactly as configured.</p>
+    <div class="card">
+      <ul>
+        <li><strong>Goal A — Generated audio output:</strong> agent turns text into an audio file/message. ElevenLabs is strong here.</li>
+        <li><strong>Goal B — Fast back-and-forth voice conversation:</strong> this needs low-latency speech-to-text + response + text-to-speech loop and depends heavily on the surface/channel integration.</li>
+      </ul>
+    </div>
+    <div class="callout warning">
+      <strong>Reality check:</strong> if your setup is tuned for Goal A, asking for Goal B will feel slow or inconsistent. Decide the target experience first, then optimize for that path.
+    </div>
+
+    <h3>Quick test to avoid expectation mismatch</h3>
+    <div class="code">Run these in order:
+1) "Generate a 1-sentence audio file reply using ElevenLabs."
+2) "Now do a 3-turn simulated conversation with short responses and audio each turn."
+
+If (1) works but (2) feels laggy, your TTS path is likely fine — the bottleneck is conversational loop latency, not your voice key/ID.</div>
+
     <h2>Known-good recovery flow (2 minutes)</h2>
     <ol>
       <li>Regenerate API key in ElevenLabs</li>
