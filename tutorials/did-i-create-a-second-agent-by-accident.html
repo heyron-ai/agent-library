@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Did I Create a Second Agent by Accident? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-danger {
+      border-left-color: var(--danger);
+      background: rgba(240,71,71,0.08);
+    }
+    .callout-danger strong { color: var(--danger); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 29px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Did I Create a Second Agent by Accident?</h1>
+      <p>A fast way to diagnose account/workspace mix-ups when your bot name, memory, or settings suddenly look wrong.</p>
+    </div>
+
+    <p>This is more common than people think: you switch devices, click a different invite link, or log in with another Google account—and now it feels like your original agent disappeared.</p>
+
+    <div class="callout-warning">
+      <p><strong>Good news:</strong> in most cases, your original agent still exists. You are just in a different account, workspace, or surface.</p>
+    </div>
+
+    <h2>Common signs of a second-agent/account mix-up</h2>
+    <div class="card">
+      <ul>
+        <li>Your agent name/personality looks generic again.</li>
+        <li>Files like <code>SOUL.md</code> or <code>MEMORY.md</code> look missing or blank.</li>
+        <li>Discord DM behaves differently from dashboard chat.</li>
+        <li>You see a different workspace path than expected.</li>
+        <li>You are sure you configured things before, but nothing matches now.</li>
+      </ul>
+    </div>
+
+    <h2>2-minute verification flow</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Confirm account identity:</strong> verify the email/account currently logged in on dashboard and Discord-related tools.</li>
+        <li><strong>Check workspace identity:</strong> confirm the active workspace/project name matches your expected one.</li>
+        <li><strong>Run an identity prompt:</strong> ask the agent to quote name + key file paths it is using.</li>
+        <li><strong>Compare to your known baseline:</strong> old screenshots, notes, or expected file names.</li>
+      </ol>
+    </div>
+
+    <h2>Copy/paste identity check prompt</h2>
+    <div class="code">Before doing anything else, print:
+1) Your agent name
+2) Current workspace/root path
+3) Whether SOUL.md exists (include exact path)
+4) Whether MEMORY.md exists (include exact path)
+5) The current timezone
+6) The exact account/workspace label you think this session belongs to
+
+If anything is missing, stop and ask me one clarifying question before continuing.</div>
+
+    <h2>If DM and dashboard feel like different bots</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Same identity, different context:</strong> DM, server channels, and dashboard chats can be separate conversation threads.</li>
+        <li><strong>Not automatically shared:</strong> prior chat context from one surface may not appear in another.</li>
+        <li><strong>Use a handoff:</strong> paste a compact context summary when switching surfaces.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <p><strong>Important:</strong> this is usually a context/account mismatch, not memory corruption.</p>
+    </div>
+
+    <h2>Quick recovery options</h2>
+    <div class="card">
+      <ol>
+        <li>Log out and log back in with the account that originally created your agent.</li>
+        <li>Open the correct workspace/project explicitly.</li>
+        <li>Run the identity check prompt above again.</li>
+        <li>If still mismatched, start a fresh session and pass a short handoff (goal + current files + next action).</li>
+      </ol>
+    </div>
+
+    <h2>High-friction mistakes to avoid</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Assuming browser profile = correct account:</strong> many users are signed into multiple Google/Discord profiles.</li>
+        <li><strong>Comparing against another user’s screenshot:</strong> names/labels may differ by account and setup.</li>
+        <li><strong>Continuing work before identity check:</strong> this creates more confusion and duplicate files.</li>
+      </ul>
+    </div>
+
+    <div class="callout-danger">
+      <p><strong>Do not delete anything yet.</strong> First confirm you are in the right account/workspace. Deleting the “wrong” one can remove useful clues for recovery.</p>
+    </div>
+
+    <h2>Escalation packet for #help</h2>
+    <div class="code">Possible second-agent/account mix-up
+
+Expected agent/workspace:
+Current visible agent/workspace:
+What changed recently (device/login/link):
+Identity check output (paste):
+What I expected instead:
+Screenshots available: yes/no</div>
+
+    <div class="footer">
+      <p>Most “my bot changed” incidents are fixable in minutes with identity + workspace verification. Verify first, then troubleshoot behavior.</p>
+    </div>
+  </div>
+</body>
+</html>
