@@ -176,6 +176,23 @@ Exact next action you should take now:</div>
       <p>Even then, include only the required excerpts, not the entire chat log.</p>
     </div>
 
+    <h2>High-friction mistakes to avoid</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Pasting old outputs without labels:</strong> mark each pasted block as <em>current truth</em> vs <em>historical context</em>.</li>
+        <li><strong>Using vague “continue from before” prompts:</strong> always state one exact next action.</li>
+        <li><strong>Referring to files without path proof:</strong> include exact file paths and ask the agent to quote key lines before acting.</li>
+        <li><strong>Reusing stale assumptions:</strong> explicitly list what changed since the old session.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good recovery prompt (copy/paste)</h2>
+    <div class="code">Use only the handoff below as active context.
+Do not assume hidden history.
+Before executing, quote the exact file path(s) and line(s) you are relying on.
+If any file is missing or stale, stop and ask one clarifying question.
+Then execute exactly this next action: [insert one action]</div>
+
     <h2>Escalation packet for #help</h2>
     <div class="code">Fresh-session quality issue
 
