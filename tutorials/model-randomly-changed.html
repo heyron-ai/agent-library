@@ -169,11 +169,14 @@ Finally, rate output confidence from 1-10.</code></pre>
     <h3>2) Long-thread quality collapse</h3>
     <p>Very long chats can degrade quality and imitate a model change. Test in a clean thread before assuming your model swapped.</p>
 
-    <h3>3) Old tutorials or screenshots</h3>
-    <p>Community docs change quickly. Verify against current settings UI, not old screenshots.</p>
+    <h3>3) Quiet fallback to a default model</h3>
+    <p>If your chosen model is temporarily unavailable, rate-limited, or access-restricted, output may look like a "different brain." Re-run the runtime check immediately before and after your test prompt to confirm what actually executed.</p>
 
-    <h3>4) Team/shared workspace edits</h3>
-    <p>If multiple people edit config, model changes may be real. Lock a known-good model during critical work windows.</p>
+    <h3>4) Shared workspace or team config edits</h3>
+    <p>If multiple people can change settings, model changes may be real. Lock a known-good model during critical work windows and document who can edit model config.</p>
+
+    <h3>5) Old screenshots or stale instructions</h3>
+    <p>UI and model lists change quickly. Verify against current settings and current runtime output, not yesterday's screenshot.</p>
 
     <div class="callout success">
       <div class="callout-title">Best practice</div>
@@ -185,9 +188,11 @@ Finally, rate output confidence from 1-10.</code></pre>
     <ul>
       <li>Where it fails (Dashboard / Discord DM / server channel)</li>
       <li>Expected vs actual behavior</li>
-      <li>Current model shown by runtime check</li>
+      <li>Current model shown by runtime check (before and after test prompt)</li>
       <li>Exact verification prompt used</li>
       <li>Whether fresh-session retest changed results</li>
+      <li>Approximate timestamp + timezone of the mismatch</li>
+      <li>Whether anyone else changed workspace/model settings recently</li>
     </ul>
 
     <div class="callout danger">
