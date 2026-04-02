@@ -80,6 +80,7 @@ Battle-tested workspace files to get started fast:
 - **[DISCORD-CHANNEL-SILENCE-PLAYBOOK.md](templates/DISCORD-CHANNEL-SILENCE-PLAYBOOK.md)** — Fast isolation and recovery workflow for “DM works but server channel is silent” and “typing then nothing” Discord failures
 - **[LINK-ACCESS-TRIAGE.md](templates/LINK-ACCESS-TRIAGE.md)** — Fast diagnosis + recovery flow for “this link opens for me but my agent can’t access it” visibility/auth mismatches
 - **[LONG-CHAT-RECOVERY-WORKFLOW.md](templates/LONG-CHAT-RECOVERY-WORKFLOW.md)** — Deterministic reset + rehydration workflow for “agent got worse over long chat” degradation and lost-work prevention
+- **[SOUL-CHANGE-VERIFICATION.md](templates/SOUL-CHANGE-VERIFICATION.md)** — Deterministic verification flow for “I updated SOUL.md but behavior didn’t change” (file/path proof, fresh-session test, and escalation packet)
 
 ## 🔧 Fix Scripts
 
