@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Updated SOUL.md But Agent Still Sounds the Same? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Updated SOUL.md But Agent Still Acts the Same?</h1>
+      <p>A fast fix for the common “I changed personality instructions, but nothing changed” loop.</p>
+    </div>
+
+    <p>If you edited SOUL.md and your agent still sounds like the old version, you’re not crazy. This is a common setup issue, especially for new users testing across dashboard + Discord.</p>
+
+    <div class="callout">
+      <p><strong>Key idea:</strong> Most failures come from editing the wrong file, testing in the wrong conversation surface, or not verifying that the file actually saved.</p>
+    </div>
+
+    <h2>2-minute diagnosis flow</h2>
+
+    <div class="step">
+      <div class="step-title">1) Verify the file was actually written</div>
+      <p>Ask your agent to show proof:</p>
+      <div class="code">Read SOUL.md and quote line 1 plus one unique phrase I added.</div>
+      <p>If it can’t quote your new text, your edit didn’t land where you think it did.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Confirm you are in the same workspace/account</div>
+      <p>A frequent failure mode is editing SOUL.md in one account/workspace and testing in another. Verify account + workspace before retesting.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Test in one surface only</div>
+      <p>Dashboard chat, Discord DM, and Discord channels are separate conversation contexts. Do one clean test in a single place first.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Run a tiny personality smoke test</div>
+      <p>Use an obvious instruction and see if it appears immediately:</p>
+      <div class="code">For this message only, answer in exactly 2 short bullet points and start with the phrase "Neon check:"</div>
+    </div>
+
+    <h2>Most common root causes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong file path:</strong> edited a different markdown file, not SOUL.md.</li>
+        <li><strong>Unsaved change:</strong> text looked edited in chat, but file update didn’t persist.</li>
+        <li><strong>Surface mismatch:</strong> expecting dashboard edit to instantly affect an old Discord thread’s behavior.</li>
+        <li><strong>Instruction conflict:</strong> strong old rules in AGENTS.md or recent chat prompts override your style tweak.</li>
+        <li><strong>Ambiguous SOUL text:</strong> personality request is too vague to produce a visible shift.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Don’t chase ghosts:</strong> changing SOUL.md won’t magically rewrite prior responses in an existing long chat. Test with a fresh, tiny prompt and visible style markers.</p>
+    </div>
+
+    <h2>Known-good rewrite pattern</h2>
+    <p>If your SOUL file is fluffy, rewrite key lines with measurable behavior:</p>
+    <div class="code">Voice rules:
+- Keep replies under 120 words unless asked for detail.
+- Use plain language for non-technical users.
+- Start with direct answer first, then optional context.
+- Use one emoji max when tone is casual.
+- Never claim actions without proof (file path, command output, or link).</div>
+
+    <h2>If it still doesn’t change</h2>
+    <p>Escalate with evidence so support can reproduce quickly:</p>
+    <div class="code">Issue: SOUL.md updated but behavior unchanged
+Where edited: [dashboard/files/path]
+Proof of file content: [quoted line from SOUL.md]
+Where tested: [dashboard chat | Discord DM | channel]
+Exact test prompt: [paste]
+Observed behavior: [what stayed the same]
+When started: [time + timezone]</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> verify file write + test one surface + use a measurable prompt. That resolves most “SOUL.md didn’t work” cases in minutes.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="your-first-soul-md.html">Your First SOUL.md</a>, <a href="dashboard-vs-discord-contexts.html">Dashboard vs Discord Contexts</a>, and <a href="new-session-bot-not-responding.html">Used /new and Now Bot Won’t Respond?</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
