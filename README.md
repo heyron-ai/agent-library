@@ -79,6 +79,7 @@ Battle-tested workspace files to get started fast:
 - **[CONTEXT-HANDOFF-CHECKLIST.md](templates/CONTEXT-HANDOFF-CHECKLIST.md)** — Practical handoff + verification workflow for dashboard/DM/server context-switch confusion (“it forgot everything” across surfaces)
 - **[DISCORD-CHANNEL-SILENCE-PLAYBOOK.md](templates/DISCORD-CHANNEL-SILENCE-PLAYBOOK.md)** — Fast isolation and recovery workflow for “DM works but server channel is silent” and “typing then nothing” Discord failures
 - **[LINK-ACCESS-TRIAGE.md](templates/LINK-ACCESS-TRIAGE.md)** — Fast diagnosis + recovery flow for “this link opens for me but my agent can’t access it” visibility/auth mismatches
+- **[LONG-CHAT-RECOVERY-WORKFLOW.md](templates/LONG-CHAT-RECOVERY-WORKFLOW.md)** — Deterministic reset + rehydration workflow for “agent got worse over long chat” degradation and lost-work prevention
 
 ## 🔧 Fix Scripts
 
