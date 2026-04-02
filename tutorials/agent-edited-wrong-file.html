@@ -188,6 +188,19 @@ Step 4) Return proof:
       <p style="margin:0;">For critical docs, include a <strong>Do Not Touch</strong> block naming protected files before any edit begins.</p>
     </div>
 
+    <h2>Advanced Edge Cases (Worth Checking)</h2>
+    <h3>1) Same filename in multiple roots</h3>
+    <p>Many users keep copies like <code>/workspace/report.md</code> and <code>/workspace/archive/report.md</code>. Require the agent to print the <strong>absolute path</strong>, not a relative path like <code>./report.md</code>.</p>
+
+    <h3>2) Path looks right but points through a symlink</h3>
+    <p>A symlink can resolve to a different real location. Ask the agent to show both: <strong>requested path</strong> and <strong>resolved real path</strong> before writing.</p>
+
+    <h3>3) Session/surface mismatch after a reset</h3>
+    <p>If you switched from dashboard to Discord (or restarted into a fresh session), confirm the active workspace root first. Wrong-file edits often come from working in the wrong session, not bad intent.</p>
+
+    <h3>4) “Looks unchanged” because edits landed in another branch/folder snapshot</h3>
+    <p>For repo workflows, ask for <code>git status --short</code> and edited file paths right after the change. This catches edits made in an unexpected branch or nested copy.</p>
+
     <h2>Escalation Packet (if it keeps happening)</h2>
     <ul>
       <li>Where you ran it (Dashboard / Discord DM / server channel)</li>
