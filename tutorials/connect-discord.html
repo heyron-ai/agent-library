@@ -608,9 +608,13 @@
     <details class="trouble-card">
       <summary>Bot replies in DMs but ignores channel messages</summary>
       <div class="answer">
-        <p>Your server probably isn't on the guild allowlist. Tell your agent in the dashboard:</p>
-        <p><em>"Add my Discord Server ID [your server ID] to the guild allowlist"</em></p>
-        <p>If it replies in channels only when @mentioned, that's actually the default. To change it, tell your agent to allow responses without being @mentioned.</p>
+        <p>This is usually a <strong>policy/config mismatch</strong> — not a token failure.</p>
+        <p>Run this exact sequence in your dashboard chat:</p>
+        <p>1) <em>"Add my Discord Server ID [your server ID] to the guild allowlist."</em><br>
+           2) <em>"Set Discord requireMention to false and groupPolicy to open."</em><br>
+           3) <em>"Set Discord allowBots to true."</em> (needed if your workflow involves relays/other bot messages)<br>
+           4) <em>"Restart the gateway."</em></p>
+        <p>Then test in a brand-new text channel with default permissions. If it works there, your core setup is healthy and older channels likely have overrides/restrictions.</p>
       </div>
     </details>
 
