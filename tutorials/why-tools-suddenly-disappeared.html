@@ -75,6 +75,7 @@
         <li><a href="#what">What this error usually means</a></li>
         <li><a href="#fast-check">2-minute fast check</a></li>
         <li><a href="#root-causes">Most common root causes</a></li>
+        <li><a href="#advanced">Advanced mismatch cases</a></li>
         <li><a href="#recovery">Known-good recovery flow</a></li>
         <li><a href="#packet">Escalation packet</a></li>
       </ul>
@@ -107,6 +108,16 @@
 
     <h3>4) Approval state confusion</h3>
     <p>Some actions require approval each time (or when command shape changes). Users often interpret a blocked command as “tool disappeared.”</p>
+
+    <h2 id="advanced">Advanced mismatch cases (high-friction)</h2>
+    <h3>5) Main session vs isolated/cron runs</h3>
+    <p>A tool can be available in your live chat session but missing in a scheduled or isolated run (or vice versa). If the problem only happens in reminders/cron jobs, include that run context in your report.</p>
+
+    <h3>6) Thread mismatch in Discord</h3>
+    <p>If you test in one thread/channel and expect the same behavior in another, you can see different capability outcomes due to per-channel policy and session binding.</p>
+
+    <h3>7) "It worked yesterday" after environment reset</h3>
+    <p>After restarts, account switching, or workspace/session resets, stale assumptions from old conversations can survive in your expectations but not in current runtime state. Always re-run a tiny probe in the exact surface you are using now.</p>
 
     <h2 id="recovery">Known-good recovery flow</h2>
     <div class="callout success">
