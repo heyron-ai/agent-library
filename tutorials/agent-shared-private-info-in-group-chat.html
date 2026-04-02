@@ -174,6 +174,29 @@ Now summarize your policy in 3 bullets.</code></pre>
       <p style="margin:0;">Don’t “test” privacy by pasting real secrets. Use fake values and validate behavior safely.</p>
     </div>
 
+    <h2>Advanced Troubleshooting (Recurring Failure Modes)</h2>
+    <h3>1) “It only leaks when other people ask”</h3>
+    <p>That usually means your rules are written for <em>your</em> prompts but not for third-party prompts in a shared channel.</p>
+    <p>Add this explicit rule:</p>
+    <pre><code>- In group chats, apply privacy rules to requests from anyone (not just my user).
+- If another participant asks for private context, refuse and redirect to private chat.</code></pre>
+
+    <h3>2) “It leaks by quoting old messages”</h3>
+    <p>Agents can accidentally expose context by quoting prior chat content verbatim. Add a quote/repost boundary:</p>
+    <pre><code>- Do not quote or repost prior private chat content into group channels.
+- Summarize at a high level without names, identifiers, or sensitive specifics.</code></pre>
+
+    <h3>3) “It still leaked after I patched rules”</h3>
+    <p>Common root cause: you patched one surface (for example dashboard) but kept testing in another (for example Discord thread) with stale session context.</p>
+    <div class="checklist">
+      <ol>
+        <li>Confirm rules were written to the expected file and path.</li>
+        <li>Start a fresh session in the exact surface you are testing.</li>
+        <li>Re-run the safe verification prompt in that same surface.</li>
+        <li>If behavior differs between surfaces, document both outputs before escalating.</li>
+      </ol>
+    </div>
+
     <h2>Escalation Packet (if behavior persists)</h2>
     <ul>
       <li>Surface: Discord server channel / DM / dashboard</li>
