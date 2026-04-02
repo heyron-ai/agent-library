@@ -165,7 +165,20 @@ Then include:
         <li><strong>Config changed, gateway not restarted:</strong> settings are correct on disk but old behavior still running.</li>
         <li><strong>Role hierarchy confusion:</strong> admin role granted, but channel override explicitly denies bot role.</li>
         <li><strong>Moderation gates:</strong> slowmode, anti-spam, or mention policies silently block bot output.</li>
+        <li><strong>Wrong guild bound in config:</strong> bot is healthy, but your server ID is missing from allowlist/target guild settings.</li>
+        <li><strong>Server mismatch during testing:</strong> DM works because global identity is fine, but channel tests are happening in a different Discord server than configured.</li>
       </ul>
+    </div>
+
+    <h2>DM works, server still silent? Run this policy reset</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Confirm server ID:</strong> verify you are testing in the exact guild configured for this bot.</li>
+        <li><strong>Set channel behavior explicitly:</strong> ask the agent to set <code>groupPolicy: open</code> and <code>requireMention: false</code> (or document your intended mention-only behavior).</li>
+        <li><strong>Check allowlist/target guild config:</strong> ensure your current guild ID is included where applicable.</li>
+        <li><strong>Restart gateway:</strong> apply changes, then restart before retesting.</li>
+        <li><strong>Retest in one clean text channel:</strong> no custom overrides, then expand back to normal channels.</li>
+      </ol>
     </div>
 
     <div class="callout danger">
