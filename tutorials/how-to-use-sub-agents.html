@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Use Sub-Agents Without Chaos — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">How-To</div>
+      <h1>How to Use Sub-Agents Without Chaos</h1>
+      <p>A practical guide for delegating work to sub-agents while keeping one clear owner, one output format, and zero confusion.</p>
+    </div>
+
+    <p>Sub-agents are great when your main agent needs parallel help (research, drafting, coding, data cleanup). But many users hit the same problem: they spawn extra agents and lose track of who did what.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Common symptom</div>
+      <p style="margin:0;">"I told my agent to create sub-agents and now I have mixed responses, duplicate work, and no clean final answer."</p>
+    </div>
+
+    <h2>When to Use a Sub-Agent</h2>
+    <ul>
+      <li><strong>Use sub-agents</strong> for large tasks that can be split (research + writing + QA).</li>
+      <li><strong>Do not use sub-agents</strong> for tiny one-step tasks (you'll add overhead for no gain).</li>
+      <li><strong>Always keep one manager</strong> (your main agent) responsible for the final merged result.</li>
+    </ul>
+
+    <h2>2-Minute Setup Pattern (Manager + Workers)</h2>
+    <div class="checklist">
+      <ol>
+        <li>Tell your main agent it is the <strong>orchestrator</strong> and final editor.</li>
+        <li>Define each sub-agent's job in one sentence (no overlap).</li>
+        <li>Force a shared output format (same headings, same bullet style).</li>
+        <li>Require a final merge pass with conflict cleanup and deduplication.</li>
+      </ol>
+    </div>
+
+    <h2>Copy/Paste Prompt Template</h2>
+    <pre><code>You are the manager agent.
+Create sub-agents only if needed.
+
+Goal: [one clear result]
+Deadline: [time]
+
+Assign workers:
+1) Research worker: gather facts/sources only
+2) Draft worker: produce first draft using research
+3) QA worker: find errors, contradictions, missing steps
+
+Rules:
+- No overlapping responsibilities
+- Each worker must return output in this format:
+  - Task completed
+  - Key findings (3-7 bullets)
+  - Open questions
+- After workers finish, merge into ONE final answer
+- Final answer must include:
+  1) Executive summary
+  2) Action steps
+  3) Risks/unknowns
+  4) Next best action</code></pre>
+
+    <h2>High-Friction Mistakes to Avoid</h2>
+    <h3>1) Letting workers answer the user directly</h3>
+    <p>Have workers report to the manager only. The manager sends the final response.</p>
+
+    <h3>2) Assigning overlapping tasks</h3>
+    <p>If two workers both "research" or both "draft," you get duplicates and contradictions.</p>
+
+    <h3>3) No merge rule</h3>
+    <p>Without a forced final merge, you end up with fragments instead of a deliverable.</p>
+
+    <h3>4) No evidence requirement</h3>
+    <p>For factual work, require each worker to cite source links or data origin.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Best practice</div>
+      <p style="margin:0;">Use sub-agents for depth and speed — but keep one accountable owner for quality. Manager-led merges are what make the workflow reliable.</p>
+    </div>
+
+    <h2>If It Still Feels Messy</h2>
+    <p>Run this reset workflow:</p>
+    <ol>
+      <li>Stop creating new workers.</li>
+      <li>Ask the manager to list all active workers and their exact jobs.</li>
+      <li>Kill overlapping workers and keep only distinct roles.</li>
+      <li>Re-run with strict format + final merge required.</li>
+    </ol>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don't spawn sub-agents "just in case." Every extra worker increases coordination cost and can lower answer quality if the roles are not tightly scoped.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="agent-working-while-youre-away.html">Can My Agent Keep Working While I’m Away?</a> · <a href="agent-says-done-but-didnt-do-it.html">Agent Said It Did Something — But Didn’t?</a> · <a href="prompting-your-agent-like-a-pro.html">Prompting Your Agent Like a Pro</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
