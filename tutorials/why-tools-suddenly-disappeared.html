@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Tools Suddenly Disappeared | heyron®</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --code-bg: #161616;
+      --info: #5865F2;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --success: #43b581;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .hero { text-align: center; padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .badge { display: inline-block; background: var(--accent); color: #fff; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; padding: .25rem .75rem; border-radius: 99px; margin-bottom: 1rem; }
+    .hero h1 { font-size: 2rem; color: #fff; margin-bottom: .75rem; }
+    .hero .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto 1rem; }
+    .hero .time { color: var(--text-muted); font-size: .85rem; }
+    h2 { font-size: 1.4rem; margin: 2rem 0 .75rem; border-bottom: 1px solid var(--border); padding-bottom: .5rem; }
+    h3 { font-size: 1.1rem; margin: 1.5rem 0 .5rem; }
+    p { margin-bottom: .85rem; }
+    ul, ol { margin: .5rem 0 1rem 1.25rem; }
+    li { margin-bottom: .4rem; }
+    code { background: var(--code-bg); border: 1px solid var(--border); padding: .15em .4em; border-radius: 4px; font-size: .88em; }
+    .callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--info); border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0 1.2rem; }
+    .callout .callout-title { font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; margin-bottom: .35rem; }
+    .callout.info { border-left-color: var(--info); }
+    .callout.warning { border-left-color: var(--warning); }
+    .callout.danger { border-left-color: var(--danger); }
+    .callout.success { border-left-color: var(--success); }
+    .callout.info .callout-title { color: var(--info); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.danger .callout-title { color: var(--danger); }
+    .callout.success .callout-title { color: var(--success); }
+    .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.2rem; margin-bottom: 1.6rem; }
+    .toc h4 { margin-bottom: .6rem; }
+    .toc ul { list-style: none; margin: 0; padding: 0; }
+    .toc li { margin-bottom: .3rem; }
+    .toc a { color: var(--text-muted); text-decoration: none; }
+    .toc a:hover { color: var(--accent-light); }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .footer { text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 1.5rem; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <span class="badge">Troubleshooting</span>
+      <h1>Why Tools Suddenly Disappeared?</h1>
+      <p class="desc">If your agent was using web search, files, or commands yesterday and now says “I can’t do that,” this is usually a session/scope issue — not a broken account.</p>
+      <p class="time">⏱ 4 minute read · Beginner</p>
+    </div>
+
+    <div class="toc">
+      <h4>📑 In this guide</h4>
+      <ul>
+        <li><a href="#what">What this error usually means</a></li>
+        <li><a href="#fast-check">2-minute fast check</a></li>
+        <li><a href="#root-causes">Most common root causes</a></li>
+        <li><a href="#recovery">Known-good recovery flow</a></li>
+        <li><a href="#packet">Escalation packet</a></li>
+      </ul>
+    </div>
+
+    <h2 id="what">What this error usually means</h2>
+    <p>In Heyron/OpenClaw, tools are contextual. A tool being available in one place does <strong>not</strong> guarantee it’s available in every session, channel, or execution mode.</p>
+    <div class="callout info">
+      <div class="callout-title">Quick mental model</div>
+      Tool access is decided by <strong>where</strong> you're talking to the agent, <strong>which session</strong> it's in, and <strong>what policy/config</strong> applies there.
+    </div>
+
+    <h2 id="fast-check">2-minute fast check</h2>
+    <ol>
+      <li>Start a fresh message and ask: <code>List tools available right now in this session.</code></li>
+      <li>If this is Discord, test in DM and one server channel separately.</li>
+      <li>If behavior changed after config edits, restart gateway and retest.</li>
+      <li>Try the same request in dashboard chat to compare.</li>
+    </ol>
+
+    <h2 id="root-causes">Most common root causes</h2>
+    <h3>1) Surface mismatch (dashboard vs Discord vs Telegram)</h3>
+    <p>You switched surfaces and expected the same capabilities/context instantly. Different surfaces can run with different session history and policy context.</p>
+
+    <h3>2) New session, old assumptions</h3>
+    <p>After <code>/new</code> or moving to a different thread/channel, your prior context is gone unless saved to files. The agent may stop using tools you expected because your prior setup instructions are no longer in that session.</p>
+
+    <h3>3) Policy/config changed</h3>
+    <p>If <code>AGENTS.md</code>, channel policy, or gateway settings changed recently, tools may be restricted until settings are reapplied and the runtime is restarted.</p>
+
+    <h3>4) Approval state confusion</h3>
+    <p>Some actions require approval each time (or when command shape changes). Users often interpret a blocked command as “tool disappeared.”</p>
+
+    <h2 id="recovery">Known-good recovery flow</h2>
+    <div class="callout success">
+      <div class="callout-title">Use this exact order</div>
+      Don’t skip steps — most loops happen when people jump straight to reinstalling everything.
+    </div>
+    <ol>
+      <li><strong>Confirm current surface:</strong> dashboard chat, Discord DM, or server channel.</li>
+      <li><strong>Run a tiny capability probe:</strong> ask for available tools in the current session.</li>
+      <li><strong>Open a clean session:</strong> start fresh and repeat the same probe.</li>
+      <li><strong>If recently edited config:</strong> apply + restart gateway, then retest.</li>
+      <li><strong>If command is blocked:</strong> review the exact approval prompt and approve/deny intentionally.</li>
+      <li><strong>If still failing:</strong> collect evidence packet below and post in <code>#help</code>.</li>
+    </ol>
+
+    <h2 id="packet">Support escalation packet (copy/paste)</h2>
+    <div class="callout warning">
+      <div class="callout-title">Copy this into #help</div>
+      <p><strong>Issue:</strong> Tools available before, now missing or denied.</p>
+      <p><strong>Surface:</strong> (dashboard / Discord DM / Discord channel / Telegram)</p>
+      <p><strong>Session context:</strong> (new session? old thread? after /new?)</p>
+      <p><strong>Recent changes:</strong> (config edits, SOUL/AGENTS edits, gateway restart Y/N)</p>
+      <p><strong>Probe result:</strong> paste agent response to “list tools available right now”</p>
+      <p><strong>Approval prompt seen:</strong> Y/N (paste exact text if yes)</p>
+      <p><strong>Expected vs actual:</strong> one sentence each</p>
+    </div>
+
+    <h2>Bottom line</h2>
+    <p>When tools “disappear,” it’s usually context/surface/policy drift — not random failure. Verify the current session, run a tiny probe, then restart/retest before escalating.</p>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — heyron®</p>
+      <p><a href="index.html">All Tutorials</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
+    </div>
+  </div>
+</body>
+</html>
