@@ -161,7 +161,23 @@
         <li>Removing operators like <code>&amp;&amp;</code> from the approval line.</li>
         <li>Approving a “safe” command but ignoring the next elevated one.</li>
         <li>Switching sessions/threads and expecting previous approvals to carry over.</li>
+        <li>Approving a command from an older message after the tool output changed.</li>
       </ul>
+    </div>
+
+    <h2>When <code>allow-always</code> still asks again</h2>
+    <div class="card">
+      <p>This confuses people a lot: <code>allow-always</code> can still trigger a new approval prompt if the next command is materially different or has a different risk profile.</p>
+      <ul>
+        <li><strong>Different command body:</strong> added flags, changed targets, or a new chained command block.</li>
+        <li><strong>Different privilege level:</strong> a normal command ran, then a separate elevated command appears.</li>
+        <li><strong>Different command context:</strong> new shell/script wrapper or multi-line script generated after retries.</li>
+      </ul>
+      <p>If prompted again, don’t assume failure. Compare old vs new command text and approve only what you intend to run.</p>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> always approve using the exact <code>/approve ...</code> line shown in the current prompt. Do not reuse a previous approval line from memory.</p>
     </div>
 
     <h2>Copy/paste support packet for #help</h2>
