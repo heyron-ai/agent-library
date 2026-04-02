@@ -85,6 +85,7 @@ Battle-tested workspace files to get started fast:
 - **[MODEL-LOCK-PLAYBOOK.md](templates/MODEL-LOCK-PLAYBOOK.md)** — Deterministic workflow to pin a model, verify runtime model-id proof, and isolate fallback/session-drift causes when outputs suddenly change
 - **[SUB-AGENT-ORCHESTRATION-CHECKLIST.md](templates/SUB-AGENT-ORCHESTRATION-CHECKLIST.md)** — Manager+workers playbook to prevent duplicate outputs, destination mismatch, and merge-quality loss in multi-agent workflows
 - **[PRIVACY-INCIDENT-RESPONSE.md](templates/PRIVACY-INCIDENT-RESPONSE.md)** — Rapid contain→patch→verify workflow for accidental private-data leaks in shared/group chats
+- **[CHANGE-SCOPE-LOCK-CHECKLIST.md](templates/CHANGE-SCOPE-LOCK-CHECKLIST.md)** — A strict scope+plan+diff workflow for preventing over-editing when you only want small targeted changes
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
 
 ## 🔧 Fix Scripts
