@@ -165,6 +165,20 @@
 - Use one emoji max when tone is casual.
 - Never claim actions without proof (file path, command output, or link).</div>
 
+    <h2>Advanced conflict checks (high-friction cases)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Competing rules in AGENTS.md:</strong> If AGENTS.md has strict voice/format rules, they can overpower softer tone tweaks in SOUL.md.</li>
+        <li><strong>Old thread inertia:</strong> Long-running chats can keep behavioral momentum. Start a fresh session for a clean read of current files.</li>
+        <li><strong>Dashboard edit confusion:</strong> If you asked chat to "change personality" but never verified file lines, you may have a planned edit rather than a persisted write.</li>
+        <li><strong>Invisible test prompt:</strong> Broad prompts like "be better" are too vague. Use a measurable marker (exact phrase, word cap, output format).</li>
+      </ul>
+    </div>
+
+    <h2>Known-good verification prompt (copy/paste)</h2>
+    <div class="code">Before answering, read SOUL.md and quote the exact line that says "Never claim actions without proof".
+Then answer this in exactly 2 bullets, under 20 words each, starting with "Neon check:".</div>
+
     <h2>If it still doesn’t change</h2>
     <p>Escalate with evidence so support can reproduce quickly:</p>
     <div class="code">Issue: SOUL.md updated but behavior unchanged
