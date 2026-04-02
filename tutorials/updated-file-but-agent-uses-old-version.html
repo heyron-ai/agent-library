@@ -171,10 +171,33 @@ If you cannot find that marker, stop and ask me to re-upload.</code></pre>
       <p style="margin:0;">Use explicit versioning every time: <code>project-brief-v1</code>, <code>project-brief-v2</code>, <code>project-brief-v3</code>. Ask for one changed-line quote before deeper work.</p>
     </div>
 
+    <h2>High-Friction Edge Cases (Worth Checking)</h2>
+    <h3>1) Cloud doc vs exported file mismatch</h3>
+    <p>You edited a Google Doc/Notion page, but uploaded an older exported <code>.pdf</code>/<code>.docx</code>. The agent can only use what you actually attached.</p>
+
+    <h3>2) Same name from different folders</h3>
+    <p>It’s common to have <code>final-v3.docx</code> in multiple folders. Confirm the local path before uploading so you don’t attach yesterday’s copy.</p>
+
+    <h3>3) Retrying in the wrong thread after fixing the file</h3>
+    <p>Users often re-upload in one place, then continue testing in another thread/surface. Keep upload + verification in the same active conversation.</p>
+
+    <h3>4) No hard proof step before analysis</h3>
+    <p>If you skip a quote/marker check, stale-context issues can hide for many messages. Always require proof first.</p>
+
+    <h2>Stronger Verification Prompt (Metadata + Quote)</h2>
+    <p>If this keeps happening, use this stricter prompt instead:</p>
+    <pre><code>Before doing any analysis:
+1) confirm exact filename you are using
+2) report any visible metadata you can access (for example file type/size)
+3) quote one sentence containing this marker: "[NEW-VERSION-MARKER]"
+4) list any other similarly named files currently in context
+If marker is missing, stop and ask me to re-upload only the newest file.</code></pre>
+
     <h2>Escalation Packet (if still broken)</h2>
     <ul>
       <li>Surface used (Dashboard / Discord DM / server channel)</li>
       <li>Exact filename uploaded + timestamp</li>
+      <li>Whether filename included explicit version suffix (v2/v3/etc.)</li>
       <li>One line that changed in the new version</li>
       <li>Agent response showing stale content</li>
       <li>Whether fresh-thread + single-file retest was done</li>
