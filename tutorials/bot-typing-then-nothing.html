@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Bot Typing Then Nothing? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Discord Bot Typing... Then Nothing?</h1>
+      <p>Fix the high-friction case where your agent shows the typing indicator but never sends a message.</p>
+    </div>
+
+    <p>This issue is common in #help and #tips-and-tricks: the bot appears alive, starts typing, and then stops with no visible reply. Usually this is a channel-policy mismatch, response-policy rule, or a blocked send path—not a "dead model."</p>
+
+    <div class="callout">
+      <p><strong>Core rule:</strong> typing indicator means the bot saw your message. The failure is usually on the <em>send/permission/policy</em> side.</p>
+    </div>
+
+    <h2>2-minute isolation flow</h2>
+    <div class="card">
+      <ol>
+        <li>Create a fresh test channel with minimal restrictions.</li>
+        <li>Give the bot role explicit <strong>View Channel</strong> + <strong>Send Messages</strong> + <strong>Read Message History</strong>.</li>
+        <li>Temporarily disable complex moderation/auto-delete bots in that channel.</li>
+        <li>Send a plain message: <em>@bot reply with exactly "pong"</em>.</li>
+        <li>If that works, your original channel has policy/override issues.</li>
+      </ol>
+    </div>
+
+    <h2>Most common causes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Channel override conflict:</strong> role can read but cannot send in this specific channel/thread/forum post.</li>
+        <li><strong>Discord Integrations command restrictions:</strong> slash/mention handling is limited by server integration settings.</li>
+        <li><strong>Mention policy mismatch:</strong> bot is configured to require mentions, but users send plain text (or vice versa).</li>
+        <li><strong>Group policy closed:</strong> DM works, server channels stay silent until group policy is opened.</li>
+        <li><strong>No restart after config edits:</strong> changes made, but runtime still using old settings.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good recovery sequence</h2>
+    <div class="code">1) Confirm these settings in agent config:
+- requireMention: false (or keep true, but always @mention during test)
+- groupPolicy: open
+
+2) Save config, then restart gateway/runtime.
+
+3) Run this test in a clean channel:
+@YourBot reply with exactly: pong
+
+4) If still typing-then-silent, test in DM.
+- DM works + channel fails = channel/integration permission issue
+- DM fails too = broader runtime/config issue</div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> one successful DM does not prove channel setup is correct. DM and server channels are different permission surfaces.</p>
+    </div>
+
+    <h2>When the issue is thread/forum specific</h2>
+    <div class="card">
+      <ul>
+        <li>Ensure the bot can <strong>Send Messages in Threads</strong>.</li>
+        <li>If using forum channels, test in a normal text channel first.</li>
+        <li>Check category-level permission sync; unsynced child channels can silently override role grants.</li>
+      </ul>
+    </div>
+
+    <h2>Copy/paste support packet</h2>
+    <div class="code">Discord typing-then-silent report
+
+Server ID:
+Channel ID (failing):
+Channel type (text/thread/forum):
+Bot permissions in failing channel:
+Works in DM? (yes/no):
+Works in clean test channel? (yes/no):
+requireMention value:
+groupPolicy value:
+Did you restart after config changes? (yes/no):
+Exact test message used:
+Observed behavior (including typing duration):</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> this is usually a permission/policy mismatch, not model failure. Use a clean channel + explicit ping test to isolate quickly and stop guessing.</p>
+    </div>
+
+    <div class="footer">
+      <p>If you want related troubleshooting, see <a href="discord-can-read-but-cant-reply.html">Bot Can Read But Can’t Reply in Discord</a> and <a href="connect-discord.html">Connect Your Agent to Discord</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
