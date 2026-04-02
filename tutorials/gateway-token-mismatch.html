@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Failed: Gateway Token Mismatch — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero { text-align: center; padding: 48px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+    .hero-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 560px; margin: 0 auto; }
+    .time-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; font-size: 13px; color: var(--text-muted); margin-top: 16px; }
+    h2 { font-size: 24px; font-weight: 700; margin: 42px 0 16px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 600; margin: 28px 0 12px; }
+    p { margin-bottom: 14px; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .step { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+    .step-number { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--accent); color: white; font-size: 14px; font-weight: 700; border-radius: 50%; margin-bottom: 10px; }
+    .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 15px; }
+    .callout-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .callout-danger { background: rgba(240, 71, 71, 0.08); border-left: 3px solid var(--danger); }
+    .callout-warning { background: rgba(250, 166, 26, 0.08); border-left: 3px solid var(--warning); }
+    .callout-success { background: rgba(67, 181, 129, 0.08); border-left: 3px solid var(--success); }
+    .callout-info { background: rgba(88, 101, 242, 0.08); border-left: 3px solid var(--accent); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: var(--accent-light); }
+    .code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; }
+    .trouble-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 10px; }
+    .trouble-card summary { font-weight: 600; cursor: pointer; list-style: none; }
+    .trouble-card summary::before { content: "▸ "; color: var(--accent-light); }
+    .trouble-card[open] summary::before { content: "▾ "; }
+    .answer { padding-top: 10px; color: var(--text-muted); }
+    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+    .footer { text-align: center; padding-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Auth Failed: Gateway Token Mismatch</h1>
+      <p>Fix the “unauthorized: gateway token mismatch” login error and get back into your agent in a few minutes.</p>
+      <div class="time-badge">⏱ About 4 minutes</div>
+    </div>
+
+    <div class="callout callout-danger">
+      <div class="callout-label">What this means</div>
+      <p style="margin:0">Your dashboard login token and your running gateway token don't match. This is usually caused by old browser state, multiple tabs/sessions, or recent config changes.</p>
+    </div>
+
+    <h2>Fast Fix (Do These In Order)</h2>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Open the correct dashboard URL from your agent output</h3>
+      <p>Use the dashboard URL your agent currently reports (not an old bookmark). If you're in multiple environments (local + VPS), this is the most common mix-up.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Paste the fresh gateway token in Control UI settings</h3>
+      <p>In the dashboard, open Control UI settings and paste the current token exactly as provided. No extra spaces, no old copied value.</p>
+      <div class="callout callout-warning">
+        <div class="callout-label">Common gotcha</div>
+        <p style="margin:0">If you copied a token from chat history from yesterday, it may no longer be valid after a restart/redeploy.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Hard refresh and clear site data for that dashboard domain</h3>
+      <p>Clear only the dashboard domain's local storage/cookies, then reload. This removes stale token state that keeps forcing unauthorized loops.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Restart gateway once, then test in one tab</h3>
+      <p>Ask your agent to restart the gateway, wait ~20-30 seconds, then test login in a single clean tab before opening others.</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">Success check</div>
+      <p style="margin:0">You should load the dashboard without “unauthorized” and be able to run a simple command (for example: <em>session_status</em>).</p>
+    </div>
+
+    <hr>
+
+    <h2>Related Error: “403 Key limit exceeded”</h2>
+    <p>Community reports today also showed model failures like:</p>
+    <div class="code">All models failed: ... 403 Key limit exceeded (total limit)</div>
+    <p>This is separate from token mismatch. It means your model provider key hit quota/limit.</p>
+    <ul style="margin-left:20px; color:var(--text-muted)">
+      <li>Open provider key settings (for OpenRouter: <a href="https://openrouter.ai/settings/keys" target="_blank">openrouter.ai/settings/keys</a>)</li>
+      <li>Top up or switch to another key/model</li>
+      <li>Set a valid fallback model that you actually have access to</li>
+    </ul>
+
+    <hr>
+
+    <h2>FAQ</h2>
+
+    <details class="trouble-card">
+      <summary>I already pasted the token, still unauthorized</summary>
+      <div class="answer">
+        <p>You're likely in the wrong dashboard origin or stale browser storage is overriding it. Verify exact URL, clear site data, and retry in a private/incognito window.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Does this mean my account is compromised?</summary>
+      <div class="answer">
+        <p>Usually no. This error is usually state mismatch, not account takeover. Still, if you accidentally posted secrets publicly, rotate them immediately.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>When should I escalate to #help?</summary>
+      <div class="answer">
+        <p>If you've done the 4 steps above and the error persists, post in #help with: exact error text, your signup email, dashboard URL used, and whether local/VPS/Tailscale is involved.</p>
+      </div>
+    </details>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — heyron Community</p>
+    </div>
+  </div>
+</body>
+</html>
