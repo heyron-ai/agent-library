@@ -82,6 +82,7 @@ Battle-tested workspace files to get started fast:
 - **[LONG-CHAT-RECOVERY-WORKFLOW.md](templates/LONG-CHAT-RECOVERY-WORKFLOW.md)** — Deterministic reset + rehydration workflow for “agent got worse over long chat” degradation and lost-work prevention
 - **[SOUL-CHANGE-VERIFICATION.md](templates/SOUL-CHANGE-VERIFICATION.md)** — Deterministic verification flow for “I updated SOUL.md but behavior didn’t change” (file/path proof, fresh-session test, and escalation packet)
 - **[BACKGROUND-TASK-DELIVERY-CHECKLIST.md](templates/BACKGROUND-TASK-DELIVERY-CHECKLIST.md)** — Fast diagnosis workflow for “task ran but I can’t find the output,” focused on schedule/timezone + destination routing mismatches
+- **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
 
 ## 🔧 Fix Scripts
 
