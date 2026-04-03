@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Origin Not Allowed in Control UI — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero { text-align: center; padding: 48px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+    .hero-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 560px; margin: 0 auto; }
+    .time-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; font-size: 13px; color: var(--text-muted); margin-top: 16px; }
+    h2 { font-size: 24px; font-weight: 700; margin: 42px 0 16px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 600; margin: 28px 0 12px; }
+    p { margin-bottom: 14px; }
+    .step { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+    .step-number { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--accent); color: white; font-size: 14px; font-weight: 700; border-radius: 50%; margin-bottom: 10px; }
+    .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 15px; }
+    .callout-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .callout-danger { background: rgba(240, 71, 71, 0.08); border-left: 3px solid var(--danger); }
+    .callout-warning { background: rgba(250, 166, 26, 0.08); border-left: 3px solid var(--warning); }
+    .callout-success { background: rgba(67, 181, 129, 0.08); border-left: 3px solid var(--success); }
+    .callout-info { background: rgba(88, 101, 242, 0.08); border-left: 3px solid var(--accent); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: var(--accent-light); }
+    .code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; }
+    .trouble-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 10px; }
+    .trouble-card summary { font-weight: 600; cursor: pointer; list-style: none; }
+    .trouble-card summary::before { content: "▸ "; color: var(--accent-light); }
+    .trouble-card[open] summary::before { content: "▾ "; }
+    .answer { padding-top: 10px; color: var(--text-muted); }
+    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+    .footer { text-align: center; padding-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>“Origin Not Allowed” in Control UI</h1>
+      <p>Fix the error that blocks dashboard access after a restart, URL change, or moving from local to VPS.</p>
+      <div class="time-badge">⏱ About 4 minutes</div>
+    </div>
+
+    <div class="callout callout-danger">
+      <div class="callout-label">What this means</div>
+      <p style="margin:0">The dashboard URL you're opening is not in your gateway's allowed origin list. The gateway is rejecting the browser for safety.</p>
+    </div>
+
+    <h2>Fast Fix (Do These In Order)</h2>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Copy the exact origin from your browser</h3>
+      <p>Grab only <strong>protocol + host + port</strong> (for example: <code>https://my-agent.example.com</code> or <code>http://192.168.1.10:3010</code>).</p>
+      <div class="callout callout-warning">
+        <div class="callout-label">Common gotcha</div>
+        <p style="margin:0">A trailing slash or wrong port can make it fail. Origins must match exactly.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Add that origin to gateway.controlUi.allowedOrigins</h3>
+      <p>In your gateway config, add the exact origin to the allow-list and save.</p>
+      <div class="code">{
+  "gateway": {
+    "controlUi": {
+      "allowedOrigins": [
+        "https://my-agent.example.com",
+        "http://192.168.1.10:3010"
+      ]
+    }
+  }
+}</div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Restart the gateway once</h3>
+      <p>Apply config changes with a clean restart, then wait 20-30 seconds.</p>
+      <div class="code">openclaw gateway restart</div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Retest in one clean browser tab</h3>
+      <p>Close duplicate tabs, open one tab to the same URL, and test again. If needed, hard refresh once.</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">Success check</div>
+      <p style="margin:0">Control UI loads without the origin error and you can run a basic command.</p>
+    </div>
+
+    <hr>
+
+    <h2>High-Friction Edge Cases</h2>
+
+    <details class="trouble-card">
+      <summary>Worked yesterday, broken today after moving to VPS</summary>
+      <div class="answer">
+        <p>You likely still have a local origin allowed, but not the new VPS domain. Add the VPS origin explicitly and restart.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>HTTPS URL in browser, HTTP origin in config</summary>
+      <div class="answer">
+        <p>Scheme mismatch is a hard fail. <code>https://</code> and <code>http://</code> are different origins.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>One teammate can load it, another cannot</summary>
+      <div class="answer">
+        <p>They may be using different URLs (domain vs IP, or different ports). Add each legitimate origin you actually use.</p>
+      </div>
+    </details>
+
+    <hr>
+
+    <h2>When to Escalate to #help</h2>
+    <p>If it still fails, post this evidence so support can help quickly:</p>
+    <ul style="margin-left:20px; color:var(--text-muted)">
+      <li>Exact full error text</li>
+      <li>Your browser URL and extracted origin</li>
+      <li>Your current <code>gateway.controlUi.allowedOrigins</code> values (redact secrets)</li>
+      <li>Whether you restarted after editing config</li>
+      <li>Whether this is local, VPS, or both</li>
+    </ul>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — heyron Community</p>
+    </div>
+  </div>
+</body>
+</html>
