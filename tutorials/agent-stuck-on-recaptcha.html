@@ -165,6 +165,20 @@ Do this now:
       </ul>
     </div>
 
+    <h2>High-friction edge cases (worth checking once)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>SSO / 2FA checkpoints:</strong> enterprise login flows (Google/Microsoft/Okta, OTP prompts) can look like CAPTCHA failure but are actually identity verification steps that require manual completion.</li>
+        <li><strong>Session trust mismatch:</strong> challenge solved in one browser/session but task resumed in another context, so the protected page still appears blocked.</li>
+        <li><strong>Geo/IP reputation spikes:</strong> VPN/proxy exits and frequent region changes can trigger repeated challenge loops even after successful verification.</li>
+        <li><strong>Cookie/privacy extensions:</strong> strict anti-tracking settings can wipe trust cookies and force repeated "verify you're human" prompts.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>If challenge loops continue:</strong> pause retries, disable VPN/proxy temporarily, use one stable browser session, complete one clean login+challenge cycle, then retest with a tiny action first.</p>
+    </div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
@@ -183,6 +197,9 @@ Exact blocker text:
 What worked before blocker:
 Manual step completed? (yes/no):
 What happened after manual step:
+VPN/proxy in use? (yes/no):
+SSO or 2FA involved? (yes/no):
+Same browser/session used end-to-end? (yes/no):
 Screenshots (optional):</div>
 
     <div class="callout-success">
