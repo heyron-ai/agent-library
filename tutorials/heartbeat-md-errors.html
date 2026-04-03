@@ -205,10 +205,30 @@ Rules:
     <div class="card">
       <ul>
         <li><strong>“File not found”</strong> → HEARTBEAT.md is in the wrong folder or wrong filename case.</li>
+        <li><strong>“HEARTBEAT prompt showed up in chat”</strong> → normal occasionally; reply exactly <code>HEARTBEAT_OK</code> once, then continue.</li>
+        <li><strong>“I typed HEATBEAT_OK and nothing happened”</strong> → typo; use <code>HEARTBEAT_OK</code> (with the <code>R</code>).</li>
         <li><strong>Repeats the same message every run</strong> → missing “do not repeat” rule and no state tracking.</li>
         <li><strong>Runs too many checks every heartbeat</strong> → checklist is too broad; trim to 3-5 items max.</li>
         <li><strong>Noisy messages at night</strong> → add explicit quiet hours with an urgency exception.</li>
       </ul>
+    </div>
+
+    <h2>If the heartbeat prompt appears mid-conversation</h2>
+    <p>Users often panic when they suddenly see a heartbeat line in chat. In most cases this is expected system behavior, not agent failure.</p>
+
+    <div class="step">
+      <div class="step-title">1) Reply with the exact no-op phrase</div>
+      <p>Send <code>HEARTBEAT_OK</code> exactly once (all caps, include the <code>R</code>).</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Continue your normal task</div>
+      <p>You do not need to restart your agent or rewrite your prompts just because a heartbeat surfaced in chat.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Only escalate if it appears repeatedly every few minutes</div>
+      <p>If heartbeat prompts flood chat, share timestamps and your current <code>HEARTBEAT.md</code> in #help so support can verify scheduling/config drift.</p>
     </div>
 
     <div class="callout-danger">
