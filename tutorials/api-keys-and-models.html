@@ -601,6 +601,13 @@
 
     <div class="step">
       <div class="step-number">✓</div>
+      <h3>"I updated the key, but errors didn’t change"</h3>
+      <p>This is usually stale state (old session/runtime still holding old auth). Save the new key, then start a fresh chat/session and run one tiny test prompt. If you recently regenerated a key, make sure any old key is removed/disabled so requests can’t silently hit the wrong credential.</p>
+      <p style="margin-bottom:0">If behavior still looks identical, switch to one known-good model for that same provider and ask the agent to quote the exact provider error text before continuing.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
       <h3>Model works for a while, then starts failing</h3>
       <p>You likely hit rate limits or monthly caps. Either lower traffic, switch to a cheaper/faster model for routine tasks, or raise your provider spend/rate limits. Keep a fallback model configured so your agent stays responsive.</p>
     </div>
