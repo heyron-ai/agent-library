@@ -91,13 +91,27 @@
         <li><strong>Old thread vs new thread:</strong> same agent identity, different session context.</li>
         <li><strong>Ambiguous reminder request:</strong> no destination specified, so output lands somewhere unexpected.</li>
         <li><strong>Silent failure after config edits:</strong> runtime restart needed before new behavior is visible.</li>
+        <li><strong>Job exists but is disabled:</strong> if disabled jobs are hidden, it looks like the job vanished.</li>
+        <li><strong>Timezone mismatch:</strong> the job is real, but scheduled in UTC or a different timezone than you expected.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h2>Advanced edge cases (worth checking once)</h2>
+      <h3>1) Created in isolated session, searched in main</h3>
+      <p>If the job was created from an isolated/worker context, the destination can differ from your current chat. Always capture <code>sessionTarget</code> and the final delivery destination together.</p>
+
+      <h3>2) Cron expression is valid but next run is later than expected</h3>
+      <p>For recurring jobs, ask for the <strong>next scheduled run time</strong> in your local timezone. If next run is correct but later than expected, this is scheduling expectation drift, not missing job state.</p>
+
+      <h3>3) One-shot <code>at</code> jobs with implicit timezone assumptions</h3>
+      <p>If no timezone is explicit, many systems interpret ISO timestamps as UTC. Use explicit timezone phrasing and ask the agent to echo both local time and UTC before creating the job.</p>
     </div>
 
     <div class="card">
       <h2>Copy/paste recovery prompt</h2>
       <p>Use this exactly:</p>
-      <p><code>Create a one-time reminder for 2 minutes from now. Before creating it, state the exact destination (sessionTarget + channel/thread). After creating it, return the cron job ID and then list cron jobs to prove it exists. Use reminder text: CANARY-CRON-VISIBILITY-TEST.</code></p>
+      <p><code>Create a one-time reminder for 2 minutes from now. Before creating it, state the exact destination (sessionTarget + channel/thread) and the exact fire time in both local timezone and UTC. After creating it, return the cron job ID and then list cron jobs including disabled jobs to prove it exists. Use reminder text: CANARY-CRON-VISIBILITY-TEST.</code></p>
     </div>
 
     <div class="card">
