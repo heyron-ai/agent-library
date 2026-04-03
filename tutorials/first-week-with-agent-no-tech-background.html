@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overwhelmed in Week 1? A No-Tech First Win Plan — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(232,168,56,0.15);
+      color: #f0c060;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 35px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 670px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Getting Started</div>
+      <h1>Overwhelmed in Week 1? A No-Tech First Win Plan</h1>
+      <p>If Heyron feels like "I thought AI would do it all" and now you're drowning in setup tabs, this guide gets you back to momentum in under 90 minutes.</p>
+    </div>
+
+    <p>This is one of the most common community pain points: high expectations, then immediate friction. You're not failing. You just need a better first-week workflow.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> your agent is not a magic autopilot. It works best as a guided operator: you define goal + constraints, it executes the repeatable parts.</p>
+    </div>
+
+    <h2>The 90-minute first win sprint</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Pick one tiny outcome</strong> (example: draft one outreach email, not "launch my full business").</li>
+        <li><strong>Use one channel</strong> (Discord <em>or</em> dashboard, not both at once).</li>
+        <li><strong>Use one model pair</strong> (primary + fallback only).</li>
+        <li><strong>Give your agent plain-language constraints</strong> (no jargon, no code unless asked).</li>
+        <li><strong>Require proof at every step</strong> ("show exact file/path/output").</li>
+      </ol>
+    </div>
+
+    <h2>Prompt template that reduces chaos</h2>
+    <div class="code">I’m non-technical. Help me get one quick win.
+
+Goal: [single specific outcome]
+Constraints:
+- Explain like I’m new (no jargon)
+- One step at a time
+- Don’t ask me to install anything unless absolutely required
+- After each step: tell me what changed and how to verify it
+- If blocked: give 2 options (fast workaround vs proper fix)
+
+Start with Step 1 only.</div>
+
+    <h2>What to do when it starts spiraling</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Stop opening new tabs.</strong> Keep one active thread and finish one task.</li>
+        <li><strong>Ban vague asks.</strong> Replace "build my MVP" with a single concrete deliverable.</li>
+        <li><strong>Demand UI reality checks.</strong> If button names don't match, ask it to adapt to what you actually see.</li>
+        <li><strong>Checkpoint frequently.</strong> Save outputs every 10-15 minutes so progress is never lost.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Red flag:</strong> if your agent keeps insisting on steps that don’t match your screen, pause and reset with current screenshots/text. Don’t brute-force old instructions.</p>
+    </div>
+
+    <h2>Two-lane decision rule (keeps you moving)</h2>
+    <div class="card">
+      <p>When blocked, always ask for two paths:</p>
+      <ul>
+        <li><strong>Lane A — Fast workaround:</strong> "Get this done today with minimal setup."</li>
+        <li><strong>Lane B — Proper setup:</strong> "Build the durable version after the quick win."</li>
+      </ul>
+      <p>This prevents all-or-nothing stalls and keeps momentum while you learn.</p>
+    </div>
+
+    <h2>Support-ready message (if you still get stuck)</h2>
+    <div class="code">I’m blocked on a week-1 setup task.
+
+Goal:
+What I tried:
+Exact error message:
+Where it breaks (step number):
+What I expected to happen:
+What happened instead:
+Screenshot/text evidence:
+
+Please give me:
+1) quickest workaround
+2) proper long-term fix</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> Week 1 should be about one repeatable win, not full automation. Once you get one clean success, everything gets easier.</p>
+    </div>
+
+    <div class="footer">
+      <p>If you feel overwhelmed, shrink scope first. Smaller tasks build skill and confidence faster than "big bang" attempts.</p>
+    </div>
+  </div>
+</body>
+</html>
