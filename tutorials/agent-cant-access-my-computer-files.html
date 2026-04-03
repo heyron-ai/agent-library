@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Can’t Access My Computer Files? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Can’t Access My Computer Files?</h1>
+      <p>Why this happens, what your agent can safely access, and the fastest way to share files without getting stuck.</p>
+    </div>
+
+    <p>Common trust-break moment: <em>"It’s on my Desktop. Why can’t the agent see it?"</em> In most setups, agents only work inside their assigned workspace unless you explicitly provide files.</p>
+
+    <h2>The core model: agents are sandboxed by default</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Usually accessible:</strong> current workspace files, files you upload, and approved tool outputs.</li>
+        <li><strong>Usually not accessible:</strong> random local folders, browser tabs, private cloud drives, other app windows.</li>
+        <li><strong>By design:</strong> this protects your system and prevents accidental data exposure.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> if a path is outside the agent workspace, treat it as invisible until you copy/upload it into a shared location the agent can read.</p>
+    </div>
+
+    <h2>2-minute recovery flow</h2>
+    <div class="card">
+      <ol>
+        <li>Ask the agent to print its current working directory.</li>
+        <li>List files in that directory to confirm what it can actually see.</li>
+        <li>Move/copy your target file into that workspace <strong>or</strong> upload it directly in chat.</li>
+        <li>Ask the agent to quote one line from the file as proof it opened the correct version.</li>
+      </ol>
+    </div>
+
+    <div class="code">Please do a file visibility check.
+
+1) Print your current workspace path.
+2) List files in that directory.
+3) Tell me whether you can see: [exact filename].
+4) If not visible, tell me exactly where I should place/upload it.
+5) After I provide it, quote the first non-empty line as proof.</div>
+
+    <h2>High-friction mistakes (very common)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Same filename, wrong folder:</strong> `report-final.pdf` exists in multiple places; agent opens the wrong one.</li>
+        <li><strong>Old version still present:</strong> user updates locally but forgets to re-upload, so agent reads stale content.</li>
+        <li><strong>Thread/surface mismatch:</strong> file was uploaded in one chat surface, task was run in another.</li>
+        <li><strong>Cloud link isn’t public:</strong> URL works for you while logged in, but not for the agent.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid this trap:</strong> “It should just know where my file is” leads to loops. Always use <strong>path proof + quote proof</strong> when file identity matters.</p>
+    </div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>File is definitely in the workspace/uploaded, but agent still reports missing.</li>
+        <li>Agent reads a different file than requested despite exact filename/path prompts.</li>
+        <li>Cross-surface behavior is inconsistent and reproducible after a fresh session.</li>
+      </ul>
+    </div>
+
+    <h2>Support packet (copy/paste)</h2>
+    <div class="code">File visibility issue report
+
+Exact filename:
+Where file currently lives (full path or upload surface):
+Agent-reported workspace path:
+Agent file-list output captured? (yes/no):
+Quote proof from file captured? (yes/no):
+Are there files with same name in other folders? (yes/no):
+Fresh session retest done? (yes/no):
+Still failing after retest? (yes/no):</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> don’t debug this as “model quality.” Debug it as a visibility problem: correct location, then verify with path-and-quote proof.</p>
+    </div>
+
+    <div class="footer">
+      <p>Once users adopt path proof + quote proof, most “can’t access my file” loops disappear.</p>
+    </div>
+  </div>
+</body>
+</html>
