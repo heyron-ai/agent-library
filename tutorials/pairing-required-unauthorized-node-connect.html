@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pairing Required / Unauthorized — Node Connect Fix | heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero { text-align: center; padding: 48px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+    .hero-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 560px; margin: 0 auto; }
+    .time-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px; font-size: 13px; color: var(--text-muted); margin-top: 16px; }
+    h2 { font-size: 24px; font-weight: 700; margin: 42px 0 16px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 600; margin: 28px 0 12px; }
+    p { margin-bottom: 14px; }
+    .step { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 14px; }
+    .step-number { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--accent); color: white; font-size: 14px; font-weight: 700; border-radius: 50%; margin-bottom: 10px; }
+    .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 15px; }
+    .callout-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .callout-danger { background: rgba(240, 71, 71, 0.08); border-left: 3px solid var(--danger); }
+    .callout-warning { background: rgba(250, 166, 26, 0.08); border-left: 3px solid var(--warning); }
+    .callout-success { background: rgba(67, 181, 129, 0.08); border-left: 3px solid var(--success); }
+    .callout-info { background: rgba(88, 101, 242, 0.08); border-left: 3px solid var(--accent); }
+    .callout-danger .callout-label { color: var(--danger); }
+    .callout-warning .callout-label { color: var(--warning); }
+    .callout-success .callout-label { color: var(--success); }
+    .callout-info .callout-label { color: var(--accent-light); }
+    .code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace; font-size: 13px; overflow-x: auto; white-space: pre-wrap; }
+    .trouble-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 10px; }
+    .trouble-card summary { font-weight: 600; cursor: pointer; list-style: none; }
+    .trouble-card summary::before { content: "▸ "; color: var(--accent-light); }
+    .trouble-card[open] summary::before { content: "▾ "; }
+    .answer { padding-top: 10px; color: var(--text-muted); }
+    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+    .footer { text-align: center; padding-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>“Pairing Required” or “Unauthorized” on Connect</h1>
+      <p>Fix node connection failures by aligning pairing state, active token, and public URL settings in one clean pass.</p>
+      <div class="time-badge">⏱ About 4 minutes</div>
+    </div>
+
+    <div class="callout callout-danger">
+      <div class="callout-label">What this means</div>
+      <p style="margin:0">Your app is reaching a gateway, but the gateway is rejecting trust state (unpaired node, expired/invalid token, or wrong public endpoint).</p>
+    </div>
+
+    <h2>Fast Recovery Flow</h2>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Confirm you are connecting to the intended gateway URL</h3>
+      <p>Make sure your app’s connect target matches the gateway you actually restarted/edited. Mixed local vs VPS URLs are the #1 hidden mismatch.</p>
+      <div class="callout callout-warning">
+        <div class="callout-label">Common trap</div>
+        <p style="margin:0">You regenerate token on one host, but your app is still pointed at another host.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Re-run a fresh pairing flow end-to-end</h3>
+      <p>Generate a new pairing link/code and complete pairing once. Don’t reuse stale screenshots/old QR links.</p>
+      <div class="code"># Use your current gateway UI/flow to generate a brand-new pairing code.
+# Then complete pairing immediately from the same app/device session.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Verify token + public URL config are from the same environment</h3>
+      <p>If you expose the gateway remotely, confirm your published URL is the one apps can actually reach and that it maps to the same running gateway/token set.</p>
+      <div class="callout callout-info">
+        <div class="callout-label">Quick check</div>
+        <p style="margin:0">Any time you rotate token or change public URL, pair again. Old pairings can become invalid by design.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <h3>Restart gateway and retry once in a clean app session</h3>
+      <p>After config updates, restart gateway and retry from a fresh app state (close/reopen app, then reconnect once).</p>
+      <div class="code">openclaw gateway restart</div>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">Success check</div>
+      <p style="margin:0">Connect succeeds without “pairing required” or “unauthorized,” and your node appears online in the expected workspace.</p>
+    </div>
+
+    <hr>
+
+    <h2>High-Friction Edge Cases</h2>
+
+    <details class="trouble-card">
+      <summary>“Bootstrap token invalid or expired”</summary>
+      <div class="answer">
+        <p>Generate a new token/code and pair immediately. Some tokens are intentionally short-lived for security.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Local Wi-Fi works, remote access fails</summary>
+      <div class="answer">
+        <p>Your local bind may be fine, but remote URL exposure is wrong (DNS, tunnel, or allow-list mismatch). Validate remote URL routing and pair using that same endpoint.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Pairing succeeds, then fails again after restart</summary>
+      <div class="answer">
+        <p>You likely rotated token/config unintentionally or restarted a different gateway instance. Reconfirm single source of truth for runtime + config path.</p>
+      </div>
+    </details>
+
+    <hr>
+
+    <h2>When to Escalate to #help</h2>
+    <p>Post this packet so support can diagnose quickly:</p>
+    <ul style="margin-left:20px; color:var(--text-muted)">
+      <li>Exact error text shown in app</li>
+      <li>Target gateway URL you used</li>
+      <li>Whether this is local, VPS, or tunnel/Tailscale</li>
+      <li>Whether token or public URL was changed recently</li>
+      <li>Confirmation that you generated a fresh pairing code and retried once</li>
+    </ul>
+
+    <hr>
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud — heyron Community</p>
+    </div>
+  </div>
+</body>
+</html>
