@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Replies in the Wrong Language? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+    .callout-success strong { color: var(--success); }
+    .callout-warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .callout-warning strong { color: var(--warning); }
+    .callout-danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step { border-left: 2px solid var(--border); padding-left: 14px; margin: 18px 0; }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Replies in the Wrong Language?</h1>
+      <p>Fix language drift fast when your agent keeps switching languages mid-task.</p>
+    </div>
+
+    <p>A recurring friction point: you ask in one language, the agent answers in another, or flips language halfway through a workflow. This is usually a context and instruction-priority issue, not a broken model.</p>
+
+    <div class="callout">
+      <p><strong>Root cause:</strong> language drift usually comes from mixed-language context, copied prompts in a different language, or missing output constraints.</p>
+    </div>
+
+    <h2>Fast 4-step recovery</h2>
+
+    <div class="step">
+      <div class="step-title">1) Set one explicit language lock</div>
+      <p>Start your next message with a direct rule: “Reply only in [LANGUAGE] unless I explicitly ask to switch.”</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Reset context for clean behavior</div>
+      <p>If the thread is mixed-language, open a fresh session and paste a compact handoff plus language lock.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Add output format requirements</div>
+      <p>Specify tone + format in the same instruction block. Example: bullet list, no translation, keep technical terms in English only.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Require self-check before final output</div>
+      <p>Have the agent confirm the output language before sending the final answer.</p>
+    </div>
+
+    <h2>Paste-ready language lock prompt</h2>
+    <div class="code">For this thread, reply ONLY in [LANGUAGE].
+If I send text in another language, keep your reply in [LANGUAGE] unless I explicitly say: "switch language".
+Before your final answer, run a quick check and confirm: "Language check passed: [LANGUAGE]".
+Then provide the answer.</div>
+
+    <h2>High-friction mistakes to avoid</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Mixed-language examples:</strong> if your sample prompt is in another language, the agent may mirror it.</li>
+        <li><strong>No format constraints:</strong> vague asks invite style/language drift.</li>
+        <li><strong>Switching surfaces:</strong> dashboard/DM/server threads can have different context history.</li>
+        <li><strong>Long pasted transcripts:</strong> old multilingual text can override your current preference.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> if you actually need bilingual output, ask explicitly for structure (e.g., “Spanish first, English translation second”). Don’t assume the agent will infer your format.</p>
+    </div>
+
+    <h2>Known-good bilingual template</h2>
+    <div class="code">Output format:
+1) Spanish version (plain language)
+2) English translation
+3) Keep product/tool names untranslated
+4) Keep each section under 120 words</div>
+
+    <h2>When to escalate in #help</h2>
+    <p>If language drift continues after a fresh session + lock prompt, share:</p>
+    <ul>
+      <li>The exact language-lock prompt you used</li>
+      <li>Which surface you tested (dashboard/DM/server)</li>
+      <li>One short example of expected vs actual output</li>
+      <li>Whether behavior changed after a fresh session</li>
+    </ul>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> treat language like a hard output constraint, not a soft preference. One explicit language lock + fresh context resolves most cases quickly.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="prompting-your-agent-like-a-pro.html">Prompting Your Agent Like a Pro</a> · <a href="dashboard-vs-discord-contexts.html">Dashboard vs Discord: Why Context Doesn’t Carry Over</a></p>
+    </div>
+  </div>
+</body>
+</html>
