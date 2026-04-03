@@ -162,6 +162,20 @@ Do this exactly:
       </ul>
     </div>
 
+    <h2>High-friction edge cases (quick checks)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong key in the wrong place:</strong> you updated one surface (dashboard or local config), but the active runtime is still using an old key somewhere else.</li>
+        <li><strong>Fresh key, same error:</strong> old key is still selected/loaded; force a clean restart, then run one tiny test prompt.</li>
+        <li><strong>Fallback hides the real issue:</strong> primary fails with 403, fallback fails with a different error (or another 403), making it look random.</li>
+        <li><strong>Burst testing triggers caps:</strong> repeated retries can quickly hit per-minute/per-day limits even with non-zero account balance.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Loop-break rule:</strong> after two failed retests, stop. Capture exact primary + fallback IDs and full provider error text, then escalate once with complete evidence.</p>
+    </div>
+
     <h2>Escalation packet for #help</h2>
     <div class="code">Provider/model failure report
 
@@ -171,7 +185,9 @@ Exact error text:
 Provider (OpenRouter/OpenAI/etc):
 Did you confirm key balance/limit? (yes/no):
 Did you test with one simple prompt? (yes/no):
-What happened on test:</div>
+What happened on test:
+Did you rotate/replace key in all active surfaces? (yes/no):
+Did you restart runtime/session after key change? (yes/no):</div>
 
     <div class="callout-success">
       <p><strong>Bottom line:</strong> this error is usually fixable in minutes. Treat it as a provider quota/config issue: validate key limits, clean model IDs, then run one tiny smoke test.</p>
