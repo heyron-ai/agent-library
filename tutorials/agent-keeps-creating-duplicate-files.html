@@ -199,6 +199,25 @@
       <p><strong>Don't do bulk deletes first.</strong> Keep an archive until you confirm the canonical file really contains everything you need.</p>
     </div>
 
+    <h2>High-friction edge cases (and fixes)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Everything saves to root:</strong> set one required project path in AGENTS.md and require the agent to print the selected path <em>before</em> writing.</li>
+        <li><strong>Two agents/sub-agents writing at once:</strong> use a single-writer rule (one manager writes final files, workers output notes only).</li>
+        <li><strong>Same filename across different folders:</strong> require absolute path + file size + modified time proof before edits.</li>
+        <li><strong>Cloud-sync conflict copies:</strong> if you see names like "(conflicted copy)", pause auto-org tasks and pick one canonical file first.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good recovery prompt</h2>
+    <div class="code">Before writing anything:
+1) Search for matching files in /projects/newsletter.
+2) Return the top 3 candidates with absolute path + modified timestamp.
+3) Ask me to confirm the canonical file.
+4) After confirmation, edit only that file in place.
+5) Return a short diff summary and exact saved path.
+Do NOT create new files unless I explicitly say "create new".</div>
+
     <h2>When to escalate in #help</h2>
     <p>If duplicates continue after this workflow, share:</p>
     <ul>
