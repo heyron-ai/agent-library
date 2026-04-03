@@ -77,6 +77,7 @@ Battle-tested workspace files to get started fast:
 - **[TIMEZONE-DRIFT-PLAYBOOK.md](templates/TIMEZONE-DRIFT-PLAYBOOK.md)** — Step-by-step verification and recovery workflow for wrong timezone/day outputs and misfiring reminders
 - **[EXECUTION-EVIDENCE-CHECKLIST.md](templates/EXECUTION-EVIDENCE-CHECKLIST.md)** — Claim→evidence→verification workflow for “agent said done but nothing changed” trust-break incidents
 - **[FILE-PATH-PROOF-CHECKLIST.md](templates/FILE-PATH-PROOF-CHECKLIST.md)** — Deterministic path-proof workflow for “agent says files exist but I can’t find them” incidents
+- **[PDF-ANALYSIS-PROOF-CHECKLIST.md](templates/PDF-ANALYSIS-PROOF-CHECKLIST.md)** — Proof-first workflow for “agent summarized my PDF wrong” incidents (filename/path proof, quote-proof test, OCR checks, and escalation packet)
 - **[EXECUTION-LAYER-OUTAGE-PLAYBOOK.md](templates/EXECUTION-LAYER-OUTAGE-PLAYBOOK.md)** — Fast isolation + recovery workflow for “chat still works but tools/commands hang or timeout” execution-plane failures
 - **[CONTEXT-HANDOFF-CHECKLIST.md](templates/CONTEXT-HANDOFF-CHECKLIST.md)** — Practical handoff + verification workflow for dashboard/DM/server context-switch confusion (“it forgot everything” across surfaces)
 - **[DISCORD-CHANNEL-SILENCE-PLAYBOOK.md](templates/DISCORD-CHANNEL-SILENCE-PLAYBOOK.md)** — Fast isolation and recovery workflow for “DM works but server channel is silent” and “typing then nothing” Discord failures
