@@ -70,6 +70,7 @@ Battle-tested workspace files to get started fast:
 - **[MEMORY-RECOVERY-PLAYBOOK.md](templates/MEMORY-RECOVERY-PLAYBOOK.md)** — Step-by-step playbook for diagnosing and fixing “my agent forgot” complaints
 - **[CONTEXT-LIMIT-RESCUE.md](templates/CONTEXT-LIMIT-RESCUE.md)** — Quick triage and recovery workflow for `context limit exceeded` / oversized prompt failures
 - **[APPROVAL-SAFETY-CHECKLIST.md](templates/APPROVAL-SAFETY-CHECKLIST.md)** — Rapid decision framework for handling “Approval Required” prompts safely
+- **[APPROVAL-WORKFLOW-RUNBOOK.md](templates/APPROVAL-WORKFLOW-RUNBOOK.md)** — Step-by-step playbook for running multi-step approval-gated tasks safely with exact-command approvals and evidence checks
 - **[SUPPORT-ESCALATION-PACKET.md](templates/SUPPORT-ESCALATION-PACKET.md)** — Structured intake + escalation format that reduces back-and-forth and speeds up triage
 - **[MODEL-SWITCH-VERIFICATION.md](templates/MODEL-SWITCH-VERIFICATION.md)** — Step-by-step checklist to prove model switching is applied and isolate stale-session/config fallback issues
 - **[MCP-CONNECTOR-RECOVERY.md](templates/MCP-CONNECTOR-RECOVERY.md)** — Fast recovery + isolation workflow for “connector installed but unavailable” MCP failures
