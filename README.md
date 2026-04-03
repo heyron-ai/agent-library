@@ -91,6 +91,7 @@ Battle-tested workspace files to get started fast:
 - **[PRIVACY-INCIDENT-RESPONSE.md](templates/PRIVACY-INCIDENT-RESPONSE.md)** — Rapid contain→patch→verify workflow for accidental private-data leaks in shared/group chats
 - **[CHANGE-SCOPE-LOCK-CHECKLIST.md](templates/CHANGE-SCOPE-LOCK-CHECKLIST.md)** — A strict scope+plan+diff workflow for preventing over-editing when you only want small targeted changes
 - **[TOOL-CAPABILITY-REALITY-CHECK.md](templates/TOOL-CAPABILITY-REALITY-CHECK.md)** — A deterministic capability check to separate what your agent can automate now vs where human handoff is required
+- **[SURFACE-MISMATCH-CANARY.md](templates/SURFACE-MISMATCH-CANARY.md)** — A tiny proof-first workflow for “works in DM/dashboard but fails in server channel/thread” routing and policy mismatch incidents
 - **[RUNTIME-RESTART-VERIFICATION.md](templates/RUNTIME-RESTART-VERIFICATION.md)** — A proof-first workflow to verify whether a restart actually applied and isolate stale-session/host mismatch loops
 - **[AGENTS-DRIFT-PREVENTION.md](templates/AGENTS-DRIFT-PREVENTION.md)** — A deterministic playbook to detect, recover, and prevent unexpected AGENTS.md behavior drift from merges, sync conflicts, and parallel edits
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
