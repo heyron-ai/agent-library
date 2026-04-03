@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tool Works in DM but Fails in Server? | heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #a0a0a0;
+      --accent: #5865f2;
+      --good: #43b581;
+      --warn: #f0c060;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 820px; margin: 0 auto; padding: 36px 20px 80px; }
+    .back { color: #9bb0ff; text-decoration: none; font-size: 14px; }
+    h1 { font-size: 34px; line-height: 1.2; margin: 16px 0 10px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--text-muted); margin-bottom: 24px; }
+    .badge {
+      display: inline-block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; color: var(--text-muted);
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; margin: 16px 0;
+    }
+    h2 { margin: 4px 0 10px; font-size: 22px; }
+    ul, ol { margin: 8px 0 8px 22px; }
+    code {
+      background: #151515; border: 1px solid #2f2f2f; border-radius: 6px; padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .footer { margin-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to Tutorials</a>
+    <div style="margin-top:14px" class="badge">Troubleshooting · 4 min</div>
+    <h1>Tool Works in DM but Fails in Server?</h1>
+    <p class="subtitle">If a tool works in dashboard or DM but suddenly fails in a server channel, this is usually a context + permission mismatch—not a broken model.</p>
+
+    <div class="card">
+      <h2>Fast reality check</h2>
+      <p>Same agent identity does <strong>not</strong> mean same runtime context. DM and server threads can have different:</p>
+      <ul>
+        <li>tool access policy</li>
+        <li>channel restrictions</li>
+        <li>session history and instruction state</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2-minute diagnosis flow</h2>
+      <ol>
+        <li><strong>Prove the exact error text.</strong><br />
+          Prompt: <code>Run the same tool call and paste the exact error text, no summary.</code>
+        </li>
+        <li><strong>Run a tiny canary in both places.</strong><br />
+          Use a minimal test task (like one-line file write or one search query) in DM and then in the server thread.</li>
+        <li><strong>Check destination context.</strong><br />
+          Prompt: <code>State current session/thread context and active policy limits before retrying.</code>
+        </li>
+        <li><strong>Retest in a fresh thread.</strong><br />
+          Start a new clean thread and rerun only the canary task.</li>
+      </ol>
+      <p class="good">If DM succeeds and server fails on the same canary, you’ve isolated a channel/session policy issue.</p>
+    </div>
+
+    <div class="card">
+      <h2>High-friction mistakes</h2>
+      <ul>
+        <li><strong>Assuming DM success proves server config:</strong> they are separate contexts.</li>
+        <li><strong>Testing in noisy old threads:</strong> stale instructions can silently constrain tool use.</li>
+        <li><strong>Skipping exact error capture:</strong> “it failed” is not enough to diagnose quickly.</li>
+        <li><strong>Changing many variables at once:</strong> makes root cause impossible to isolate.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Copy/paste recovery prompt</h2>
+      <p><code>Before doing any work, show current context (surface + thread/session) and any tool/policy limits. Then run this canary task exactly once and return raw output only: create file canary-tool-context.txt with one line "tool context canary" and confirm absolute path. If blocked, return exact error text and where it was blocked.</code></p>
+    </div>
+
+    <div class="card">
+      <h2>When to escalate to #help</h2>
+      <p>Escalate with this packet:</p>
+      <ul>
+        <li>Timestamp + timezone</li>
+        <li>DM canary result vs server canary result</li>
+        <li>Exact server channel/thread where failure occurs</li>
+        <li>Exact error text (verbatim)</li>
+      </ul>
+      <p class="warn">Without side-by-side canary proof, support has to guess between policy, permissions, and runtime state.</p>
+    </div>
+
+    <p class="footer">Bottom line: compare the same tiny tool action across surfaces. If one succeeds and one fails, you’ve found a context/policy mismatch—not a random model problem.</p>
+  </div>
+</body>
+</html>
