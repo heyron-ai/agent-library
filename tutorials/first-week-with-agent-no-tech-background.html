@@ -163,6 +163,38 @@ Start with Step 1 only.</div>
       <p>This prevents all-or-nothing stalls and keeps momentum while you learn.</p>
     </div>
 
+    <h2>High-friction recovery: “it worked, then my agent forgot everything”</h2>
+    <div class="card">
+      <p>This is usually not random model behavior. In week 1, it’s most often one of these:</p>
+      <ul>
+        <li><strong>Wrong surface/thread:</strong> you switched from dashboard to Discord (or DM to server) and expected the same live context.</li>
+        <li><strong>Rule overload:</strong> you pasted a huge hardening block and unintentionally made normal actions impossible.</li>
+        <li><strong>No proof loop:</strong> instructions changed, but you never confirmed what file/rules actually got updated.</li>
+      </ul>
+      <p><strong>2-minute reset:</strong> ask your agent to quote the active rules file and summarize the top 5 constraints currently controlling behavior <em>before</em> doing any more work.</p>
+    </div>
+
+    <h2>High-friction recovery: security prompt made my agent unusable</h2>
+    <div class="card">
+      <p>If you pasted a long “security hardening” instruction and your agent became overly restrictive, use this rollback-safe pattern:</p>
+      <ol>
+        <li>Ask for a <strong>diff-style summary</strong> of exactly what changed in rules/policies.</li>
+        <li>Keep the high-value protections (approval before delete/send, timeout ceilings).</li>
+        <li>Temporarily relax blockers that prevent normal work (for example: broad “ask before every network request”).</li>
+        <li>Retest with one tiny canary task and require evidence of completion.</li>
+      </ol>
+    </div>
+
+    <div class="code">My agent became too restricted after a security prompt.
+
+Before changing anything else:
+1) Show the exact rules currently active (file path + relevant lines).
+2) Identify which rules are blocking normal operation.
+3) Propose a minimal patch that keeps safety but restores normal task execution.
+4) Run one tiny canary task and show proof of success.
+
+Do not do broad rewrites. Use the smallest safe change set.</div>
+
     <h2>Support-ready message (if you still get stuck)</h2>
     <div class="code">I’m blocked on a week-1 setup task.
 
