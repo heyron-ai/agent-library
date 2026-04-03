@@ -105,6 +105,37 @@
 
     <hr>
 
+    <h2>High-Friction Edge Cases (Worth Checking)</h2>
+
+    <details class="trouble-card">
+      <summary>Local works, VPS fails (or the reverse)</summary>
+      <div class="answer">
+        <p>This is usually a mixed-origin issue. You might be logging into one dashboard URL while using a token from another runtime.</p>
+        <ul style="margin-left:20px; color:var(--text-muted)">
+          <li>Confirm the exact dashboard URL origin (<em>protocol + host + port</em>)</li>
+          <li>Confirm the token came from that same runtime/environment</li>
+          <li>Close extra tabs that point to a different origin</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Token mismatch keeps returning after restart</summary>
+      <div class="answer">
+        <p>If the token is being regenerated (or overwritten) during deploy/startup, your pasted value can go stale immediately.</p>
+        <p>After restart, fetch the <strong>current</strong> token again, paste once, then test in a single clean tab. Avoid reusing any cached token from earlier messages.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>Incognito works, normal browser fails</summary>
+      <div class="answer">
+        <p>That confirms a local browser-state conflict (old localStorage/cookies/service worker). Clear site data for the dashboard domain in your normal profile, then retest.</p>
+      </div>
+    </details>
+
+    <hr>
+
     <h2>Related Error: “403 Key limit exceeded”</h2>
     <p>Community reports today also showed model failures like:</p>
     <div class="code">All models failed: ... 403 Key limit exceeded (total limit)</div>
@@ -136,7 +167,14 @@
     <details class="trouble-card">
       <summary>When should I escalate to #help?</summary>
       <div class="answer">
-        <p>If you've done the 4 steps above and the error persists, post in #help with: exact error text, your signup email, dashboard URL used, and whether local/VPS/Tailscale is involved.</p>
+        <p>If you've done the steps above and the error persists, post in #help with:</p>
+        <ul style="margin-left:20px; color:var(--text-muted)">
+          <li>Exact error text (copy/paste, not paraphrased)</li>
+          <li>Dashboard URL origin used</li>
+          <li>Whether incognito works</li>
+          <li>Whether this is local, VPS, Tailscale, or a mix</li>
+          <li>Whether the issue started after restart/redeploy</li>
+        </ul>
       </div>
     </details>
 
