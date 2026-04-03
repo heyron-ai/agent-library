@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where Did My Tokens Go? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Where Did My Tokens Go?</h1>
+      <p>A fast, no-jargon way to understand usage limits, reset timing, and why "I paid already" can still hit provider caps.</p>
+    </div>
+
+    <p>Common #help question: <em>"I’m burning through tokens. Do we have a limit, and when does it reset?"</em> This guide gives you a deterministic way to diagnose that in under 5 minutes.</p>
+
+    <h2>First: there are usually two different limit systems</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Platform-side limits</strong> (your heyron plan/session/runtime behavior).</li>
+        <li><strong>Provider-side limits</strong> (OpenRouter/OpenAI/etc key credits, quota, rate limits, or monthly caps).</li>
+      </ul>
+      <p>If either side is exhausted or blocked, your run can fail.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> a heyron subscription does not automatically grant unlimited third-party provider usage when your workflow depends on your own external API key.</p>
+    </div>
+
+    <h2>2-minute diagnosis flow</h2>
+    <div class="card">
+      <ol>
+        <li>Capture the <strong>exact error text</strong> (don’t paraphrase).</li>
+        <li>If it mentions <code>403</code>, <code>quota</code>, <code>credits</code>, <code>limit exceeded</code>, or <code>rate limit</code>, suspect provider-side cap first.</li>
+        <li>Check whether this run used your own provider key or heyron-included defaults.</li>
+        <li>Start a fresh session and run one tiny prompt to confirm if failure is persistent or thread-specific.</li>
+      </ol>
+    </div>
+
+    <h2>How reset timing usually works</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Provider keys:</strong> reset windows are controlled by that provider (monthly billing cycle, top-up balance, or per-minute rate windows).</li>
+        <li><strong>Rate limits:</strong> can reset in seconds/minutes, not billing-cycle boundaries.</li>
+        <li><strong>Plan usage buckets:</strong> may reset on your heyron billing cadence or configured allowance window.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid this trap:</strong> waiting for midnight in your local timezone may do nothing. Reset windows often follow provider account timezone/UTC or billing anniversary date.</p>
+    </div>
+
+    <h2>Copy/paste verification prompt</h2>
+    <div class="code">I need a usage-limit diagnosis with proof.
+
+1) Tell me which key/provider this session is using.
+2) Quote the exact last error text verbatim.
+3) Classify this as: provider quota, provider rate limit, invalid key/model, or platform/session issue.
+4) Give me the next safe action in one step.
+5) If you can’t determine reset timing, tell me exactly which billing/usage page I should check.</div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>You verified key + model are valid, but usage errors continue across fresh sessions.</li>
+        <li>Reset window should have passed, but the same quota error persists.</li>
+        <li>Error category changes randomly between runs (for example, quota + auth + model-not-found).</li>
+      </ul>
+    </div>
+
+    <h2>Support packet (paste this)</h2>
+    <div class="code">Token / limit issue report
+
+Exact error text:
+Provider/model used:
+Using personal provider key? (yes/no):
+Fresh session retest done? (yes/no):
+Same error after retest? (yes/no):
+When you expected reset (date/time + timezone):
+Any recent key/model changes:
+Screenshot of usage/quota page (optional):</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> treat token issues as a routing problem first: identify which limit system failed, then verify the correct reset window for that system.</p>
+    </div>
+
+    <div class="footer">
+      <p>Once you separate provider caps from platform usage, these issues become predictable and fast to fix.</p>
+    </div>
+  </div>
+</body>
+</html>
