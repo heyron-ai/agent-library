@@ -156,6 +156,16 @@
 4) Give me the next safe action in one step.
 5) If you can’t determine reset timing, tell me exactly which billing/usage page I should check.</div>
 
+    <h2>High-friction edge cases (worth checking once)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Mixed-key confusion:</strong> one surface/session is using your personal key, another is using defaults. A successful run in one place does not prove quota is fine everywhere.</li>
+        <li><strong>Old key still active in runtime:</strong> after rotating/updating a provider key, stale session state can keep using the old credential until you restart/reconnect and retest in a fresh session.</li>
+        <li><strong>Fallback model mismatch:</strong> primary model fails on quota, then fallback fails with a different error (for example model-not-found), making it look random.</li>
+        <li><strong>Reset-date mismatch:</strong> monthly reset is tied to billing anniversary (or provider timezone), not calendar month in your local timezone.</li>
+      </ul>
+    </div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
@@ -175,7 +185,9 @@ Fresh session retest done? (yes/no):
 Same error after retest? (yes/no):
 When you expected reset (date/time + timezone):
 Any recent key/model changes:
-Screenshot of usage/quota page (optional):</div>
+Screenshot of usage/quota page (optional):
+Any key rotation in last 24h? (yes/no):
+Fallback model(s) configured? (list):</div>
 
     <div class="callout-success">
       <p><strong>Bottom line:</strong> treat token issues as a routing problem first: identify which limit system failed, then verify the correct reset window for that system.</p>
