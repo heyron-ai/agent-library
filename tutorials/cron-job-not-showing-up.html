@@ -93,6 +93,8 @@
         <li><strong>Silent failure after config edits:</strong> runtime restart needed before new behavior is visible.</li>
         <li><strong>Job exists but is disabled:</strong> if disabled jobs are hidden, it looks like the job vanished.</li>
         <li><strong>Timezone mismatch:</strong> the job is real, but scheduled in UTC or a different timezone than you expected.</li>
+        <li><strong>Cron vs heartbeat mix-up:</strong> users ask for an exact daily time, but the agent writes to <code>HEARTBEAT.md</code> instead of creating a cron schedule. Heartbeat is approximate, cron is exact.</li>
+        <li><strong>Weekday gap surprise:</strong> “daily market update” often really means weekdays. If the cron expression excludes weekends, it can look “broken” on Saturday/Sunday.</li>
       </ul>
     </div>
 
@@ -106,12 +108,19 @@
 
       <h3>3) One-shot <code>at</code> jobs with implicit timezone assumptions</h3>
       <p>If no timezone is explicit, many systems interpret ISO timestamps as UTC. Use explicit timezone phrasing and ask the agent to echo both local time and UTC before creating the job.</p>
+
+      <h3>4) Heartbeat fallback masked as scheduling</h3>
+      <p>If an agent says “I set your daily task” but only edited <code>HEARTBEAT.md</code>, nothing is guaranteed to run at an exact time. For time-specific tasks (market open, school pickup, morning brief), require a real cron job and verify with job ID.</p>
+
+      <h3>5) Community pattern: econ calendar reminders</h3>
+      <p>“Daily econ calendar” requests fail when timing is implied but not explicit. Specify <strong>timezone + weekdays/weekends + destination</strong> in one sentence, then ask the agent to return the exact cron expression and next run timestamp.</p>
     </div>
 
     <div class="card">
       <h2>Copy/paste recovery prompt</h2>
       <p>Use this exactly:</p>
       <p><code>Create a one-time reminder for 2 minutes from now. Before creating it, state the exact destination (sessionTarget + channel/thread) and the exact fire time in both local timezone and UTC. After creating it, return the cron job ID and then list cron jobs including disabled jobs to prove it exists. Use reminder text: CANARY-CRON-VISIBILITY-TEST.</code></p>
+      <p><code>Then create a recurring weekday schedule at 8:15 AM America/New_York for “Daily Econ Calendar Reminder.” Return the cron expression, timezone, and next three run times.</code></p>
     </div>
 
     <div class="card">
