@@ -613,6 +613,20 @@
 
     <div class="step">
       <div class="step-number">✓</div>
+      <h3>"403 Key limit exceeded" (especially with OpenRouter)</h3>
+      <p>This means the provider key hit a hard limit (daily/monthly cap, total spend cap, or exhausted balance). Open the provider key dashboard, confirm remaining credits, and check per-key limits. Then either top up, raise the cap, or switch to another key/model you already have access to.</p>
+      <p style="margin-bottom:0">If the error appears after a model switch, verify that the selected model is actually available to that exact key.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
+      <h3>"I pay for heyron — why can't I generate unlimited images/videos?"</h3>
+      <p>Subscription credits cover a lot, but some external providers (image/video/voice APIs) can have their own billing rules, quotas, or premium tiers. If an external provider returns billing/limit errors, that limit is outside core chat usage and must be handled in that provider account.</p>
+      <p style="margin-bottom:0">Quick check: ask the agent to quote the exact provider error text. If it mentions quota/credits/rate limit from a third-party service, troubleshoot that provider first.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
       <h3>"I switched models but it still feels the same"</h3>
       <p>This is usually a context/session issue, not a broken model switch. Start a fresh chat/session, then ask the agent to confirm the active model in one line (for example: <code>"Confirm active model only"</code>). If needed, switch once via dashboard settings, then run one clean test prompt. Old context can make two different models sound similar on routine tasks.</p>
     </div>
