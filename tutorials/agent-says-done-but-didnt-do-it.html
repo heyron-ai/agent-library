@@ -190,6 +190,25 @@
       <p><strong>Best practice:</strong> ask for “done + evidence + verification” every time you care about reliability. This reduces support loops dramatically.</p>
     </div>
 
+    <h2>If it “thinks forever” and then does nothing</h2>
+    <div class="card">
+      <p>Another common pattern: the agent shows <em>thinking</em> for several minutes, then no visible action lands anywhere.</p>
+      <ol>
+        <li>Run a tiny canary task first: <em>"Create a file named canary.txt with one line: test"</em>.</li>
+        <li>If the canary fails, treat this as an execution-layer issue (not a prompt-quality issue).</li>
+        <li>Start a fresh session and rerun the same tiny canary task.</li>
+        <li>If it still fails, restart the gateway/runtime and retry once.</li>
+      </ol>
+      <p>Do <strong>not</strong> keep sending bigger prompts while tiny tasks are failing. You will only add confusion and context noise.</p>
+    </div>
+
+    <h2>Quick reset prompt (when runs stall)</h2>
+    <div class="code">Before doing anything else:
+1) Confirm your current workspace path.
+2) Do this tiny task now: create canary.txt containing exactly "test".
+3) Return proof: absolute file path + first line of file.
+If this fails, stop and report the exact failure point.</div>
+
     <h2>Escalation packet for #help</h2>
     <div class="code">Execution mismatch report
 
