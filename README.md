@@ -81,6 +81,7 @@ Battle-tested workspace files to get started fast:
 - **[CONTEXT-HANDOFF-CHECKLIST.md](templates/CONTEXT-HANDOFF-CHECKLIST.md)** — Practical handoff + verification workflow for dashboard/DM/server context-switch confusion (“it forgot everything” across surfaces)
 - **[DISCORD-CHANNEL-SILENCE-PLAYBOOK.md](templates/DISCORD-CHANNEL-SILENCE-PLAYBOOK.md)** — Fast isolation and recovery workflow for “DM works but server channel is silent” and “typing then nothing” Discord failures
 - **[LINK-ACCESS-TRIAGE.md](templates/LINK-ACCESS-TRIAGE.md)** — Fast diagnosis + recovery flow for “this link opens for me but my agent can’t access it” visibility/auth mismatches
+- **[ANTI-BOT-CHECKPOINT-HANDOFF.md](templates/ANTI-BOT-CHECKPOINT-HANDOFF.md)** — Human-checkpoint handoff workflow for reCAPTCHA/Cloudflare/login verification blockers, including loop-break rules and resume packet
 - **[LONG-CHAT-RECOVERY-WORKFLOW.md](templates/LONG-CHAT-RECOVERY-WORKFLOW.md)** — Deterministic reset + rehydration workflow for “agent got worse over long chat” degradation and lost-work prevention
 - **[SOUL-CHANGE-VERIFICATION.md](templates/SOUL-CHANGE-VERIFICATION.md)** — Deterministic verification flow for “I updated SOUL.md but behavior didn’t change” (file/path proof, fresh-session test, and escalation packet)
 - **[BACKGROUND-TASK-DELIVERY-CHECKLIST.md](templates/BACKGROUND-TASK-DELIVERY-CHECKLIST.md)** — Fast diagnosis workflow for “task ran but I can’t find the output,” focused on schedule/timezone + destination routing mismatches
