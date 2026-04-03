@@ -158,6 +158,16 @@ Please do this:
 4) Add a simple tracking table (post URL, views, saves, comments, next tweak).
 5) Keep everything ready for manual publish in Instagram/TikTok.</div>
 
+    <h2>High-friction edge cases (worth checking)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>"Facebook works, Instagram does not":</strong> this often means your Instagram business/professional account is not correctly linked in Meta account settings, even if Facebook posting works.</li>
+        <li><strong>Wrong account/token target:</strong> connector auth may be valid, but pointed at a different social account than the one you’re checking.</li>
+        <li><strong>Draft vs publish mismatch:</strong> some flows create drafts successfully but cannot complete final publish in your current permission scope.</li>
+        <li><strong>Rate/abuse protections:</strong> repeated retries in a short window can trigger temporary blocks that look like random failures.</li>
+      </ul>
+    </div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
