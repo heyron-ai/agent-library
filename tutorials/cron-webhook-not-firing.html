@@ -95,6 +95,18 @@
     </div>
 
     <div class="card">
+      <h2>Advanced edge cases (when basics look correct)</h2>
+      <ul>
+        <li><strong>302/307 redirect trap:</strong> your URL redirects to login or another host, so receiver logs look empty on the original endpoint.</li>
+        <li><strong>TLS/certificate mismatch:</strong> endpoint cert is expired/self-signed or hostname does not match; request fails before app logs.</li>
+        <li><strong>Provider WAF/rate limits:</strong> Cloudflare/API gateways return intermittent 403/429 during bursts.</li>
+        <li><strong>Idempotency dedupe:</strong> receiver silently drops repeat payload IDs/messages as duplicates.</li>
+        <li><strong>Wrong environment secret:</strong> staging secret checked against production endpoint (or vice versa).</li>
+      </ul>
+      <p class="warn">If delivery fails intermittently, compare two back-to-back canaries with unique payload IDs and inspect both receiver and edge/proxy logs.</p>
+    </div>
+
+    <div class="card">
       <h2>Copy/paste recovery prompt</h2>
       <p><code>Show the full cron job JSON for my webhook task. Verify delivery.mode is webhook and echo delivery.to exactly. Then create a one-shot canary job 2 minutes from now with payload text CANARY-WEBHOOK-DELIVERY-TEST and delivery.to set to the same URL. After it runs, return run status + any delivery error details verbatim.</code></p>
     </div>
@@ -107,6 +119,7 @@
         <li>Canary payload text and trigger time (local + UTC)</li>
         <li>Run-history result from scheduler</li>
         <li>Receiver-side HTTP status + error/body snippet</li>
+        <li>Any redirect/TLS/proxy layer evidence (Cloudflare, API Gateway, reverse proxy logs)</li>
       </ul>
       <p class="warn">Without scheduler + receiver evidence together, support can’t tell if the failure is routing, auth, or endpoint behavior.</p>
     </div>
