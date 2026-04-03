@@ -620,6 +620,13 @@
 
     <div class="step">
       <div class="step-number">✓</div>
+      <h3>"Model id is invalid" after switching (example: Grok / Minimax mixups)</h3>
+      <p>This usually means the model string is malformed or mapped to the wrong provider namespace. Use exact provider/model IDs (for example <code>openrouter/minimax/minimax-m2.5</code> only if your route actually uses OpenRouter). Don’t combine one provider name with another provider's model slug.</p>
+      <p style="margin-bottom:0">Fast fix: switch to one known-good model first, confirm it works, then change only one field at a time (primary model, then fallback). If primary + fallback both fail immediately, your IDs or provider route are mismatched.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
       <h3>"I pay for heyron — why can't I generate unlimited images/videos?"</h3>
       <p>Subscription credits cover a lot, but some external providers (image/video/voice APIs) can have their own billing rules, quotas, or premium tiers. If an external provider returns billing/limit errors, that limit is outside core chat usage and must be handled in that provider account.</p>
       <p style="margin-bottom:0">Quick check: ask the agent to quote the exact provider error text. If it mentions quota/credits/rate limit from a third-party service, troubleshoot that provider first.</p>
@@ -629,6 +636,13 @@
       <div class="step-number">✓</div>
       <h3>"I switched models but it still feels the same"</h3>
       <p>This is usually a context/session issue, not a broken model switch. Start a fresh chat/session, then ask the agent to confirm the active model in one line (for example: <code>"Confirm active model only"</code>). If needed, switch once via dashboard settings, then run one clean test prompt. Old context can make two different models sound similar on routine tasks.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">✓</div>
+      <h3>"How many tokens do I get, and when does it reset?"</h3>
+      <p>There are two different buckets people mix up: (1) included heyron usage, and (2) your own provider key usage. Provider-key limits reset on that provider's schedule (daily/monthly depending on account settings), not on heyron's internal cycle.</p>
+      <p style="margin-bottom:0">If you're unsure which limit you hit, ask the agent to quote the exact error text and provider name. If the error says OpenRouter/OpenAI/Anthropic quota or key-limit, fix it in that provider dashboard first.</p>
     </div>
 
     <div class="step">
