@@ -210,7 +210,36 @@ Rules:
         <li><strong>Repeats the same message every run</strong> → missing “do not repeat” rule and no state tracking.</li>
         <li><strong>Runs too many checks every heartbeat</strong> → checklist is too broad; trim to 3-5 items max.</li>
         <li><strong>Noisy messages at night</strong> → add explicit quiet hours with an urgency exception.</li>
+        <li><strong>Heartbeat reads but does not execute your tiny task</strong> → likely capability mismatch, approval-gated commands, or instruction conflict. See advanced checks below.</li>
+        <li><strong>Using heartbeat as cron replacement for exact-time jobs</strong> → heartbeat is periodic and can drift; use cron for exact schedule requirements.</li>
       </ul>
+    </div>
+
+    <h2>Advanced checks for “heartbeat runs, but nothing actually happens”</h2>
+    <p>This is a recurring trust-break: the heartbeat appears to run, but your requested action (like posting a daily econ reminder) never lands.</p>
+
+    <div class="step">
+      <div class="step-title">1) Separate “must run at exact time” from “periodic checks”</div>
+      <p>Use heartbeat for loose periodic checks. Use cron for exact schedules (for example, weekdays at 8:30 AM). If exact timing matters, heartbeat alone is the wrong tool.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Test with a tiny no-tool canary</div>
+      <p>Temporarily replace your checklist with one line: <em>"On heartbeat, reply with: HEARTBEAT_CANARY_OK + current local time."</em> If this fails, your issue is heartbeat routing/config, not your task logic.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Check for approval-gated or unavailable actions</div>
+      <p>If your heartbeat asks for actions that require unavailable tools or approval, the run may look “stuck.” Start by verifying a plain text output works first, then add one external action at a time.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Remove conflicting instruction layers</div>
+      <p>Conflicts across SOUL.md, AGENTS.md, and HEARTBEAT.md can cancel execution. Add a clear heartbeat override line such as: <em>"During heartbeat runs, follow HEARTBEAT.md checklist first."</em></p>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Reality check:</strong> heartbeat is best for batching low-urgency checks. For strict delivery windows (market open, econ calendar, meeting reminders), pair heartbeat with cron instead of forcing heartbeat to act like a scheduler.</p>
     </div>
 
     <h2>If the heartbeat prompt appears mid-conversation</h2>
