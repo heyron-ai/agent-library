@@ -156,6 +156,25 @@
       <p><strong>Avoid this trap:</strong> “It should just know where my file is” leads to loops. Always use <strong>path proof + quote proof</strong> when file identity matters.</p>
     </div>
 
+    <h2>Advanced edge cases (when basics look correct)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>iCloud/Desktop sync mismatch (macOS):</strong> file appears in Finder but is still cloud-only; copy it into workspace and retry.</li>
+        <li><strong>Zipped content not extracted:</strong> users upload a `.zip` and expect direct file access to inner docs/images.</li>
+        <li><strong>Wrong extension / hidden extension:</strong> `notes.txt` vs `notes.txt.md` causes “file not found” confusion.</li>
+        <li><strong>Unicode/special characters in filename:</strong> smart quotes, emojis, and trailing spaces can break exact path matching.</li>
+        <li><strong>Case-sensitive mismatch:</strong> `Report-Final.pdf` and `report-final.pdf` may behave differently across environments.</li>
+      </ul>
+    </div>
+
+    <div class="code">Run this strict file-identity check:
+
+1) Print absolute path + byte size + modified timestamp for: [exact filename].
+2) If multiple matches exist, list all absolute paths.
+3) Open only the newest match and quote line 1 plus line 5.
+4) If file is inside a zip, extract first, then repeat proof.
+5) If filename has spaces/special characters, print the exact escaped path used.</div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
