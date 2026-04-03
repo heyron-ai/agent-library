@@ -86,6 +86,7 @@ Battle-tested workspace files to get started fast:
 - **[SOUL-CHANGE-VERIFICATION.md](templates/SOUL-CHANGE-VERIFICATION.md)** — Deterministic verification flow for “I updated SOUL.md but behavior didn’t change” (file/path proof, fresh-session test, and escalation packet)
 - **[BACKGROUND-TASK-DELIVERY-CHECKLIST.md](templates/BACKGROUND-TASK-DELIVERY-CHECKLIST.md)** — Fast diagnosis workflow for “task ran but I can’t find the output,” focused on schedule/timezone + destination routing mismatches
 - **[MODEL-LOCK-PLAYBOOK.md](templates/MODEL-LOCK-PLAYBOOK.md)** — Deterministic workflow to pin a model, verify runtime model-id proof, and isolate fallback/session-drift causes when outputs suddenly change
+- **[BILLING-AND-QUOTA-TRIAGE.md](templates/BILLING-AND-QUOTA-TRIAGE.md)** — Fast triage workflow to separate cancellation/refund requests from provider key/quota/model failures, with a support-ready escalation packet
 - **[SUB-AGENT-ORCHESTRATION-CHECKLIST.md](templates/SUB-AGENT-ORCHESTRATION-CHECKLIST.md)** — Manager+workers playbook to prevent duplicate outputs, destination mismatch, and merge-quality loss in multi-agent workflows
 - **[PRIVACY-INCIDENT-RESPONSE.md](templates/PRIVACY-INCIDENT-RESPONSE.md)** — Rapid contain→patch→verify workflow for accidental private-data leaks in shared/group chats
 - **[CHANGE-SCOPE-LOCK-CHECKLIST.md](templates/CHANGE-SCOPE-LOCK-CHECKLIST.md)** — A strict scope+plan+diff workflow for preventing over-editing when you only want small targeted changes
