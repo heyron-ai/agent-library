@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cron Webhook Not Firing? | heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #a0a0a0;
+      --accent: #5865f2;
+      --good: #43b581;
+      --warn: #f0c060;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 820px; margin: 0 auto; padding: 36px 20px 80px; }
+    .back { color: #9bb0ff; text-decoration: none; font-size: 14px; }
+    h1 { font-size: 34px; line-height: 1.2; margin: 16px 0 10px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--text-muted); margin-bottom: 24px; }
+    .badge {
+      display: inline-block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; color: var(--text-muted);
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; margin: 16px 0;
+    }
+    h2 { margin: 4px 0 10px; font-size: 22px; }
+    h3 { margin: 16px 0 8px; font-size: 18px; }
+    ul, ol { margin: 8px 0 8px 22px; }
+    code {
+      background: #151515; border: 1px solid #2f2f2f; border-radius: 6px; padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .footer { margin-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to Tutorials</a>
+    <div style="margin-top:14px" class="badge">Troubleshooting · 4 min</div>
+    <h1>Cron Webhook Not Firing?</h1>
+    <p class="subtitle">If your scheduled job runs but your webhook destination gets nothing, this guide isolates the issue in minutes without guesswork.</p>
+
+    <div class="card">
+      <h2>Fast reality check</h2>
+      <p>Most webhook failures are one of these:</p>
+      <ul>
+        <li><strong>Job ran, destination rejected it</strong> (4xx/5xx response).</li>
+        <li><strong>Wrong URL</strong> (staging vs production, typo, old endpoint).</li>
+        <li><strong>Delivery mode mismatch</strong> (announce vs webhook).</li>
+        <li><strong>Webhook endpoint requires auth/signature</strong> that the job did not send.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2-minute diagnosis flow</h2>
+      <ol>
+        <li><strong>Prove delivery mode.</strong><br />
+          Ask for the full job object and confirm it has <code>delivery.mode: webhook</code> and <code>delivery.to: https://...</code>.</li>
+        <li><strong>Run a canary job now.</strong><br />
+          Trigger a one-shot job with unique payload text like <code>CANARY-WEBHOOK-APR03</code>.</li>
+        <li><strong>Check run history.</strong><br />
+          Confirm whether the cron run finished and capture any error status/details.</li>
+        <li><strong>Verify receiver logs.</strong><br />
+          Check your webhook endpoint logs for request arrival, status code, and rejection reason.</li>
+      </ol>
+      <p class="good">If run history shows success but receiver has no hit, your URL/destination is likely wrong. If receiver shows 4xx/5xx, fix endpoint auth/format first.</p>
+    </div>
+
+    <div class="card">
+      <h2>High-friction mistakes</h2>
+      <ul>
+        <li><strong>Using localhost/private URL:</strong> remote jobs cannot reach <code>http://localhost</code> on your laptop.</li>
+        <li><strong>Trailing slash/path mismatch:</strong> <code>/webhook</code> vs <code>/webhook/</code> can be treated differently.</li>
+        <li><strong>HTTP instead of HTTPS:</strong> some environments reject insecure endpoints.</li>
+        <li><strong>Wrong method expectation:</strong> endpoint expects GET, cron sends POST.</li>
+        <li><strong>Missing auth header/secret:</strong> endpoint drops request as unauthorized.</li>
+        <li><strong>“It ran” interpreted as “it delivered”:</strong> execution success and delivery success are different checks.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Copy/paste recovery prompt</h2>
+      <p><code>Show the full cron job JSON for my webhook task. Verify delivery.mode is webhook and echo delivery.to exactly. Then create a one-shot canary job 2 minutes from now with payload text CANARY-WEBHOOK-DELIVERY-TEST and delivery.to set to the same URL. After it runs, return run status + any delivery error details verbatim.</code></p>
+    </div>
+
+    <div class="card">
+      <h2>When to escalate</h2>
+      <p>Escalate with this packet:</p>
+      <ul>
+        <li>Job ID + full delivery block</li>
+        <li>Canary payload text and trigger time (local + UTC)</li>
+        <li>Run-history result from scheduler</li>
+        <li>Receiver-side HTTP status + error/body snippet</li>
+      </ul>
+      <p class="warn">Without scheduler + receiver evidence together, support can’t tell if the failure is routing, auth, or endpoint behavior.</p>
+    </div>
+
+    <p class="footer">Bottom line: verify mode, URL, run history, and receiver logs in one pass. That closes almost every “webhook didn’t fire” case fast.</p>
+  </div>
+</body>
+</html>
