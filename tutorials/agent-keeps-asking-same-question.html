@@ -182,17 +182,40 @@ Done criteria: [objective checks]
 Ask policy: If required fields are present, proceed with no further questions.
 Evidence: Return [path + quote + summary].</div>
 
+    <h2>Advanced edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Approval-gated execution:</strong> the agent may keep asking variants of the same question when the real blocker is an unapproved command. Check for pending <em>Approval Required</em> first.</li>
+        <li><strong>Tool-capability mismatch:</strong> if a requested action is not available in the current session/surface, the agent may loop on clarifications instead of stating the limitation clearly.</li>
+        <li><strong>Conflicting rules:</strong> if SOUL/AGENTS instructions conflict with your immediate request, the model may keep seeking reconfirmation. Ask it to list the conflict explicitly before proceeding.</li>
+        <li><strong>Hidden required field:</strong> some tasks require one missing key (exact destination, date/timezone, account name). Tell the agent to output a <em>missing-fields list</em> once, then continue.</li>
+      </ul>
+    </div>
+
+    <h2>Stronger recovery prompt (anti-loop)</h2>
+    <div class="code">You are currently in a repeated-question loop.
+
+Do this now:
+1) Extract all confirmed requirements from this thread.
+2) Return them as a checklist with ✅/❌ status.
+3) If any required field is missing, ask ONE final question containing only the missing fields.
+4) If no required fields are missing, execute immediately.
+5) Return completion evidence: exact output path/location + short quoted proof.
+
+Do not repeat previously answered questions.</div>
+
     <h2>When to escalate in #help</h2>
     <p>If repetition continues after the loop-break prompt, share:</p>
     <ul>
       <li>The exact prompt that triggered repetition</li>
       <li>Which surface you used (dashboard, DM, server channel)</li>
       <li>What requirement was repeated back incorrectly</li>
+      <li>Whether an approval prompt was pending</li>
       <li>One screenshot or quoted reply showing the loop</li>
     </ul>
 
     <div class="callout-success">
-      <p><strong>Bottom line:</strong> repeated-question loops are usually instruction-structure issues. One compact requirement block + strict ask policy fixes most of them quickly.</p>
+      <p><strong>Bottom line:</strong> repeated-question loops are usually structure + blocker issues. One compact requirement block, one-question ask cap, and explicit blocker checks resolve most loops fast.</p>
     </div>
 
     <div class="footer">
