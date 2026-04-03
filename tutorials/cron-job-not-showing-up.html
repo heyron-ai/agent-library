@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cron Job Created but Not Showing Up? | heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #a0a0a0;
+      --accent: #5865f2;
+      --good: #43b581;
+      --warn: #f0c060;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 820px; margin: 0 auto; padding: 36px 20px 80px; }
+    .back { color: #9bb0ff; text-decoration: none; font-size: 14px; }
+    h1 { font-size: 34px; line-height: 1.2; margin: 16px 0 10px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--text-muted); margin-bottom: 24px; }
+    .badge {
+      display: inline-block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; color: var(--text-muted);
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; margin: 16px 0;
+    }
+    h2 { margin: 4px 0 10px; font-size: 22px; }
+    h3 { margin: 16px 0 8px; font-size: 18px; }
+    ul, ol { margin: 8px 0 8px 22px; }
+    code {
+      background: #151515; border: 1px solid #2f2f2f; border-radius: 6px; padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .footer { margin-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to Tutorials</a>
+    <div style="margin-top:14px" class="badge">Troubleshooting · 4 min</div>
+    <h1>Cron Job Created but Not Showing Up?</h1>
+    <p class="subtitle">If your agent says it created a cron reminder but you can’t find it in the dashboard, this guide isolates the mismatch in under 2 minutes.</p>
+
+    <div class="card">
+      <h2>Fast reality check</h2>
+      <p>Most of the time this is <strong>not</strong> a scheduler bug. It’s one of these:</p>
+      <ul>
+        <li>Job was created in a <strong>different session/thread</strong>.</li>
+        <li>Job was created with a different <strong>session target</strong> than expected.</li>
+        <li>The agent <strong>described</strong> creation but never actually ran the write call.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2-minute diagnosis flow</h2>
+      <ol>
+        <li><strong>Ask for proof, not a summary.</strong><br />
+          Prompt: <code>Show the exact cron job ID you created and paste the full job object.</code>
+        </li>
+        <li><strong>Confirm where it was created.</strong><br />
+          Prompt: <code>Tell me the session target and destination channel/thread for this job.</code>
+        </li>
+        <li><strong>List jobs immediately.</strong><br />
+          Prompt: <code>List all active cron jobs now and include disabled jobs too.</code>
+        </li>
+        <li><strong>Run a canary test.</strong><br />
+          Create a one-shot reminder 2 minutes out, with unique text like <code>CANARY-APR03-1023</code>.</li>
+      </ol>
+      <p class="good">If the canary appears correctly, your scheduler works. The original issue was route/session mismatch.</p>
+    </div>
+
+    <div class="card">
+      <h2>Known high-friction mistakes</h2>
+      <ul>
+        <li><strong>“Agent cronjobs” vs “Control cronjobs” confusion:</strong> jobs may show in one area depending on how they were created.</li>
+        <li><strong>Old thread vs new thread:</strong> same agent identity, different session context.</li>
+        <li><strong>Ambiguous reminder request:</strong> no destination specified, so output lands somewhere unexpected.</li>
+        <li><strong>Silent failure after config edits:</strong> runtime restart needed before new behavior is visible.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Copy/paste recovery prompt</h2>
+      <p>Use this exactly:</p>
+      <p><code>Create a one-time reminder for 2 minutes from now. Before creating it, state the exact destination (sessionTarget + channel/thread). After creating it, return the cron job ID and then list cron jobs to prove it exists. Use reminder text: CANARY-CRON-VISIBILITY-TEST.</code></p>
+    </div>
+
+    <div class="card">
+      <h2>When to escalate to #help</h2>
+      <p>Escalate only after you have:</p>
+      <ul>
+        <li>Timestamp + timezone</li>
+        <li>Expected destination vs actual destination</li>
+        <li>Cron job ID (or explicit failure to return one)</li>
+        <li>Canary reminder result</li>
+      </ul>
+      <p class="warn">Without this evidence, support has to guess—and resolution takes much longer.</p>
+    </div>
+
+    <p class="footer">Bottom line: prove <em>job ID + destination + canary delivery</em>. That closes most “it said it made the cron job but I can’t see it” cases fast.</p>
+  </div>
+</body>
+</html>
