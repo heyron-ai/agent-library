@@ -151,7 +151,20 @@
         <li><strong>Rule collision:</strong> SOUL.md asks for one style, AGENTS.md enforces another; AGENTS wins for operations.</li>
         <li><strong>Chat instruction override myth:</strong> one-off messages like "ignore prior rules" may be blocked by higher-priority safety/instruction layers.</li>
         <li><strong>Stale-thread behavior:</strong> old conversation momentum can make behavior seem unchanged even after you fix AGENTS.md. Retest in a fresh session.</li>
+        <li><strong>Git auto-merge overwrite:</strong> a pull/rebase can silently replace local AGENTS.md with remote changes you did not review.</li>
+        <li><strong>Sync client rollback:</strong> iCloud/Dropbox/Drive conflict files can restore an older AGENTS.md version unexpectedly.</li>
+        <li><strong>Cross-agent edits:</strong> multiple agents/processes editing AGENTS.md in parallel can create partial or mixed instructions.</li>
       </ul>
+    </div>
+
+    <h2>If this keeps happening, isolate the source</h2>
+    <div class="card">
+      <ol>
+        <li>Run <strong>git status</strong> and <strong>git log -- AGENTS.md</strong> to see whether commits/pulls changed the file.</li>
+        <li>Check for cloud-sync conflict files (names with <em>conflict</em>, <em>copy</em>, or duplicate timestamps).</li>
+        <li>Confirm only one active agent/session has permission to edit workspace instruction files.</li>
+        <li>Lock AGENTS.md changes behind a single review prompt: <strong>plan → diff → confirm → apply</strong>.</li>
+      </ol>
     </div>
 
     <h2>Prevention: stop future drift</h2>
@@ -172,7 +185,10 @@ Last modified timestamp:
 What changed unexpectedly (section names):
 Fresh session retest done? (yes/no):
 Behavior difference observed (1-2 examples):
-Known-good AGENTS snapshot available? (yes/no):</div>
+Known-good AGENTS snapshot available? (yes/no):
+Recent git operation before drift? (pull/rebase/merge/none):
+Cloud-sync client in use for workspace? (none/iCloud/Drive/Dropbox/other):
+Any other active agent/session editing files? (yes/no/unknown):</div>
 
     <div class="callout-success">
       <p><strong>Bottom line:</strong> treat behavior drift like a configuration incident: prove path, prove diff, roll back minimally, then retest in a fresh session.</p>
