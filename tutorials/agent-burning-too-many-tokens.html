@@ -151,6 +151,23 @@ Output format:
       </ul>
     </div>
 
+    <h2>Advanced edge case: external-tool retry spiral</h2>
+    <div class="card">
+      <p>Recurring pattern from community chat: users try to connect external generators (like Midjourney/social tools), then keep retrying the same broad prompt while setup or capability is still unresolved.</p>
+      <ul>
+        <li><strong>Why it burns tokens:</strong> each retry repeats long context, same explanation, and no new signal.</li>
+        <li><strong>Fix:</strong> run one tiny capability canary first (yes/no), then branch.</li>
+      </ul>
+      <div class="code">Canary check (copy/paste):
+1) In one sentence, confirm whether you can directly perform [specific external action] in this session.
+2) If NO, return only:
+   - exact manual handoff step I should do
+   - exact output artifact you can still produce now
+3) Keep response under 120 words.
+</div>
+      <p>Do not continue with long production prompts until the canary returns a clear capability answer.</p>
+    </div>
+
     <div class="callout-warning">
       <p><strong>Loop-break rule:</strong> after two failed retries, stop. Split into smaller steps or start a fresh session with a compact handoff instead of trying the same giant prompt again.</p>
     </div>
@@ -168,6 +185,7 @@ Output format:
       <ul>
         <li>Token use stays unusually high even with short prompts and tight output limits.</li>
         <li>You see inconsistent quota behavior across the same model/provider with identical prompts.</li>
+        <li>External-tool workflows keep looping between “can do” and “can’t do” across retries.</li>
         <li>You need help separating platform limits from provider key caps/reset windows.</li>
       </ul>
     </div>
