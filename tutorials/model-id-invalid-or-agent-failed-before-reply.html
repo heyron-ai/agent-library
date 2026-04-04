@@ -186,6 +186,23 @@ Step 3: Add fallback #2 → test</div>
       <p><strong>Important:</strong> if a model worked last week but fails now, the model may have been renamed, deprecated, or your key scope changed.</p>
     </div>
 
+    <h2>High-friction edge cases (that look random but aren’t)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Provider namespace mismatch:</strong> model ID format may require a provider prefix/syntax change (for example, switching providers but keeping old-style IDs).</li>
+        <li><strong>Fallback masks root cause:</strong> runtime may report generic “all models failed” while the first real failure is auth/quota on primary.</li>
+        <li><strong>Stale runtime after config edit:</strong> dashboard shows new model list, but active runtime is still using old values until a fresh session/restart.</li>
+        <li><strong>Mixed key + model family:</strong> key is valid, but not authorized for that model family/tier.</li>
+      </ul>
+    </div>
+
+    <h3>Loop-break sequence</h3>
+    <div class="code">1) Set ONE known-good model (no fallbacks)
+2) Start a fresh session (or restart runtime if required)
+3) Run canary: "Reply with OK"
+4) Re-add exactly one fallback
+5) Re-test before adding another</div>
+
     <h2>Copy/paste prompt to self-heal config</h2>
     <div class="code">Diagnose my model config without guessing.
 1) Tell me the exact primary model currently set.
@@ -210,6 +227,7 @@ Step 3: Add fallback #2 → test</div>
       <li>Primary model ID + fallback IDs</li>
       <li>Whether error is 401, 403, invalid ID, or “all models failed”</li>
       <li>Result of tiny canary prompt</li>
+      <li>Whether you tested with one-model/no-fallback mode in a fresh session</li>
       <li>What changed right before it broke</li>
     </ul>
 
