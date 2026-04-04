@@ -100,6 +100,7 @@ Battle-tested workspace files to get started fast:
 - **[RUNTIME-RESTART-VERIFICATION.md](templates/RUNTIME-RESTART-VERIFICATION.md)** — A proof-first workflow to verify whether a restart actually applied and isolate stale-session/host mismatch loops
 - **[AGENTS-DRIFT-PREVENTION.md](templates/AGENTS-DRIFT-PREVENTION.md)** — A deterministic playbook to detect, recover, and prevent unexpected AGENTS.md behavior drift from merges, sync conflicts, and parallel edits
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
+- **[HEARTBEAT-CRON-DECISION-WORKFLOW.md](templates/HEARTBEAT-CRON-DECISION-WORKFLOW.md)** — A fast decision and verification playbook for choosing heartbeat vs cron, proving timezone/destination, and breaking scheduler confusion loops
 
 ## 🔧 Fix Scripts
 
