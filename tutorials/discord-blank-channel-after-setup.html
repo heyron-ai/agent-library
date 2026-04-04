@@ -153,12 +153,23 @@ Do this exactly:
       </ul>
     </div>
 
+    <h2>Advanced edge cases (if basic reset didn't fix it)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Hardware acceleration crash loop:</strong> If desktop goes blank repeatedly, disable Hardware Acceleration in Discord settings (or launch once with a clean profile) and retest.</li>
+        <li><strong>Security software / DNS filtering:</strong> Ad blockers, endpoint security tools, or DNS filters can partially block Discord assets and render blank panes. Run one clean test with these disabled.</li>
+        <li><strong>Network-path mismatch:</strong> If home Wi-Fi fails but mobile hotspot works, treat this as local network filtering/routing, not bot setup failure.</li>
+        <li><strong>Server-specific corruption:</strong> If only one server/channel is blank, check channel permissions + category sync and test a brand-new text channel in the same server.</li>
+      </ul>
+    </div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
         <li>Blank channel persists in both desktop and browser.</li>
         <li>Discord works again, but bot still fails the tiny canary test.</li>
         <li>Error appeared right after account/security/email re-auth changes.</li>
+        <li>You can reproduce the issue on one network but not another (Wi-Fi vs hotspot).</li>
       </ul>
     </div>
 
