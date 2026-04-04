@@ -105,6 +105,7 @@ Battle-tested workspace files to get started fast:
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
 - **[HEARTBEAT-CRON-DECISION-WORKFLOW.md](templates/HEARTBEAT-CRON-DECISION-WORKFLOW.md)** — A fast decision and verification playbook for choosing heartbeat vs cron, proving timezone/destination, and breaking scheduler confusion loops
 - **[AUTOMATION-HANDOFF-DECISION.md](templates/AUTOMATION-HANDOFF-DECISION.md)** — A canary-first workflow to decide what your agent can automate now vs what needs explicit human handoff, before burning time/tokens
+- **[CLIENT-DATA-REDACTION-CHECKLIST.md](templates/CLIENT-DATA-REDACTION-CHECKLIST.md)** — A redaction-first workflow for safely using client/customer context without exposing sensitive identifiers, credentials, or account data
 
 ## 🔧 Fix Scripts
 
