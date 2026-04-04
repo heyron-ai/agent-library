@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Message Too Long? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Discord Message Too Long?</h1>
+      <p>If your agent thinks for a while and then sends nothing (or replies cut off), you may be hitting Discord’s message length limit.</p>
+    </div>
+
+    <p>Recurring pattern: users ask for a long output, the bot appears to work, then either fails silently or returns partial text. This is usually not model failure — it’s output format mismatch with Discord limits.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> Discord has strict per-message character limits. Big responses must be split, summarized, or turned into a file.</p>
+    </div>
+
+    <h2>Fast diagnosis (60 seconds)</h2>
+    <div class="card">
+      <ol>
+        <li>Ask for a tiny test: “Reply with exactly one sentence.”</li>
+        <li>If tiny replies work but long ones fail, this is likely output-size related.</li>
+        <li>Retry with: “Give me 5 bullets max, no long paragraphs.”</li>
+      </ol>
+    </div>
+
+    <h2>Known-good recovery flow</h2>
+    <div class="card">
+      <ol>
+        <li>Switch to chunked output: ask for <strong>Part 1/Part 2/Part 3</strong>.</li>
+        <li>Limit each reply: “Max 8 bullets, max 120 characters per bullet.”</li>
+        <li>For long drafts, ask for a file output instead of one giant chat message.</li>
+        <li>Request a short executive summary first, then expand section-by-section.</li>
+      </ol>
+    </div>
+
+    <h2>Copy/paste anti-failure prompt</h2>
+    <div class="code">Output format rules (strict):
+- Do NOT send one giant message.
+- Split into numbered parts and wait after each part.
+- Keep each part under Discord-safe length.
+- If output is still too large, create a file and share the path.
+
+Now give me Part 1 only: a concise summary in 6 bullets max.</div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid this trap:</strong> asking for “everything in one response” creates silent failures and trust breaks. Use staged output on purpose.</p>
+    </div>
+
+    <h2>If you need the full long-form result</h2>
+    <div class="card">
+      <ul>
+        <li>Ask the agent to write a file (HTML/Markdown/TXT) and provide the exact path.</li>
+        <li>Then ask for a short preview in chat (top 5 points only).</li>
+        <li>If file creation fails, request the content in 3-5 sequential chunks.</li>
+      </ul>
+    </div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>Tiny replies fail too (not just long replies).</li>
+        <li>Agent repeatedly says “done” but sends no content and no file path.</li>
+        <li>Chunked prompts still fail after a fresh channel test.</li>
+      </ul>
+    </div>
+
+    <h2>Support packet</h2>
+    <div class="code">Discord long-message issue
+
+Where it fails (DM/server/thread):
+Tiny 1-sentence test result:
+Long output request used:
+Did chunked output work (yes/no):
+Did file-output fallback work (yes/no):
+Exact error text (if any):
+Screenshot/message link:</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> if short responses work and long responses fail, switch to chunked or file-based output immediately. Don’t debug models first.</p>
+    </div>
+
+    <div class="footer">
+      <p>This turns a common “agent is broken” moment into a 2-minute formatting fix.</p>
+    </div>
+  </div>
+</body>
+</html>
