@@ -198,6 +198,23 @@ Return: before/after text only.</div>
       </ul>
     </div>
 
+    <h2>Advanced edge cases (when it still fails)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Attachment pileups:</strong> Multiple large files/images in one turn can exceed budget even if your text is short. Send one file at a time.</li>
+        <li><strong>"Summarize everything" prompts:</strong> Asking for broad synthesis across many sources spikes token use. Ask for a table of contents first, then process sections.</li>
+        <li><strong>Stale giant handoffs:</strong> Pasting old handoff blocks in every message silently bloats each turn. Reuse a compact 5-line brief instead.</li>
+        <li><strong>Error-loop escalation:</strong> If the exact same compact request fails twice in a fresh session, switch to a smaller subtask and include only one artifact.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good compact handoff (copy/paste)</h2>
+    <div class="code">Goal: [one sentence]
+Current artifact: [single file/path/link]
+Success criteria: [2 bullets]
+Hard constraints: [max 2 bullets]
+Now do only Step 1 and keep output under 120 words.</div>
+
     <div class="callout-warning">
       <p><strong>Avoid the retry trap:</strong> repeatedly resending the same oversized request usually makes things worse and wastes tokens.</p>
     </div>
