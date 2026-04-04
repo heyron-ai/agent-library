@@ -431,9 +431,22 @@
             <li>🧵 <strong>One agent, many surfaces:</strong> Discord DM and server channels are the same agent identity, but each surface has separate conversation context/history.</li>
         </ul>
 
+        <h2>Automation Reality Check: Popular Requests</h2>
+        <ul class="examples-list">
+            <li>🎨 <strong>Canva:</strong> your agent can usually help with copy, layout direction, and design prompts. Direct in-app editing/publishing depends on connector availability and permission scope, so verify with a tiny canary task first.</li>
+            <li>🖼️ <strong>Midjourney:</strong> your agent can generate prompt packs and workflow steps. Direct control is often constrained by Discord/bot interaction limits, so plan for a manual final trigger unless a proven integration is confirmed.</li>
+            <li>📱 <strong>Instagram/TikTok:</strong> content planning and caption generation work great; direct posting is commonly blocked by account policy/API constraints. Use a “final-post handoff” checklist to keep output shipping.</li>
+            <li>🌍 <strong>Website builds:</strong> your agent can produce real HTML/CSS/JS and deployment steps, but DNS/account-level publish actions may still require your credentials and one final click.</li>
+        </ul>
+
+        <div class="callout info">
+            <div class="callout-title">Use a 2-minute canary before long tasks</div>
+            <p>Before a big workflow, ask for one tiny proof action (for example: one Canva draft change, one test social post draft, one single-file website publish plan with exact destination). If the canary fails, switch to handoff mode immediately instead of burning tokens on retries.</p>
+        </div>
+
         <div class="callout warning">
             <div class="callout-title">Fast self-check prompt</div>
-            <p>Paste this to your agent: <code>List my current tools/integrations, my saved timezone, whether you can browse/click websites, whether you can directly publish to social platforms from my current setup, whether you can pin messages in Discord from this environment, and whether you can keep working after I close chat. Also switch to token-aware mode (concise responses, minimal retries) and show me where to confirm my plan/reset limits. If any capability is missing, show exact handoff steps + cron-style task setup I should use instead.</code></p>
+            <p>Paste this to your agent: <code>List my current tools/integrations, my saved timezone, whether you can browse/click websites, whether you can directly publish to social platforms from my current setup, whether you can pin messages in Discord from this environment, and whether you can keep working after I close chat. Also switch to token-aware mode (concise responses, minimal retries) and show me where to confirm my plan/reset limits. Then run a 2-minute canary for my requested workflow and tell me if we should use direct automation or manual handoff.</code></p>
         </div>
 
         <h2>What's Next?</h2>
