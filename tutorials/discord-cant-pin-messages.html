@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Pin Permission Is On, But Agent Still Can’t Pin? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Discord Pin Permission Is On, But Agent Still Can’t Pin?</h1>
+      <p>When pinning fails even with permissions enabled, the blocker is usually capability limits, channel overrides, or thread state.</p>
+    </div>
+
+    <p>This one frustrates everyone: you turned on pin permissions, but the agent still can’t pin the message. In most cases, this is not a model problem.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> many agent setups are optimized for read/reply workflows, not full moderation actions. Pinning can be unavailable even when normal replies work.</p>
+    </div>
+
+    <h2>2-minute diagnosis</h2>
+    <div class="card">
+      <ol>
+        <li>Verify the agent can still send a normal reply in the same channel/thread.</li>
+        <li>Try pinning manually with your own account in that exact location.</li>
+        <li>If human pin works but agent pin fails, treat this as an action-capability mismatch first.</li>
+        <li>If both fail, this is a Discord permission/channel-policy issue, not an agent issue.</li>
+      </ol>
+    </div>
+
+    <h2>Known-good recovery flow</h2>
+    <div class="card">
+      <ol>
+        <li>Move to a fresh, non-archived channel/thread and run a tiny canary action: "reply with PIN-CANARY".</li>
+        <li>Confirm channel-level overrides for the bot role (not just server-level role permissions).</li>
+        <li>Check Integrations restrictions in server settings for command/action limits.</li>
+        <li>If pin action is still unavailable, switch to a manual handoff pattern: agent marks messages, human pins.</li>
+      </ol>
+    </div>
+
+    <h2>Copy/paste fallback prompt</h2>
+    <div class="code">Pinning might be blocked in this context.
+Please do this instead:
+1) Reply with: PIN-TARGET CONFIRMED
+2) Quote the exact message I should pin
+3) Give a one-line reason why this message should be pinned
+4) Stop and wait for me to pin manually</div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid this trap:</strong> retrying pin requests in the same broken channel/thread creates a fake "agent is broken" loop. First prove location health with a fresh canary.</p>
+    </div>
+
+    <h2>High-friction edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Thread state mismatch:</strong> archived/locked threads can allow reading but block moderation actions.</li>
+        <li><strong>Role override drift:</strong> category/channel overrides can silently cancel server-level permissions.</li>
+        <li><strong>Integration policy restrictions:</strong> commands/actions may be limited by Integrations rules.</li>
+        <li><strong>Capability expectation mismatch:</strong> setup supports conversation well but not all native moderation UI actions.</li>
+      </ul>
+    </div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>Agent can reply reliably, but pin action fails in multiple fresh channels.</li>
+        <li>You confirmed channel overrides and integrations settings with no change.</li>
+        <li>Behavior changed suddenly after a config/runtime update.</li>
+      </ul>
+    </div>
+
+    <h2>Support packet</h2>
+    <div class="code">Discord pin-action failure
+
+Server + channel:
+Thread link (if any):
+Canary reply result:
+Manual human pin result in same location:
+Bot role/channel override checks completed:
+Integrations restrictions checked (yes/no):
+Exact error text (if shown):
+What changed recently (config/restart/update):</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> if the agent can reply but not pin, assume action-capability or channel-policy mismatch. Use manual pin handoff and keep moving.</p>
+    </div>
+
+    <div class="footer">
+      <p>This turns a common Discord pinning trust-break into a fast yes/no diagnosis with a practical fallback.</p>
+    </div>
+  </div>
+</body>
+</html>
