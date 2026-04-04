@@ -96,6 +96,17 @@
     </div>
 
     <div class="card">
+      <h2>If you copied hardening commands from OpenClaw docs into a HeyRon container</h2>
+      <p>This is a common break pattern from community reports: settings that are safe for direct OpenClaw self-hosting can block HeyRon’s managed gateway path.</p>
+      <ul>
+        <li><strong>Symptom:</strong> chat opens, then tools/actions fail, or you get auth/connect loops.</li>
+        <li><strong>Likely cause:</strong> overly strict network/approval/deny defaults that block HeyRon-required gateway behavior.</li>
+        <li><strong>Fix path:</strong> roll back the newest hardening block first (not your whole setup), then retest with canary.</li>
+      </ul>
+      <p><strong>Important:</strong> if rollback does not restore behavior quickly, open a support ticket and note that the break started immediately after applying <code>docs.openclaw.ai/security</code> recommendations.</p>
+    </div>
+
+    <div class="card">
       <h2>Copy/paste recovery prompt</h2>
       <p><code>Act as a rollback assistant. First run one tiny canary task and report pass/fail with evidence. If fail, identify the most recently added security/policy block, disable only that block, and rerun the canary. Repeat one change at a time until pass. Then list which exact rule caused failure and provide a narrower safer replacement instead of broad deny rules.</code></p>
     </div>
