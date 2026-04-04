@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stop File Chaos with BEST_PRACTICES.md — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(67,181,129,0.15);
+      color: #43b581;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Workflow</div>
+      <h1>Stop File Chaos with <code>BEST_PRACTICES.md</code></h1>
+      <p>If your agent keeps creating duplicate files, forgetting your naming rules, or filing things in random folders, this one-file system fixes it fast.</p>
+    </div>
+
+    <p>Community pattern: users get good results for a few days, then file sprawl starts. Duplicate docs, unclear “final-final-v2” names, and random folder drift kill trust. You don’t need a giant AGENTS.md rewrite to fix this.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> your agent follows what is easiest to find in current context. If your file rules are scattered across chat history, they won’t be applied consistently.</p>
+    </div>
+
+    <h2>The simple fix</h2>
+    <div class="card">
+      <ol>
+        <li>Create one reference file: <strong>BEST_PRACTICES.md</strong>.</li>
+        <li>Put all file workflow rules there (naming, folder map, duplicate policy, archive policy).</li>
+        <li>In AGENTS.md, add one short pointer to this file instead of duplicating rules.</li>
+        <li>Before filing or project work, prompt: <strong>"Read BEST_PRACTICES.md first, then execute."</strong></li>
+      </ol>
+    </div>
+
+    <h2>Starter template (copy/paste)</h2>
+    <div class="code"># BEST_PRACTICES.md
+
+## 1) Canonical folder map
+- drafts/ = active rough work
+- deliverables/ = final outputs only
+- archive/YYYY-MM/ = retired/old versions
+
+## 2) Naming rules
+- Use: YYYY-MM-DD-topic-short-slug.ext
+- Never use: final-final, v2, new, copy
+- Keep names lowercase and hyphenated
+
+## 3) Find-before-create rule
+Before creating any file:
+1. Search for existing candidates by topic/slug.
+2. If a likely file exists, update it instead of creating a new one.
+3. If uncertain, ask one disambiguation question with exact candidate paths.
+
+## 4) Duplicate prevention
+- If duplicates exist, choose one canonical file.
+- Move superseded files to archive/YYYY-MM/.
+- Add a one-line note: "superseded by [path]"
+
+## 5) Completion proof
+For every write task, report:
+- exact path written
+- whether file was created vs updated
+- 1-line summary of what changed</div>
+
+    <h2>AGENTS.md pointer block</h2>
+    <div class="code">### File workflow contract
+Before any organizing, writing, moving, or renaming:
+1) Read BEST_PRACTICES.md
+2) Follow it as the source of truth for file handling
+3) If conflict appears, ask before proceeding</div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid this trap:</strong> dumping 200 lines of file policy directly into AGENTS.md. It bloats routine context and still drifts over time.</p>
+    </div>
+
+    <h2>2-minute repair flow when chaos already exists</h2>
+    <div class="card">
+      <ol>
+        <li>Pick one project folder and stop all parallel edits there.</li>
+        <li>Ask the agent for a duplicate inventory list (filename + full path + last modified).</li>
+        <li>Choose canonical files only; archive the rest.</li>
+        <li>Create/update BEST_PRACTICES.md with the rules you actually want.</li>
+        <li>Run one tiny canary task (single file update) and verify proof output.</li>
+      </ol>
+    </div>
+
+    <h2>Copy/paste control prompt</h2>
+    <div class="code">File task (strict):
+1) Read BEST_PRACTICES.md first and summarize the rules you will follow.
+2) Do a find-before-create scan for matching files.
+3) Update existing canonical file when possible; do not create duplicates.
+4) If ambiguity remains, ask one question with exact candidate paths.
+5) After completion, return: exact path, created-or-updated, and one-line diff summary.</div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>Agent keeps creating duplicates even after BEST_PRACTICES.md + canary task.</li>
+        <li>Files appear in unexpected locations despite explicit workspace path constraints.</li>
+        <li>Agent reports writes but no files exist at reported paths.</li>
+      </ul>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> one clean reference file + find-before-create + proof output eliminates most file-organization loops.</p>
+    </div>
+
+    <div class="footer">
+      <p>This workflow came directly from recurring community file-sprawl pain and proven fixes from advanced users.</p>
+    </div>
+  </div>
+</body>
+</html>
