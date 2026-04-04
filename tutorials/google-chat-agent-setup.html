@@ -187,6 +187,22 @@
       </ul>
     </div>
 
+    <h2>Partner collaboration checklist (2 humans + 1 agent)</h2>
+    <p>Recent community pattern: one person can use the agent, but their partner cannot in the same workspace. Run this exact checklist before deeper debugging:</p>
+    <div class="card">
+      <ol>
+        <li><strong>Use one shared Space</strong> (not separate DMs) for your first real test.</li>
+        <li><strong>Have both humans run the same canary</strong> in that exact Space/thread: <code>@YourAgent reply with exactly: "GOOGLE_CHAT_CANARY_OK"</code>.</li>
+        <li><strong>Compare behavior side-by-side:</strong> if one succeeds and one fails, this is usually account/OU policy scope, not an agent failure.</li>
+        <li><strong>Verify both users can see the app card</strong> in Space members/integrations.</li>
+        <li><strong>Lock one working pattern</strong> (for example: always @mention in thread) and document it in the space topic.</li>
+      </ol>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Common trap:</strong> testing in your own DM and your partner testing in a Space can look like "different agent behavior." It's usually different context + policy scope.</p>
+    </div>
+
     <h2>When to escalate in #help</h2>
     <p>If setup still fails, share:</p>
     <ul>
@@ -194,6 +210,7 @@
       <li>Whether the app appears in Google Chat search for each affected user</li>
       <li>The exact canary prompt and exact response/error (copy/paste, no paraphrase)</li>
       <li>Whether direct @mention works while plain messages fail</li>
+      <li>Whether one partner succeeds while the other fails in the same space/thread</li>
       <li>Whether your Workspace admin confirmed app access policy + OU/group scope</li>
     </ul>
 
