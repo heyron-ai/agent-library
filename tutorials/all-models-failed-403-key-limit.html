@@ -176,6 +176,19 @@ Do this exactly:
       <p><strong>Loop-break rule:</strong> after two failed retests, stop. Capture exact primary + fallback IDs and full provider error text, then escalate once with complete evidence.</p>
     </div>
 
+    <h2>When it might be a platform-wide incident</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Signal:</strong> several users report <code>403 Key limit exceeded</code> at the same time across channels.</li>
+        <li><strong>What this usually means:</strong> shared provider allocation/key pool limits are being hit, not just your individual prompt.</li>
+        <li><strong>What to do:</strong> open one support ticket with evidence instead of repeatedly retrying and burning more requests.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <p><strong>Fast differentiator:</strong> if your exact same short canary prompt fails in a fresh session <em>and</em> other users are reporting the same 403 window, treat it as service allocation pressure and escalate once with timestamps.</p>
+    </div>
+
     <h2>Escalation packet for #help</h2>
     <div class="code">Provider/model failure report
 
