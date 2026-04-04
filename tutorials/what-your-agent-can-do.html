@@ -422,6 +422,7 @@
         <h2>Quick Reality Checks (from recent community questions)</h2>
         <ul class="examples-list">
             <li>🌐 <strong>Browser expectations:</strong> your agent can search/fetch/read web pages, but it generally cannot click through JavaScript-heavy flows or fill forms like a human browser session.</li>
+            <li>📣 <strong>Social media + website expectations:</strong> your agent can write posts, content calendars, captions, and website code/content drafts — but direct publishing and final launch steps usually still need your account permissions and a human click to complete.</li>
             <li>🎙️ <strong>Voice setup gotcha:</strong> if ElevenLabs voice is connected but speech still fails, verify you selected a voice that exists in <em>your own</em> ElevenLabs account and shared the correct voice ID + API key with your agent.</li>
             <li>🕒 <strong>Time-of-day weirdness:</strong> if your agent says “good night” at 3pm, ask it to check current local time and timezone, then save your preferred timezone in memory.</li>
             <li>🌙 <strong>"Work while I sleep" expectation:</strong> closing a chat tab can stop in-thread work. For guaranteed background runs, use explicit scheduling (cron/reminders/heartbeat) and ask for a completion message in your target channel.</li>
@@ -430,7 +431,7 @@
 
         <div class="callout warning">
             <div class="callout-title">Fast self-check prompt</div>
-            <p>Paste this to your agent: <code>List my current tools/integrations, my saved timezone, whether you can browse/click websites, and whether you can keep working after I close chat. If not, show me the exact cron-style reminder/task setup I should use instead.</code></p>
+            <p>Paste this to your agent: <code>List my current tools/integrations, my saved timezone, whether you can browse/click websites, whether you can directly publish to social platforms from my current setup, and whether you can keep working after I close chat. If not, show me the exact handoff steps + cron-style task setup I should use instead.</code></p>
         </div>
 
         <h2>What's Next?</h2>
