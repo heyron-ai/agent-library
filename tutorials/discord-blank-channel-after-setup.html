@@ -125,8 +125,9 @@
       <ol>
         <li>Fully quit Discord desktop (not just close window).</li>
         <li>Reopen Discord and run <strong>Ctrl/Cmd + R</strong> to hard refresh.</li>
+        <li>If still blank, clear Discord cache (<strong>User Settings → Advanced → Clear Cache</strong>) and restart app.</li>
         <li>If still blank, sign out/in again, then disable VPN/proxy for one test.</li>
-        <li>Test in browser. If browser works but desktop fails, desktop cache is the issue.</li>
+        <li>Test in browser. If browser works but desktop fails, desktop cache/session state is the issue.</li>
         <li>Reinstall desktop app (latest build), then re-test with a plain text message in a normal channel.</li>
       </ol>
     </div>
@@ -160,6 +161,7 @@ Do this exactly:
         <li><strong>Security software / DNS filtering:</strong> Ad blockers, endpoint security tools, or DNS filters can partially block Discord assets and render blank panes. Run one clean test with these disabled.</li>
         <li><strong>Network-path mismatch:</strong> If home Wi-Fi fails but mobile hotspot works, treat this as local network filtering/routing, not bot setup failure.</li>
         <li><strong>Server-specific corruption:</strong> If only one server/channel is blank, check channel permissions + category sync and test a brand-new text channel in the same server.</li>
+        <li><strong>Email re-entry loop during setup:</strong> If reconnect flow keeps asking for email and then drops you into a blank pane, stop reconnect attempts, clear cache, and run one clean browser-based connect pass before returning to desktop.</li>
       </ul>
     </div>
 
