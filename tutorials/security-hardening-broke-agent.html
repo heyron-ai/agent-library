@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Hardening Broke My Agent? | heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #a0a0a0;
+      --accent: #5865f2;
+      --good: #43b581;
+      --warn: #f0c060;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 820px; margin: 0 auto; padding: 36px 20px 80px; }
+    .back { color: #9bb0ff; text-decoration: none; font-size: 14px; }
+    h1 { font-size: 34px; line-height: 1.2; margin: 16px 0 10px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--text-muted); margin-bottom: 24px; }
+    .badge {
+      display: inline-block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; color: var(--text-muted);
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; margin: 16px 0;
+    }
+    h2 { margin: 4px 0 10px; font-size: 22px; }
+    ul, ol { margin: 8px 0 8px 22px; }
+    code {
+      background: #151515; border: 1px solid #2f2f2f; border-radius: 6px; padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .footer { margin-top: 26px; color: var(--text-muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to Tutorials</a>
+    <div style="margin-top:14px" class="badge">Troubleshooting · 4 min</div>
+    <h1>Applied Security Hardening and Now Your Agent Is "Broken"?</h1>
+    <p class="subtitle">This usually means your restrictions are too broad, overlapping, or blocking normal tool execution—not that the model failed.</p>
+
+    <div class="card">
+      <h2>Fast reality check</h2>
+      <p>If your agent can still chat but can’t do actions, you likely hit a policy collision:</p>
+      <ul>
+        <li>approval policy now blocks routine commands</li>
+        <li>network restrictions block tool access</li>
+        <li>timeout values are too aggressive for real tasks</li>
+        <li>multiple guardrails overlap and cancel normal behavior</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>2-minute recovery flow (safe rollback)</h2>
+      <ol>
+        <li><strong>Run one tiny canary task.</strong><br />
+          Ask for: <code>Create a file named canary.txt containing OK and show the full path.</code>
+        </li>
+        <li><strong>If canary fails, revert only the newest hardening block.</strong><br />
+          Don’t wipe everything. Remove one recent policy cluster, then retest.
+        </li>
+        <li><strong>Re-enable guardrails one-by-one.</strong><br />
+          Add back exactly one restriction, run canary again, continue.
+        </li>
+        <li><strong>Stop at first failure.</strong><br />
+          The last re-added rule is likely the blocker. Tune that rule only.
+        </li>
+      </ol>
+      <p class="good">This finds the exact bad rule fast without losing your full security posture.</p>
+    </div>
+
+    <div class="card">
+      <h2>High-friction mistakes to avoid</h2>
+      <ul>
+        <li><strong>Changing 10 things at once:</strong> you can’t isolate the blocker.</li>
+        <li><strong>Using heartbeat as a workaround:</strong> this hides root cause instead of fixing policy collisions.</li>
+        <li><strong>Skipping restart/reload after config edits:</strong> stale runtime state can make old failures look persistent.</li>
+        <li><strong>Treating all failures as model issues:</strong> most are execution-policy issues after hardening.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Copy/paste recovery prompt</h2>
+      <p><code>Act as a rollback assistant. First run one tiny canary task and report pass/fail with evidence. If fail, identify the most recently added security/policy block, disable only that block, and rerun the canary. Repeat one change at a time until pass. Then list which exact rule caused failure and provide a narrower safer replacement instead of broad deny rules.</code></p>
+    </div>
+
+    <div class="card">
+      <h2>When to escalate to #help</h2>
+      <ul>
+        <li>timestamp + timezone</li>
+        <li>the exact hardening block(s) added recently</li>
+        <li>canary task prompt + exact failure output</li>
+        <li>which single rollback step restored behavior (if any)</li>
+      </ul>
+      <p class="warn">Post exact policy text (redact secrets) so support can identify collision patterns quickly.</p>
+    </div>
+
+    <p class="footer">Bottom line: don’t nuke your full setup. Use one-rule-at-a-time rollback + canary proof to isolate the real blocker safely.</p>
+  </div>
+</body>
+</html>
