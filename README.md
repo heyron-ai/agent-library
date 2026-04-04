@@ -92,6 +92,7 @@ Battle-tested workspace files to get started fast:
 - **[PRIVACY-INCIDENT-RESPONSE.md](templates/PRIVACY-INCIDENT-RESPONSE.md)** — Rapid contain→patch→verify workflow for accidental private-data leaks in shared/group chats
 - **[CHANGE-SCOPE-LOCK-CHECKLIST.md](templates/CHANGE-SCOPE-LOCK-CHECKLIST.md)** — A strict scope+plan+diff workflow for preventing over-editing when you only want small targeted changes
 - **[REPEATED-QUESTION-LOOP-BREAKER.md](templates/REPEATED-QUESTION-LOOP-BREAKER.md)** — A fast anti-loop override that forces one-shot missing-field collection and evidence-first execution
+- **[LANGUAGE-LOCK-PLAYBOOK.md](templates/LANGUAGE-LOCK-PLAYBOOK.md)** — A deterministic recovery workflow for wrong-language/mixed-language replies with hard language lock, canary test, and escalation packet
 - **[TOOL-CAPABILITY-REALITY-CHECK.md](templates/TOOL-CAPABILITY-REALITY-CHECK.md)** — A deterministic capability check to separate what your agent can automate now vs where human handoff is required
 - **[SURFACE-MISMATCH-CANARY.md](templates/SURFACE-MISMATCH-CANARY.md)** — A tiny proof-first workflow for “works in DM/dashboard but fails in server channel/thread” routing and policy mismatch incidents
 - **[RUNTIME-RESTART-VERIFICATION.md](templates/RUNTIME-RESTART-VERIFICATION.md)** — A proof-first workflow to verify whether a restart actually applied and isolate stale-session/host mismatch loops
