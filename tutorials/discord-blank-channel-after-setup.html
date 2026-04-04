@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Opens a Blank Channel After Setup? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Discord Opens a Blank Channel After Setup?</h1>
+      <p>If Discord turns blank or unusable during setup, this is usually a client-state issue — not a broken agent.</p>
+    </div>
+
+    <p>Fresh community report: users successfully install/connect, then Discord app shows a blank channel pane and setup stalls. This guide gives a 4-minute recovery flow.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> if Discord UI is blank, fix client state first. Agent config changes won’t help until Discord can render channels normally.</p>
+    </div>
+
+    <h2>Fast diagnosis (90 seconds)</h2>
+    <div class="card">
+      <ol>
+        <li>Check if Discord works in browser (<strong>discord.com/app</strong>) while desktop app is blank.</li>
+        <li>Try another server/channel. If all are blank, this is likely client cache/session corruption.</li>
+        <li>Sign out and back in once. If still blank, continue to clean reset below.</li>
+      </ol>
+    </div>
+
+    <h2>Known-good recovery flow</h2>
+    <div class="card">
+      <ol>
+        <li>Fully quit Discord desktop (not just close window).</li>
+        <li>Reopen Discord and run <strong>Ctrl/Cmd + R</strong> to hard refresh.</li>
+        <li>If still blank, sign out/in again, then disable VPN/proxy for one test.</li>
+        <li>Test in browser. If browser works but desktop fails, desktop cache is the issue.</li>
+        <li>Reinstall desktop app (latest build), then re-test with a plain text message in a normal channel.</li>
+      </ol>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid this trap:</strong> repeatedly reconnecting your bot while Discord UI is broken creates extra noise and can make troubleshooting harder. Stabilize Discord first, then retest bot behavior.</p>
+    </div>
+
+    <h2>Copy/paste test prompt after recovery</h2>
+    <div class="code">I just fixed Discord UI state and need a clean test.
+
+Do this exactly:
+1) Confirm you can see this channel context.
+2) Reply with: "Channel visibility test passed."
+3) Do one tiny action only: summarize this message in 1 sentence.
+4) If any step fails, tell me exact blocker text and stop.</div>
+
+    <h2>If browser works but desktop still fails</h2>
+    <div class="card">
+      <ul>
+        <li>Use browser Discord temporarily to continue work.</li>
+        <li>Keep one stable test channel for bot checks (avoid threads/forums while diagnosing).</li>
+        <li>Capture one screenshot of blank desktop + one screenshot of working browser state for support.</li>
+      </ul>
+    </div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>Blank channel persists in both desktop and browser.</li>
+        <li>Discord works again, but bot still fails the tiny canary test.</li>
+        <li>Error appeared right after account/security/email re-auth changes.</li>
+      </ul>
+    </div>
+
+    <h2>Support packet</h2>
+    <div class="code">Discord blank-channel issue
+
+Desktop app version:
+OS:
+Browser test result (works/fails):
+VPN/proxy on or off:
+Hard refresh tried (yes/no):
+Sign-out/in tried (yes/no):
+Reinstall tried (yes/no):
+Exact current blocker text:
+Screenshot links:</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> blank Discord channels are usually client-state failures. Recover UI first, run one tiny canary test, then continue normal setup.</p>
+    </div>
+
+    <div class="footer">
+      <p>This saves hours of “bot debugging” when the real blocker is Discord app state.</p>
+    </div>
+  </div>
+</body>
+</html>
