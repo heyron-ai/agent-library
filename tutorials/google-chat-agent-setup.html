@@ -176,17 +176,29 @@
       <p><strong>Important:</strong> if you want both you and your partner to use the same agent reliably, test both accounts in the same space with the same canary prompt before real work.</p>
     </div>
 
+    <h2>Advanced edge cases (when basic checks pass but it still fails)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>App only responds when directly mentioned:</strong> some spaces are configured so apps do not answer ambient messages. Use explicit <code>@YourAgent</code> mentions in your operating pattern.</li>
+        <li><strong>Thread mismatch:</strong> canary was run in main space, real task posted in a thread (or vice versa). Treat each thread as its own context lane.</li>
+        <li><strong>External/guest membership limits:</strong> mixed-domain spaces can have tighter app policies than internal spaces.</li>
+        <li><strong>One user works, another fails:</strong> OU/group rollout lag or app access policy not fully propagated yet. Re-test after policy sync, then escalate with account-level evidence.</li>
+        <li><strong>Notifications make it look silent:</strong> app replied in-thread but users were watching main timeline only. Confirm by opening the exact thread and sorting by newest.</li>
+      </ul>
+    </div>
+
     <h2>When to escalate in #help</h2>
     <p>If setup still fails, share:</p>
     <ul>
-      <li>Whether you tested DM, group chat, or Space</li>
-      <li>Whether the app appears in Google Chat search</li>
-      <li>The exact canary prompt and exact response/error</li>
-      <li>Whether your Workspace admin confirmed app access policy</li>
+      <li>Whether you tested DM, group chat, or Space (and thread vs main timeline)</li>
+      <li>Whether the app appears in Google Chat search for each affected user</li>
+      <li>The exact canary prompt and exact response/error (copy/paste, no paraphrase)</li>
+      <li>Whether direct @mention works while plain messages fail</li>
+      <li>Whether your Workspace admin confirmed app access policy + OU/group scope</li>
     </ul>
 
     <div class="callout-success">
-      <p><strong>Bottom line:</strong> most Google Chat failures are policy + destination mismatch problems, not model problems. Do the canary in the final destination first, then scale.</p>
+      <p><strong>Bottom line:</strong> most Google Chat failures are policy + destination mismatch problems, not model problems. Do the canary in the exact final destination (including thread context), then scale.</p>
     </div>
 
     <div class="footer">
