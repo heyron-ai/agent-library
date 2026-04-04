@@ -136,6 +136,33 @@
 
     <hr>
 
+    <h2>When this is likely a server-side mismatch (not your browser)</h2>
+    <p>Recent #help reports show cases where users did all local fixes correctly, but the mismatch persisted until support resynced the runtime token server-side.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Fast differentiator</div>
+      <p style="margin:0">If token mismatch survives: fresh token paste + clean-tab test + single restart, and <em>still</em> fails in both normal and incognito sessions, treat it as likely backend token-state drift.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <h3>Escalate once with an evidence packet (don’t loop retries)</h3>
+      <p>Open a support ticket at <a href="https://heyron.ai/support" target="_blank">heyron.ai/support</a> and include:</p>
+      <ul style="margin-left:20px; color:var(--text-muted)">
+        <li>Exact error text: <span class="code" style="display:block; margin-top:8px;">unauthorized: gateway token mismatch</span></li>
+        <li>Dashboard origin used (<em>protocol + host + port</em>)</li>
+        <li>Runtime type (local Docker, VPS, Tailscale, etc.) + container/project name</li>
+        <li>Whether incognito fails the same way</li>
+        <li>Timestamp + timezone of last failed attempt</li>
+      </ul>
+      <div class="callout callout-warning">
+        <div class="callout-label">Why this matters</div>
+        <p style="margin:0">Repeated local retries won’t fix server-side token registry drift and can waste a lot of time. One clean ticket gets you to a real fix faster.</p>
+      </div>
+    </div>
+
+    <hr>
+
     <h2>Related Error: “403 Key limit exceeded”</h2>
     <p>Community reports today also showed model failures like:</p>
     <div class="code">All models failed: ... 403 Key limit exceeded (total limit)</div>
