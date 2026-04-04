@@ -152,12 +152,33 @@ Now give me Part 1 only: a concise summary in 6 bullets max.</div>
       </ul>
     </div>
 
+    <h2>High-friction edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Code blocks can explode length:</strong> long stack traces/log dumps inside triple-backticks often exceed limits even when normal text works.</li>
+        <li><strong>Markdown tables render badly in Discord:</strong> switch to bullets for comparisons instead of wide tables.</li>
+        <li><strong>Thread/server policy mismatch:</strong> if DM works but a server thread fails, test in a clean server channel and compare results.</li>
+        <li><strong>One giant retry loop:</strong> if the same oversized request keeps failing, force a hard cap per part before retrying.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good "safe output" prompt</h2>
+    <div class="code">You are writing for Discord. Follow these constraints exactly:
+- No markdown tables.
+- No giant code blocks over 40 lines.
+- Max 900 characters per message.
+- Split into Part 1 / Part 2 / Part 3 and stop after each part.
+- If any part would exceed 900 chars, write full output to a file and return: file path + 5-bullet summary.
+
+Start with Part 1 now.</div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
         <li>Tiny replies fail too (not just long replies).</li>
         <li>Agent repeatedly says “done” but sends no content and no file path.</li>
         <li>Chunked prompts still fail after a fresh channel test.</li>
+        <li>DM succeeds but server/channel replies still fail after policy/permission recheck.</li>
       </ul>
     </div>
 
@@ -169,6 +190,8 @@ Tiny 1-sentence test result:
 Long output request used:
 Did chunked output work (yes/no):
 Did file-output fallback work (yes/no):
+Did DM vs server behavior differ (yes/no):
+Was markdown table/code-block output requested (yes/no):
 Exact error text (if any):
 Screenshot/message link:</div>
 
