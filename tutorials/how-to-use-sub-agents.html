@@ -224,6 +224,16 @@ Rules:
       <li>Require manager to include a short <strong>what changed during merge</strong> section.</li>
     </ul>
 
+    <h3>5) “Can I use a sub-agent to keep files organized?”</h3>
+    <p>Yes — but only with strict file rules, or you'll create duplicates/triplicates fast.</p>
+    <ul>
+      <li>Create exactly one <strong>File Steward</strong> worker role. No other worker can create/move files.</li>
+      <li>Enforce <strong>find-before-create</strong>: worker must search for an existing canonical file before writing.</li>
+      <li>Require a completion proof block: <code>file path + action + reason + timestamp</code>.</li>
+      <li>Manager must approve any new top-level folders before the worker creates them.</li>
+      <li>If file chaos already exists, pause new writes and run a one-time dedupe pass first.</li>
+    </ul>
+
     <h2>If It Still Feels Messy</h2>
     <p>Run this reset workflow:</p>
     <ol>
@@ -239,7 +249,7 @@ Rules:
     </div>
 
     <div class="footer">
-      <p>Related: <a href="agent-working-while-youre-away.html">Can My Agent Keep Working While I’m Away?</a> · <a href="agent-says-done-but-didnt-do-it.html">Agent Said It Did Something — But Didn’t?</a> · <a href="prompting-your-agent-like-a-pro.html">Prompting Your Agent Like a Pro</a></p>
+      <p>Related: <a href="agent-working-while-youre-away.html">Can My Agent Keep Working While I’m Away?</a> · <a href="agent-says-done-but-didnt-do-it.html">Agent Said It Did Something — But Didn’t?</a> · <a href="stop-file-chaos-with-best-practices-md.html">Stop File Chaos with BEST_PRACTICES.md</a> · <a href="prompting-your-agent-like-a-pro.html">Prompting Your Agent Like a Pro</a></p>
       <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
     </div>
   </div>
