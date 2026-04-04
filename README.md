@@ -64,6 +64,7 @@ Battle-tested workspace files to get started fast:
 - **[AGENTS.md](templates/AGENTS.md)** — Operating manual for your agent
 - **[SOUL.md](templates/SOUL.md)** — Personality template
 - **[TOOLS.md](templates/TOOLS.md)** — Environment-specific notes
+- **[BEST_PRACTICES.md](templates/BEST_PRACTICES.md)** — Source-of-truth file-organization rules (find-before-create, canonical paths, and completion proof) to prevent duplicate-file chaos
 - **[HEARTBEAT.md](templates/HEARTBEAT.md)** — Proactive heartbeat checklist template
 - **[COMMUNITY-SWEEP.md](templates/COMMUNITY-SWEEP.md)** — Community intelligence workflow template
 - **[DISCORD-CONNECT-CHECKLIST.md](templates/DISCORD-CONNECT-CHECKLIST.md)** — Fast diagnostic checklist for Discord connection failures
