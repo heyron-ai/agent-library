@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Burning Too Many Tokens? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(250,166,26,0.15);
+      color: var(--warning);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Agent Burning Too Many Tokens?</h1>
+      <p>Fix runaway token usage with a fast proof-first workflow: smaller turns, tighter outputs, and no-repeat context handoffs.</p>
+    </div>
+
+    <p>Community pattern: users hit limits fast, assume billing is broken, and keep retrying giant prompts. Most of the time, this is a prompt-shape and workflow issue—not a model bug.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> one oversized turn can cost more than ten small turns. The fastest way to save tokens is to force short, staged responses.</p>
+    </div>
+
+    <h2>2-minute diagnosis checklist</h2>
+    <div class="card">
+      <ol>
+        <li>Are you pasting huge chat history repeatedly?</li>
+        <li>Are you asking for giant outputs in one message ("full strategy", "all code", "everything")?</li>
+        <li>Are you retrying the same failed prompt without reducing scope?</li>
+        <li>Are you mixing multiple tasks in one request?</li>
+        <li>Did you ask the agent to be concise and return only final output?</li>
+      </ol>
+    </div>
+
+    <h2>Known-good low-token prompt pattern</h2>
+    <div class="code">Token-aware mode ON.
+
+Goal: [one concrete task only]
+Context (max 5 bullets):
+- ...
+- ...
+
+Constraints:
+- Keep response under 180 words
+- No markdown tables
+- Ask at most one clarifying question (only if blocking)
+- If not blocked, execute immediately
+
+Output format:
+1) Result
+2) Evidence (paths/links/commands used)
+3) Next smallest step</div>
+
+    <h2>High-friction mistakes that spike token burn</h2>
+    <div class="card">
+      <ul>
+        <li><strong>"Summarize everything" loops:</strong> asking for giant retrospectives every turn.</li>
+        <li><strong>Attachment pileups:</strong> re-uploading many files without narrowing target files.</li>
+        <li><strong>Multi-goal mega prompts:</strong> strategy + implementation + QA + publish in one shot.</li>
+        <li><strong>Verbose style lock:</strong> forcing long-form explanations when a short checklist would do.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Loop-break rule:</strong> after two failed retries, stop. Split into smaller steps or start a fresh session with a compact handoff instead of trying the same giant prompt again.</p>
+    </div>
+
+    <h2>Compact handoff when starting fresh</h2>
+    <div class="code">New session handoff:
+- Objective: [single outcome]
+- Completed so far: [3 bullets max]
+- Current blocker: [1 sentence]
+- Required output: [exact format]
+- Hard limits: <= 180 words, no tables, no repeated recap</div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>Token use stays unusually high even with short prompts and tight output limits.</li>
+        <li>You see inconsistent quota behavior across the same model/provider with identical prompts.</li>
+        <li>You need help separating platform limits from provider key caps/reset windows.</li>
+      </ul>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> small scoped turns + hard output limits + compact handoffs solve most token-burn loops quickly.</p>
+    </div>
+
+    <div class="footer">
+      <p>Built from recurring community friction around quota panic, long-context retries, and oversized response requests.</p>
+    </div>
+  </div>
+</body>
+</html>
