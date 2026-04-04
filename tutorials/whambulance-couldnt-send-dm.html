@@ -199,6 +199,17 @@
       <p><strong>Can’t find your support thread?</strong> Scroll for a bot mention with a thread link, or post once in #help: <em>"I enabled DMs — please reopen my support thread."</em></p>
     </div>
 
+    <h2>Advanced edge cases (when DMs are ON but it still fails)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>DM toggle is on, but bot is blocked:</strong> open the bot profile and confirm it is not blocked.</li>
+        <li><strong>Server DM override still off:</strong> global privacy can be ON while the heyron server-level setting is OFF.</li>
+        <li><strong>Mobile/desktop mismatch:</strong> one client applies the toggle late; test from the other client after a full restart.</li>
+        <li><strong>Safety filters/intermediate apps:</strong> strict filters or bridge-style repost flows can strip message content. If triage shows your message as blank, repost plain text directly in <strong>#help</strong>.</li>
+        <li><strong>Repeated retries causing noise:</strong> send one clean retry after settings changes, then wait for the bot response instead of rapid reposting.</li>
+      </ul>
+    </div>
+
     <h2>Known-good test message</h2>
     <p>Paste this in #help after changing settings:</p>
     <div class="code">Test: I enabled DMs from server members. Please reopen my support thread if needed.</div>
