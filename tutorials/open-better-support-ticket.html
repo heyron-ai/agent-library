@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Better Support Tickets (and Get Faster Fixes) — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: var(--warning);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Open Better Support Tickets (and Get Faster Fixes)</h1>
+      <p>A 3-minute format that helps support reproduce your issue quickly instead of asking 12 follow-up questions.</p>
+    </div>
+
+    <p>Recurring community pattern: users report "it doesn't work" with no exact error, no timestamp, and no destination context. Support has to guess. This tutorial gives you a clean, copy/paste structure that gets faster answers.</p>
+
+    <div class="callout">
+      <p><strong>Reality check:</strong> clear evidence beats long stories. One precise report with exact error text and a tiny repro usually resolves faster than 20 back-and-forth messages.</p>
+    </div>
+
+    <h2>What to include every time</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Expected behavior:</strong> What should have happened?</li>
+        <li><strong>Actual behavior:</strong> What happened instead?</li>
+        <li><strong>Exact error text:</strong> Copy/paste, don't paraphrase.</li>
+        <li><strong>Where it happened:</strong> Dashboard, Discord DM, server channel, thread, etc.</li>
+        <li><strong>When it happened:</strong> Include timezone.</li>
+        <li><strong>Repro steps:</strong> 3-5 short steps max.</li>
+      </ol>
+    </div>
+
+    <h2>Copy/paste support packet</h2>
+    <div class="code">Support Packet
+- Expected: [what should happen]
+- Actual: [what happened]
+- Exact error: [paste full error text]
+- Surface: [dashboard / Discord DM / server / thread]
+- Time: [YYYY-MM-DD HH:MM timezone]
+- Repro steps:
+  1) ...
+  2) ...
+  3) ...
+- What I already tried:
+  - ...
+  - ...
+- One screenshot/log snippet (optional but helpful): [attach]
+</div>
+
+    <h2>High-friction mistakes that slow support</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Paraphrased errors:</strong> "something about auth" is not actionable.</li>
+        <li><strong>No destination context:</strong> DM works but server fails is a huge clue—include it.</li>
+        <li><strong>No timestamp/timezone:</strong> impossible to line up logs quickly.</li>
+        <li><strong>Retry spam:</strong> 10 retries can hide the original cause. Share the first failing attempt too.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Privacy tip:</strong> include enough evidence to debug, but redact secrets (API keys, tokens, personal IDs) before posting.</p>
+    </div>
+
+    <h2>One-minute self-check before posting</h2>
+    <div class="card">
+      <ul>
+        <li>Can someone else reproduce this from your steps?</li>
+        <li>Did you include exact text, not summaries?</li>
+        <li>Did you include channel/thread destination?</li>
+        <li>Did you include your local time + timezone?</li>
+      </ul>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> short, structured, evidence-first tickets get solved faster and reduce support loops for everyone.</p>
+    </div>
+
+    <div class="footer">
+      <p>Built from recurring #help friction where missing error text, missing context, and unclear repro steps delayed fixes.</p>
+    </div>
+  </div>
+</body>
+</html>
