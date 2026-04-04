@@ -179,6 +179,26 @@ openclaw gateway status</div>
       <div class="code">Create file test-openclaw.txt with contents "hello from local" in the current workspace, then confirm full path.</div>
     </div>
 
+    <h2>Common confusion: "Why are my markdown files different in GitHub vs Gateway?"</h2>
+    <div class="card">
+      <p><strong>Short answer:</strong> they are often <em>not</em> identical, and that can be normal.</p>
+      <ul>
+        <li><strong>GitHub repo files</strong> are your source/history layer (commits, branches, pull requests).</li>
+        <li><strong>Gateway workspace files</strong> are your agent's live working copy for the current runtime/session.</li>
+        <li>Local edits can exist in Gateway before you commit/push to GitHub.</li>
+        <li>GitHub can be ahead of local if you pulled changes in one place but not the other.</li>
+      </ul>
+      <p>If they look "vastly different," verify before panic:</p>
+      <div class="code">git status --short
+git branch --show-current
+git log --oneline -5</div>
+      <p>Then ask your agent to confirm absolute file path + last modified time for the file it's using.</p>
+    </div>
+
+    <div class="callout callout-warning">
+      <p><strong>Loop-break rule:</strong> don't keep retrying big tasks until file identity is proven. First confirm exact path, branch, and whether changes are committed.</p>
+    </div>
+
     <h2>Common failure patterns (and fixes)</h2>
 
     <div class="card">
