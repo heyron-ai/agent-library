@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model ID Invalid or “Agent Failed Before Reply”? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 28px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Model ID Invalid or “Agent Failed Before Reply”?</h1>
+      <p>A clean recovery flow for broken model settings, invalid fallback IDs, and “all models failed” errors.</p>
+    </div>
+
+    <p>If your agent suddenly stops responding after model changes, you’re usually dealing with config validation — not a broken account.</p>
+
+    <div class="callout">
+      <p><strong>Common trigger:</strong> changing the primary model and fallback models at the same time, then one ID is typed wrong or no longer available.</p>
+    </div>
+
+    <h2>What this error usually means</h2>
+    <div class="card">
+      <ul>
+        <li><strong>“Model ID is not valid”:</strong> the model string does not match a currently supported ID in your provider route.</li>
+        <li><strong>“Agent failed before reply”:</strong> preflight validation failed before the model even generated output.</li>
+        <li><strong>“All models failed”:</strong> primary + all fallbacks failed (invalid IDs, disabled key, or exhausted key limits).</li>
+      </ul>
+    </div>
+
+    <h2>5-minute recovery workflow</h2>
+
+    <div class="step">
+      <div class="step-title">1) Revert to one known-good model (no fallbacks)</div>
+      <p>Temporarily remove every fallback model. Keep only one model that previously worked in your setup.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Run a tiny canary test</div>
+      <p>Send a minimal prompt like “Reply with OK.” If this fails, the issue is still base config/provider, not prompt quality.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Validate fallback IDs one-by-one</div>
+      <p>Add one fallback, test. Add the next, test. Do not add 3+ at once or you won’t know which one broke it.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Check provider/key limits</div>
+      <p>If you see 403 key limit errors, the model ID may be fine — the key quota is not. Fix quota/key first.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) Keep a rollback block</div>
+      <p>Save your last known-good model config in a note so you can restore fast after experiments.</p>
+    </div>
+
+    <h2>Good vs risky model-change pattern</h2>
+
+    <h3>Risky (hard to debug)</h3>
+    <div class="code">Change primary model + add 3 new fallbacks + switch provider key in one edit.</div>
+
+    <h3>Safe (debuggable)</h3>
+    <div class="code">Step 1: Change primary model only → test
+Step 2: Add fallback #1 → test
+Step 3: Add fallback #2 → test</div>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> if a model worked last week but fails now, the model may have been renamed, deprecated, or your key scope changed.</p>
+    </div>
+
+    <h2>Copy/paste prompt to self-heal config</h2>
+    <div class="code">Diagnose my model config without guessing.
+1) Tell me the exact primary model currently set.
+2) List all fallback model IDs exactly as configured.
+3) Flag any invalid or suspicious IDs.
+4) Propose the smallest safe rollback to one known-good model.
+5) After rollback, run a tiny canary prompt: "Reply with OK" and report result.</div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>You reverted to a previously working model and canary still fails.</li>
+        <li>You keep seeing 401/403 errors after key reset.</li>
+        <li>Dashboard shows one model, runtime reports another.</li>
+        <li>Behavior differs across Discord vs dashboard with same agent config.</li>
+      </ul>
+    </div>
+
+    <h2>Support packet (fast)</h2>
+    <ul>
+      <li>Exact error text (full line, no paraphrase)</li>
+      <li>Primary model ID + fallback IDs</li>
+      <li>Whether error is 401, 403, invalid ID, or “all models failed”</li>
+      <li>Result of tiny canary prompt</li>
+      <li>What changed right before it broke</li>
+    </ul>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> model failures are usually config drift, not agent failure. Roll back to one known-good model, test small, then reintroduce fallbacks one at a time.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="api-keys-and-models.html">API Keys &amp; Models</a> and <a href="all-models-failed-403-key-limit.html">All Models Failed: 403 Key Limit Exceeded</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
