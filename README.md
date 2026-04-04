@@ -81,6 +81,7 @@ Battle-tested workspace files to get started fast:
 - **[EXECUTION-LAYER-OUTAGE-PLAYBOOK.md](templates/EXECUTION-LAYER-OUTAGE-PLAYBOOK.md)** — Fast isolation + recovery workflow for “chat still works but tools/commands hang or timeout” execution-plane failures
 - **[CONTEXT-HANDOFF-CHECKLIST.md](templates/CONTEXT-HANDOFF-CHECKLIST.md)** — Practical handoff + verification workflow for dashboard/DM/server context-switch confusion (“it forgot everything” across surfaces)
 - **[DISCORD-CHANNEL-SILENCE-PLAYBOOK.md](templates/DISCORD-CHANNEL-SILENCE-PLAYBOOK.md)** — Fast isolation and recovery workflow for “DM works but server channel is silent” and “typing then nothing” Discord failures
+- **[DISCORD-LONG-OUTPUT-GUARDRAILS.md](templates/DISCORD-LONG-OUTPUT-GUARDRAILS.md)** — Output-size guardrails for Discord to prevent cut-off/silent long replies using chunk labels, per-message limits, and file fallback
 - **[LINK-ACCESS-TRIAGE.md](templates/LINK-ACCESS-TRIAGE.md)** — Fast diagnosis + recovery flow for “this link opens for me but my agent can’t access it” visibility/auth mismatches
 - **[ANTI-BOT-CHECKPOINT-HANDOFF.md](templates/ANTI-BOT-CHECKPOINT-HANDOFF.md)** — Human-checkpoint handoff workflow for reCAPTCHA/Cloudflare/login verification blockers, including loop-break rules and resume packet
 - **[LONG-CHAT-RECOVERY-WORKFLOW.md](templates/LONG-CHAT-RECOVERY-WORKFLOW.md)** — Deterministic reset + rehydration workflow for “agent got worse over long chat” degradation and lost-work prevention
