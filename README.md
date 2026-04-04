@@ -103,6 +103,7 @@ Battle-tested workspace files to get started fast:
 - **[AGENTS-DRIFT-PREVENTION.md](templates/AGENTS-DRIFT-PREVENTION.md)** — A deterministic playbook to detect, recover, and prevent unexpected AGENTS.md behavior drift from merges, sync conflicts, and parallel edits
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
 - **[HEARTBEAT-CRON-DECISION-WORKFLOW.md](templates/HEARTBEAT-CRON-DECISION-WORKFLOW.md)** — A fast decision and verification playbook for choosing heartbeat vs cron, proving timezone/destination, and breaking scheduler confusion loops
+- **[AUTOMATION-HANDOFF-DECISION.md](templates/AUTOMATION-HANDOFF-DECISION.md)** — A canary-first workflow to decide what your agent can automate now vs what needs explicit human handoff, before burning time/tokens
 
 ## 🔧 Fix Scripts
 
