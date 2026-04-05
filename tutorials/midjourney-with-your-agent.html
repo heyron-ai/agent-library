@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Midjourney with Your Agent (Without Getting Stuck) — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Using Midjourney with Your Agent (Without Getting Stuck)</h1>
+      <p>A practical workflow for when your agent can plan Midjourney prompts but cannot directly run the full Discord image flow.</p>
+    </div>
+
+    <p>A common frustration is: <em>"My agent says it can do Midjourney, but then it stalls or asks me to do things manually."</em> In most setups, this is normal. Your agent is great at ideation and prompt iteration, but final image generation usually still happens in your Midjourney Discord flow.</p>
+
+    <div class="callout">
+      <p><strong>Mental model:</strong> use your agent as the creative director + prompt optimizer. Use Midjourney itself for generation and final upscales/variations.</p>
+    </div>
+
+    <h2>What your agent should do vs what you still do</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Agent does:</strong> brand/style discovery, prompt drafting, prompt versioning, negative constraints, iteration planning.</li>
+        <li><strong>You do:</strong> run <code>/imagine</code>, choose variations/upscales, and post final assets where needed.</li>
+        <li><strong>If it claims full automation:</strong> ask for capability proof before you run long prompt loops.</li>
+      </ul>
+    </div>
+
+    <h2>2-minute canary test (before big workflows)</h2>
+    <div class="card">
+      <ol>
+        <li>Ask your agent for 3 Midjourney prompts for the same concept (realistic, cinematic, flat-vector).</li>
+        <li>Run one prompt in Midjourney Discord manually.</li>
+        <li>Paste result notes (what looked wrong/right) back to the agent.</li>
+        <li>Ask for a revised prompt based on that feedback.</li>
+      </ol>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Loop-break rule:</strong> if your agent keeps repeating "I can publish directly" but gives no proof, stop and switch to manual-generation workflow immediately.</p>
+    </div>
+
+    <h2>Known-good prompt format</h2>
+    <div class="code">Act as my Midjourney prompt engineer.
+
+Goal:
+[what image I need]
+
+Brand/style constraints:
+[colors, mood, references]
+
+Output format:
+1) Give 4 distinct prompt options
+2) Each prompt must include aspect ratio + style controls
+3) Add 1 short "when to use this version" note per prompt
+4) End with a "next-iteration plan" after I send results</div>
+
+    <h2>High-friction mistakes to avoid</h2>
+    <div class="card">
+      <ul>
+        <li>Asking for 20+ prompts before testing one concept.</li>
+        <li>Skipping style constraints (brand colors, lighting mood, composition).</li>
+        <li>Not saving winning prompts with version labels (v1, v2, v3).</li>
+        <li>Treating Midjourney generation limits/errors as "agent failure."</li>
+      </ul>
+    </div>
+
+    <h2>When to escalate to #help</h2>
+    <div class="card">
+      <ul>
+        <li>Your agent used to guide iterations correctly, then stopped producing usable prompt revisions.</li>
+        <li>You see persistent platform/tool errors unrelated to prompt quality.</li>
+        <li>You need a capability check for a specific connector workflow beyond standard Midjourney-in-Discord usage.</li>
+      </ul>
+    </div>
+
+    <h2>Support-ready evidence packet</h2>
+    <div class="code">Midjourney workflow issue report
+
+Goal:
+Prompt used:
+Where it failed (agent planning vs generation step):
+Expected behavior:
+Actual behavior:
+One successful/failed sample output:
+What changed recently (model/tool/surface):</div>
+
+    <div class="callout-success">
+      <p><strong>Best practice:</strong> run a quick canary, lock one winning style, then scale output. This keeps token usage down and avoids endless prompt churn.</p>
+    </div>
+
+    <div class="footer">
+      <p>This approach keeps your workflow fast: agent for strategy, Midjourney for rendering, and no more "why is this stuck" loops.</p>
+    </div>
+  </div>
+</body>
+</html>
