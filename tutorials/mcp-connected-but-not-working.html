@@ -166,19 +166,37 @@ Do not perform any write actions.</div>
       <p><strong>Fast fix:</strong> After install + OAuth, start a brand-new session in the <em>same</em> surface you plan to use, then run the read-only smoke test once before doing real work.</p>
     </div>
 
+    <h2>High-friction case: Google connectors (Drive/Gmail) auth loops</h2>
+    <div class="card">
+      <p>A recurring pattern in community reports: users connect Google once, see “connected,” but still get unavailable/unauthorized errors right after.</p>
+      <ul>
+        <li><strong>Google account mismatch:</strong> OAuth completed under one Google account, but the files/mailbox you test belong to another.</li>
+        <li><strong>Scope mismatch:</strong> Connector auth succeeded with limited scopes, but your test requires broader access.</li>
+        <li><strong>Security-step interruption:</strong> Browser security checks or account prompts interrupted OAuth before final consent.</li>
+        <li><strong>Surface mismatch:</strong> Installed from one surface (dashboard) and tested from another (Discord) without a fresh session handoff.</li>
+      </ul>
+      <p><strong>Fast recovery flow:</strong> reconnect OAuth intentionally with the exact Google account you need, complete all consent screens, start a fresh session in the same surface, then run a read-only canary (list one file/folder or fetch the latest email subject only).</p>
+    </div>
+
+    <div class="callout warning">
+      <strong>Loop-break rule:</strong> If you have done one clean reconnect + one fresh-session canary and it still fails, stop retrying broad prompts. Capture exact error text and escalate once.
+    </div>
+
     <h2>Support packet (copy/paste)</h2>
     <div class="code">Connector issue report:
-- Connector name: [e.g., Dropbox MCP]
+- Connector name: [e.g., Google Drive / Gmail / Dropbox MCP]
 - Installed + enabled: yes/no
 - OAuth reconnected today: yes/no
 - Fresh session tested after reconnect: yes/no
 - Read-only smoke test prompt used: [paste]
 - Exact error text: [paste full text]
 - Workspace/account where connector is installed: [name]
+- Surface tested (dashboard/Discord/etc): [name]
+- External account used in OAuth (email/account label): [value]
 - Resource tested: [what you tried to access]</div>
 
     <div class="footer">
-      <p>Related reads: <a href="dropbox-mcp-setup.html">Dropbox Not Working? Install MCP the Right Way</a> · <a href="api-keys-and-models.html">API Keys &amp; Models</a> · <a href="agent-feels-slow-or-stuck.html">Agent Feels Slow or Stuck?</a></p>
+      <p>Related reads: <a href="dropbox-mcp-setup.html">Dropbox Not Working? Install MCP the Right Way</a> · <a href="google-sheets-agent-write.html">Google Sheets Agent Write</a> · <a href="api-keys-and-models.html">API Keys &amp; Models</a></p>
     </div>
   </div>
 </body>
