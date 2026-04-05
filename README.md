@@ -76,6 +76,7 @@ Battle-tested workspace files to get started fast:
 - **[SUPPORT-ESCALATION-PACKET.md](templates/SUPPORT-ESCALATION-PACKET.md)** — Structured intake + escalation format that reduces back-and-forth and speeds up triage
 - **[MODULE-2-NO-REPLY-CANARY.md](templates/MODULE-2-NO-REPLY-CANARY.md)** — A fast canary-first workflow for onboarding “agent error/no reply” loops that separates surface mismatch from runtime incidents and produces a clean escalation packet
 - **[TICKET-REOPEN-EVIDENCE-PACKET.md](templates/TICKET-REOPEN-EVIDENCE-PACKET.md)** — One-shot reopen template for “marked resolved but still broken” cases with exact-error proof and minimal repro steps
+- **[SUPPORT-ROUTING-QUICKMAP.md](templates/SUPPORT-ROUTING-QUICKMAP.md)** — Fast “where should I ask?” routing map for active support paths (support form vs hop-in-help vs follow-up channels), with a copy/paste evidence packet
 - **[MODEL-SWITCH-VERIFICATION.md](templates/MODEL-SWITCH-VERIFICATION.md)** — Step-by-step checklist to prove model switching is applied and isolate stale-session/config fallback issues
 - **[MODEL-SWITCH-500-RECOVERY.md](templates/MODEL-SWITCH-500-RECOVERY.md)** — Deterministic loop-break workflow for `Gateway tool invoke failed: 500` model-switch failures with canary tests, fresh-session proof, and escalation packet
 - **[MCP-CONNECTOR-RECOVERY.md](templates/MCP-CONNECTOR-RECOVERY.md)** — Fast recovery + isolation workflow for “connector installed but unavailable” MCP failures
