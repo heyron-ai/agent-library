@@ -81,6 +81,7 @@ Battle-tested workspace files to get started fast:
 - **[MODEL-SWITCH-500-RECOVERY.md](templates/MODEL-SWITCH-500-RECOVERY.md)** — Deterministic loop-break workflow for `Gateway tool invoke failed: 500` model-switch failures with canary tests, fresh-session proof, and escalation packet
 - **[MCP-CONNECTOR-RECOVERY.md](templates/MCP-CONNECTOR-RECOVERY.md)** — Fast recovery + isolation workflow for “connector installed but unavailable” MCP failures
 - **[GOOGLE-DRIVE-CONNECTOR-LOOP-BREAKER.md](templates/GOOGLE-DRIVE-CONNECTOR-LOOP-BREAKER.md)** — A 5-minute proof-first workflow for “connected but no files” Google Drive loops (account/scope/surface mismatch + canary test + escalation packet)
+- **[GOOGLE-WORKSPACE-CONNECTOR-CANARY.md](templates/GOOGLE-WORKSPACE-CONNECTOR-CANARY.md)** — Unified 5-minute canary workflow for Drive/Gmail/Calendar "connected but not working" loops, with one-variable isolation and escalation-ready evidence
 - **[TIMEZONE-DRIFT-PLAYBOOK.md](templates/TIMEZONE-DRIFT-PLAYBOOK.md)** — Step-by-step verification and recovery workflow for wrong timezone/day outputs and misfiring reminders
 - **[EXECUTION-EVIDENCE-CHECKLIST.md](templates/EXECUTION-EVIDENCE-CHECKLIST.md)** — Claim→evidence→verification workflow for “agent said done but nothing changed” trust-break incidents
 - **[FILE-PATH-PROOF-CHECKLIST.md](templates/FILE-PATH-PROOF-CHECKLIST.md)** — Deterministic path-proof workflow for “agent says files exist but I can’t find them” incidents
