@@ -126,6 +126,10 @@
       <p><strong>Important:</strong> “Connected” in one surface does not always mean every chat/session/thread is using the same authenticated context yet.</p>
     </div>
 
+    <div class="callout">
+      <p><strong>Quick reality check:</strong> yes, Google Drive access is possible — but it must be the <em>Drive connector OAuth flow</em>, not just creating a Gmail account for your agent. Community reports show many users get stuck by mixing those two ideas.</p>
+    </div>
+
     <h2>Fast path (5 minutes)</h2>
 
     <div class="step">
@@ -136,6 +140,11 @@
     <div class="step">
       <div class="step-title">2) Confirm Drive permission scopes were granted</div>
       <p>If consent was interrupted or partially accepted, listing/reading files may fail silently. Re-run authorization and accept required Drive scopes fully.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2.5) Complete Google security prompts in one clean browser flow</div>
+      <p>Do not switch accounts mid-OAuth. Disable popup blockers for the auth step and finish every Google consent/security screen before returning.</p>
     </div>
 
     <div class="step">
@@ -172,6 +181,8 @@ Steps:
     <div class="card">
       <ul>
         <li><strong>Wrong account authorized:</strong> connector succeeds but files “missing” because you connected a different Google account.</li>
+        <li><strong>Gmail vs Drive confusion:</strong> creating a Gmail account for your agent is not the same as completing Drive connector OAuth in the active workspace/session.</li>
+        <li><strong>OAuth security loop:</strong> Google security/consent screens were interrupted, blocked, or denied, so connector appears connected but cannot list files.</li>
         <li><strong>Workspace admin policy restrictions:</strong> Drive API access can be blocked at org level even when personal accounts work.</li>
         <li><strong>Surface mismatch:</strong> dashboard chat works, Discord thread fails (or vice versa) due to session/context differences.</li>
         <li><strong>Shared Drive confusion:</strong> file is in Shared Drive but connector only sees My Drive scope/account context.</li>
