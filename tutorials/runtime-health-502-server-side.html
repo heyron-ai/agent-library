@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Runtime Health 502 During Setup — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 35px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-danger {
+      border-left-color: var(--danger);
+      background: rgba(240,71,71,0.08);
+    }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>“Runtime Not Healthy (Health 502)” During Setup?</h1>
+      <p>A deterministic recovery flow for the exact setup loop where your agent appears online but backend health checks keep returning 502.</p>
+    </div>
+
+    <p>If support or system messages say your runtime is <strong>not healthy</strong> with <strong>health 502</strong>, you're usually dealing with a backend startup/reachability issue — not a personality prompt problem.</p>
+
+    <div class="callout-warning">
+      <p><strong>Important:</strong> repeated re-prompts and random config edits rarely fix this. Use a clean isolation flow first.</p>
+    </div>
+
+    <h2>Fast isolation flow (5 minutes)</h2>
+
+    <div class="step">
+      <div class="step-title">1) Confirm scope: one agent or all agents?</div>
+      <p>Open a second known-good agent (or canary workspace). If only one fails, it is likely workspace/runtime specific. If all fail, it may be broader infrastructure.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Confirm surface: dashboard only or all channels?</div>
+      <p>Test dashboard + one connected channel (Discord/Telegram). Capture exact behavior in each surface. This quickly separates UI path issues from runtime issues.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Run one clean browser pass</div>
+      <p>Try incognito/private window, then one normal window after a hard refresh. Avoid rapid reconnect loops while testing.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Wait 60–120 seconds, then retest once</div>
+      <p>Cold starts and host restarts can produce temporary 502s. One delayed retry is useful; ten immediate retries are noise.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) If still failing, escalate with evidence (not guesses)</div>
+      <p>At this point, the likely fix is host-side/runtime intervention. Send a complete packet so support can act immediately.</p>
+    </div>
+
+    <h2>What this usually means</h2>
+    <div class="card">
+      <ul>
+        <li>Runtime/container is not fully booted yet</li>
+        <li>Upstream dependency is timing out during startup</li>
+        <li>Agent host health is degraded (server-side)</li>
+        <li>Network path or control-UI route is unstable while runtime is recovering</li>
+      </ul>
+    </div>
+
+    <h2>High-friction mistakes to avoid</h2>
+    <div class="card">
+      <ul>
+        <li>Changing SOUL.md/AGENTS.md repeatedly (not related to runtime health)</li>
+        <li>Reconnecting integrations over and over before proving scope</li>
+        <li>Posting “still broken” with no timestamp, no surface test, no exact error text</li>
+        <li>Mixing old and new errors in one thread without a clean latest repro</li>
+      </ul>
+    </div>
+
+    <h2>Copy/paste escalation packet</h2>
+    <div class="code">I'm seeing: runtime not healthy / health 502.
+
+Started around: [time + timezone]
+Agent/workspace: [name or link]
+Tested surfaces:
+- Dashboard: [result]
+- Discord/Telegram: [result]
+Scope check:
+- Other agent works? [yes/no]
+- This agent only? [yes/no]
+Retest steps done:
+- hard refresh
+- incognito test
+- waited 60-120s and retried once
+Current status: [still failing / intermittent]
+
+Please check host/runtime health server-side.</div>
+
+    <div class="callout-danger">
+      <p><strong>Security reminder:</strong> never include API keys, tokens, or passwords in support messages.</p>
+    </div>
+
+    <h2>Loop-break rule</h2>
+    <div class="callout">
+      <p><strong>If the same health 502 persists after one clean retest:</strong> stop local random changes and escalate once with the packet above. This saves hours of avoidable churn.</p>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> runtime health 502 is usually an infrastructure/runtime condition, not user prompt quality. Prove scope quickly, retest once, then escalate with precise evidence.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="fix-502-agent-not-loading.html">Seeing a 502 Error? Agent Not Loading?</a> · <a href="container-down-agent-offline.html">Agent Offline? Container Might Be Down</a> · <a href="open-better-support-ticket.html">Open Better Support Tickets</a></p>
+    </div>
+  </div>
+</body>
+</html>
