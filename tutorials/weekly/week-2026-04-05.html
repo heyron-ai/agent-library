@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Den Weekly — April 5, 2026 — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f; --surface: #1a1a1a; --border: #333; --text: #e5e5e5; --text-muted: #999;
+      --accent: #f0c060; --accent-light: #f5d78e; --success: #43b581; --warning: #faa61a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero { text-align: center; border-bottom: 1px solid var(--border); padding: 48px 0 40px; margin-bottom: 48px; }
+    .badge { display: inline-block; background: var(--accent); color: #000; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .hero h1 { font-size: 32px; margin-bottom: 8px; }
+    .hero .date { color: var(--text-muted); margin-bottom: 12px; }
+    h2 { font-size: 22px; margin: 40px 0 14px; }
+    h3 { font-size: 17px; margin: 24px 0 8px; }
+    p { margin-bottom: 12px; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 12px 0; }
+    .tip { border-left: 3px solid var(--success); background: rgba(67,181,129,.08); }
+    .issue { border-left: 3px solid var(--warning); background: rgba(250,166,26,.08); }
+    .shout { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .shout span { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 14px; font-weight: 600; }
+    .footer { text-align: center; color: var(--text-muted); font-size: 14px; padding-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Weekly Digest</div>
+      <h1>The Den Weekly</h1>
+      <div class="date">Week of Mar 31–Apr 5, 2026 · Issue #2</div>
+      <p>What the Heyron community built, fixed, debated, and taught each other this week.</p>
+    </div>
+
+    <h2>🏆 Showcase Spotlights</h2>
+    <div class="box"><p><strong>jennigans3057</strong> shared an AI-assisted <strong>divorce mediation platform + CRM</strong> built with Ron/Claude, including coparenting workflows. Community reaction was huge, with strong support from <strong>catherine1724</strong>, <strong>asparagus113618</strong>, and <strong>officiallyjanet</strong>.</p></div>
+    <div class="box"><p><strong>nx3creationsllc</strong> dropped a full <strong>Byron Dashboard User Guide</strong> and widget system documentation in #showcase—great example of turning a project into reusable docs others can copy.</p></div>
+    <div class="box"><p><strong>johfams</strong> and team are building an <strong>AI curriculum for kids ages 4–8</strong>, focused on practical building blocks and early AI literacy.</p></div>
+    <div class="box"><p><strong>scott1968</strong> kicked off an <strong>AI robotics project</strong> (sharing build progress publicly), while <strong>officiallyjanet</strong> shared <strong>Casebriefr.com</strong> as a legal-AI work-in-progress.</p></div>
+
+    <hr />
+
+    <h2>💡 Best Tips</h2>
+    <div class="box tip"><p><strong>Telegram + ElevenLabs voice stack:</strong> <strong>cheerbear32</strong> and <strong>grymgaming</strong> shared practical wins using Telegram chat + ElevenLabs TTS when people wanted agents to “talk back.”</p></div>
+    <div class="box tip"><p><strong>Use /model(s) in Telegram/web:</strong> <strong>nx3creationsllc</strong> and <strong>officiallyjanet</strong> pointed newcomers to quick model switching via command flow instead of digging through settings.</p></div>
+    <div class="box tip"><p><strong>File hygiene matters:</strong> in #ideas-and-feedback, <strong>officiallyjanet</strong>, <strong>catherine1724</strong>, and others compared note/file organization patterns to reduce duplicate files and agent confusion.</p></div>
+
+    <hr />
+
+    <h2>🔥 Hot Topics</h2>
+    <h3>1) Setup realism vs hype</h3>
+    <p>Members openly discussed expectation gaps for beginners. The vibe was constructive: acknowledge friction, then share exact fixes.</p>
+
+    <h3>2) “Where should support happen now?”</h3>
+    <p>The #help channel migration message and Campfire reminders sparked lots of rerouting questions. People are still adjusting to the new support flow.</p>
+
+    <h3>3) Browser control and integrations</h3>
+    <p>Recurring curiosity around browser-enabled agents, Google Drive, and cross-app automations stayed active across #general-chat and #ideas-and-feedback.</p>
+
+    <hr />
+
+    <h2>⚠️ Common Issues (Recurring)</h2>
+    <div class="box issue"><p><strong>Module 2 “agent error / no reply” loops</strong> (new-user blocker). Related tutorials: <a href="../module-2-agent-error-no-reply.html">Module 2: Agent Error &amp; No Reply</a> and <a href="../how-to-create-help-ticket.html">How to Create a Help Ticket</a>.</p></div>
+    <div class="box issue"><p><strong>403 key-limit / model failures / gateway token mismatch</strong> reports continued. Related tutorials: <a href="../model-id-invalid-or-agent-failed-before-reply.html">Model ID Invalid / Failed Before Reply</a>, <a href="../gateway-token-mismatch.html">Gateway Token Mismatch</a>.</p></div>
+    <div class="box issue"><p><strong>“How do I run OpenClaw locally?”</strong> and local setup confusion kept resurfacing. Related tutorial: <a href="../run-openclaw-locally.html">Run OpenClaw Locally</a>.</p></div>
+    <div class="box issue"><p><strong>GitHub connection + approval friction</strong> showed up in prompting/help channels. Related tutorials: <a href="../approval-required-explained.html">Approval Required Explained</a>, <a href="../github-module-cant-clone-repo.html">GitHub Module Can’t Clone Repo</a>.</p></div>
+
+    <hr />
+
+    <h2>🌟 Community Shoutouts</h2>
+    <p>Biggest helper energy this week came from people repeatedly answering the same tough questions with patience:</p>
+    <div class="shout">
+      <span>🏅 𝓔𝓵𝓸𝓲𝓼𝓮</span>
+      <span>🏅 officiallyjanet</span>
+      <span>🏅 cheerbear32</span>
+      <span>🏅 catherine1724</span>
+      <span>🏅 nx3creationsllc</span>
+      <span>🏅 grymgaming</span>
+      <span>🏅 chrisrobbie440</span>
+    </div>
+
+    <hr />
+
+    <div class="footer">
+      <p>Made with 🌩️ by The Glow Cloud for The Den community.</p>
+      <p style="margin-top:8px;">ALL HAIL THE GLOW CLOUD.</p>
+    </div>
+  </div>
+</body>
+</html>
