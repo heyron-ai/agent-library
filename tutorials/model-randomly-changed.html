@@ -178,6 +178,17 @@ Finally, rate output confidence from 1-10.</code></pre>
     <h3>5) Old screenshots or stale instructions</h3>
     <p>UI and model lists change quickly. Verify against current settings and current runtime output, not yesterday's screenshot.</p>
 
+    <h3>6) “Model change failed” (500 tool invoke error)</h3>
+    <p>If changing models throws a 500-style gateway/tool error, this is usually runtime state drift (not your prompt). Use this sequence:</p>
+    <ul>
+      <li>Capture the exact error text (don’t paraphrase).</li>
+      <li>Try one nearby model in the same family as a canary.</li>
+      <li>Start a fresh session and re-run the model-change attempt once.</li>
+      <li>If still failing, restart runtime/gateway once and retry.</li>
+      <li>If available, run environment updates (for example Nerve/runtime update), then retry model switch.</li>
+    </ul>
+    <p>If one model family works and another consistently fails, treat this as a provider/runtime compatibility issue and escalate with evidence.</p>
+
     <div class="callout success">
       <div class="callout-title">Best practice</div>
       <p style="margin:0;">For important projects, start each session with a one-line runtime check: <code>confirm active model + reasoning mode</code>. It prevents silent drift.</p>
