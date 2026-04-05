@@ -179,6 +179,17 @@ Please do:
 2) Extract action items
 3) Draft a response email in my tone</div>
 
+    <h2>High-friction social link edge cases (Facebook/Instagram)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Public page vs logged-in view mismatch:</strong> if the page only opens while you are logged in, the agent may not be able to read it from URL-only access.</li>
+        <li><strong>Page role requirement:</strong> some business-page content (drafts, insights, unpublished posts) requires owner/editor permissions and will look “missing” to agents.</li>
+        <li><strong>Geo/age/privacy restrictions:</strong> region/age gates can make links appear broken from remote fetch paths.</li>
+        <li><strong>App/web redirect traps:</strong> mobile-app links can redirect to login walls. Prefer full desktop web URLs for testing.</li>
+      </ul>
+      <p><strong>Fast check:</strong> open the exact link in an incognito tab while logged out. If it fails there, give the agent exported text/screenshots instead of retrying the URL.</p>
+    </div>
+
     <h2>Support-ready escalation packet</h2>
     <div class="code">URL access issue report
 
