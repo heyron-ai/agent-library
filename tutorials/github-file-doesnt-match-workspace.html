@@ -188,6 +188,20 @@ If any mismatch exists, stop and explain the mismatch class (local ahead / remot
     <h3>Multiple accounts/workspaces</h3>
     <p>If behavior feels random, confirm you’re logged into the same account/workspace in both places before any edits.</p>
 
+    <h3>Detached HEAD after checking a specific commit</h3>
+    <p>If <code>git branch --show-current</code> returns nothing, you’re not on a normal branch. You may be viewing an old commit snapshot. Switch back to your working branch before editing.</p>
+
+    <h3>Uncommitted merge/rebase state</h3>
+    <p>If Git says merge/rebase is in progress, stop file edits and finish or abort that operation first. Partial merge state can make file content look inconsistent between local and GitHub.</p>
+
+    <h3>Wrong remote (fork vs upstream)</h3>
+    <p>Confirm <code>git remote -v</code>. Many mismatches are local changes tracked against a fork while GitHub browser is opened on upstream (or vice versa).</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Known-good proof bundle before editing</div>
+      <p style="margin:0;"><code>git branch --show-current</code> + <code>git rev-parse --short HEAD</code> + absolute file path + first 3 lines of file. If any one of these differs from your expected target, stop and re-align context first.</p>
+    </div>
+
     <div class="callout danger">
       <div class="callout-title">Safety note</div>
       <p style="margin:0;">Never paste tokens or secrets when sharing diagnostics. Share path/branch/commit info only.</p>
