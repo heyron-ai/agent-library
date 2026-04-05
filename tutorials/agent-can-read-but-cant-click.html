@@ -169,6 +169,20 @@
 
 Do not claim completion without evidence.</div>
 
+    <h2>Advanced edge cases (when basic checks still fail)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Popup/consent walls:</strong> cookie banners, region consent popups, and age gates can block the target button even when the page is visible.</li>
+        <li><strong>Embedded login flows:</strong> OAuth popups and third-party auth windows are often blocked or unsupported in restricted browser contexts.</li>
+        <li><strong>Anti-bot interstitials:</strong> Cloudflare/reCAPTCHA checks can allow read access but block click progression.</li>
+        <li><strong>Environment drift:</strong> you may validate in one thread/session and run the real task in another where tool capability differs.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Proof rule:</strong> Before any production task, require the agent to return one concrete click-evidence artifact from this exact session (target text clicked + resulting page state).</p>
+    </div>
+
     <h2>Known-good fallback pattern</h2>
     <p>When automation isn’t available, split work between the agent and a human:</p>
     <div class="card">
@@ -209,6 +223,7 @@ Exact action that failed (click/login/form/publish):
 Prompt used:
 Tools shown by agent in-session:
 URL involved:
+Surface/session tested (DM/server/thread/dashboard):
 Expected behavior:
 Actual behavior:
 What changed recently (if anything):</div>
