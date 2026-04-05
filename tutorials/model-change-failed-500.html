@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Change Failed (500)? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    .checklist ol { margin-left: 22px; }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Model Change Failed (500)?</h1>
+      <p>A deterministic recovery flow for <code>Gateway tool invoke failed: 500</code> and other model-switch failures.</p>
+    </div>
+
+    <p>If model switching throws a 500 error, this is usually <strong>runtime/state drift</strong>, not a prompt problem. The goal is to isolate whether the issue is model-specific, session-specific, or runtime-wide.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Most common mistake</div>
+      <p style="margin:0;">Users keep retrying random model names in the same stale session. That usually burns time and tokens without proving anything.</p>
+    </div>
+
+    <h2>2-Minute Recovery Flow</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Capture exact error text</strong> (do not paraphrase).</li>
+        <li><strong>Try one canary model</strong> in the same provider family.</li>
+        <li><strong>Open a fresh session</strong> and repeat the exact switch once.</li>
+        <li><strong>Temporarily disable fallbacks</strong> to expose the real failing model.</li>
+        <li><strong>Restart runtime/gateway once</strong>, then retest one model only.</li>
+      </ol>
+    </div>
+
+    <h2>Known-Good Verification Prompt</h2>
+    <p>Paste this after switching models:</p>
+    <pre><code>Before answering, print:
+1) active model id/name
+2) fallback models list (or "none")
+3) current session surface (dashboard / DM / server)
+Then write exactly 3 bullets explaining one risk of changing models mid-project.</code></pre>
+
+    <p>If the model switch says “success” but this output still shows the old model, treat it as a state-application failure.</p>
+
+    <h2>High-Friction Edge Cases</h2>
+    <h3>1) Provider namespace mismatch</h3>
+    <p>Model IDs must match provider format exactly. One wrong prefix can trigger a 500-looking failure path.</p>
+
+    <h3>2) Fallback masking</h3>
+    <p>Your primary model may fail, but fallback still answers. That can hide the real error. Test with one explicit model and no fallback first.</p>
+
+    <h3>3) Stale runtime after config edits</h3>
+    <p>If config changed but runtime wasn’t restarted, model-switch behavior can be inconsistent across sessions.</p>
+
+    <h3>4) Surface mismatch</h3>
+    <p>Dashboard and Discord can run different session contexts. Always verify model in the same surface where failure happens.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Loop-break rule</div>
+      <p style="margin:0;">If two clean attempts fail with the same 500 error, stop retrying and escalate with evidence. More retries add noise.</p>
+    </div>
+
+    <h2>Escalation Packet (Copy/Paste)</h2>
+    <ul>
+      <li>Exact error text (full line)</li>
+      <li>Model you tried to switch to</li>
+      <li>Whether fallback was enabled</li>
+      <li>Surface where failure occurred (dashboard/DM/server)</li>
+      <li>Fresh-session retest result</li>
+      <li>Runtime restart retest result</li>
+      <li>Timestamp + timezone</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Don’t do this</div>
+      <p style="margin:0;">Don’t paste API keys or full secrets in support tickets while debugging model issues.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="model-randomly-changed.html">Model Randomly Changed?</a> · <a href="model-id-invalid-or-agent-failed-before-reply.html">Model ID Invalid?</a> · <a href="api-keys-and-models.html">API Keys &amp; Models</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
