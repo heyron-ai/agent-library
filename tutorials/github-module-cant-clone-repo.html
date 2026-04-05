@@ -206,15 +206,28 @@ Do not claim success without evidence.</div>
       </ul>
     </div>
 
+    <h2>New high-friction case: model-level security refusal</h2>
+    <div class="card">
+      <p>Recent community reports show this exact loop:</p>
+      <div class="code">"I cannot proceed if it involves directly handling sensitive information like access tokens. My security protocols prevent me from using tokens exposed in plain text."</div>
+      <ul>
+        <li><strong>This is often model behavior, not your GitHub setup.</strong> One model may refuse token-based clone syntax while another model in the same workspace works.</li>
+        <li><strong>Do not paste long-lived tokens repeatedly in chat.</strong> Repeated retries increase exposure risk and still may not fix the refusal.</li>
+        <li><strong>Use capability-first testing:</strong> run a read-only canary first, then ask for the safest next action supported by that model/context.</li>
+        <li><strong>If the task requires direct token handling and keeps refusing,</strong> switch to a model/runtime that supports the flow or use an approved integration path instead of forcing plain-text token prompts.</li>
+      </ul>
+    </div>
+
     <h2>Known-good verification prompt</h2>
     <div class="code">Diagnose GitHub repo access in this exact session.
 Do this in order and stop on first blocker:
-1) Confirm active GitHub identity (username/org visibility if available).
+1) Confirm active model and active GitHub identity.
 2) Check access to OWNER/REPO with a read-only canary (default branch + latest commit hash).
 3) If clone is not allowed, say "clone blocked" and give the exact reason in one sentence.
-4) Return only:
+4) If blocked due to token/security refusal, provide one safer alternative path (no token pasted in chat).
+5) Return only:
    - Capability: [clone available yes/no]
-   - Evidence: [repo visibility + branch + commit hash OR exact blocker]
+   - Evidence: [model + repo visibility + branch + commit hash OR exact blocker]
    - Safe next step: [single best next action]
 Do not claim success without concrete evidence.</div>
 
