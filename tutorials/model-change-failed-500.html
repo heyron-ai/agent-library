@@ -164,6 +164,15 @@ Then write exactly 3 bullets explaining one risk of changing models mid-project.
     <h3>4) Surface mismatch</h3>
     <p>Dashboard and Discord can run different session contexts. Always verify model in the same surface where failure happens.</p>
 
+    <h3>5) Session-level override still pinned</h3>
+    <p>If a session has a pinned model override, config edits may not apply as expected. Reset the override to default and rerun the canary test in a fresh session.</p>
+
+    <h3>6) Runtime health is degraded (500/502 family)</h3>
+    <p>Model switching can fail when runtime health is already unstable. If you also see slow tool calls, blank responses, or runtime health errors, treat this as runtime instability first and model-switch issue second.</p>
+
+    <h3>7) Wrong account/workspace context</h3>
+    <p>Users sometimes switch model settings in one account/workspace and test in another. Confirm you are editing and testing in the same workspace before escalating.</p>
+
     <div class="callout success">
       <div class="callout-title">Loop-break rule</div>
       <p style="margin:0;">If two clean attempts fail with the same 500 error, stop retrying and escalate with evidence. More retries add noise.</p>
