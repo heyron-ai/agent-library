@@ -190,6 +190,26 @@ Do not do any other steps.</div>
       </ul>
     </div>
 
+    <h2>Advanced edge cases (from recent community reports)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>NAT/firewall with unstable public tunnels:</strong> tools like LocalTunnel/Serveo can rotate endpoints or drop sessions, which breaks extension reliability. For day-to-day work, move to a stable lane (private mesh VPN or reverse proxy).</li>
+        <li><strong>Token survives in one browser profile but fails in another:</strong> extension on Profile A may still hold an old token while Profile B has the new one. Re-enter token in the exact active profile and rerun canary.</li>
+        <li><strong>Remote URL changes but allowlist does not:</strong> if your tunnel URL changed, your prior `allowedOrigins` entry is now stale. Update origin allowlist first, then reconnect.</li>
+        <li><strong>"It worked yesterday" after reboot:</strong> dynamic DNS/Tunnel URL or host IP changed after restart. Verify current endpoint before assuming model/tool failure.</li>
+      </ul>
+    </div>
+
+    <h2>Stable lane recommendation (to avoid tunnel loops)</h2>
+    <div class="callout">
+      <p><strong>If temporary tunnels keep dropping:</strong> pick one of these and standardize.</p>
+      <ul>
+        <li><strong>Most stable for solo use:</strong> Tailscale/ZeroTier + private gateway URL</li>
+        <li><strong>Most stable for shared/team use:</strong> Reverse proxy + TLS + fixed DNS hostname</li>
+        <li><strong>Tunnel-only mode:</strong> Use for short tests only, not long-running production browser sessions</li>
+      </ul>
+    </div>
+
     <h2>Loop-break rules (important)</h2>
     <div class="callout-danger">
       <p><strong>Don't retry blindly:</strong> after two failed remote attempts, stop and capture exact error text + endpoint + timestamp. Random retries hide the root cause.</p>
