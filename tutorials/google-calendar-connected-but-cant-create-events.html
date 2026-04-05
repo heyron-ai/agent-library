@@ -181,6 +181,9 @@ Do this exactly:
         <li><strong>Workspace admin restrictions:</strong> org policy allows calendar view but blocks third-party writes.</li>
         <li><strong>Shared calendar permissions:</strong> account can view shared calendar but lacks “make changes to events.”</li>
         <li><strong>Recurring-rule validation errors:</strong> RRULE or invalid date format causes silent/opaque create failures.</li>
+        <li><strong>All-day/DST drift:</strong> all-day events or daylight-saving transitions can appear on the wrong day if timezone isn’t explicit.</li>
+        <li><strong>Attendee/invite policy failures:</strong> some org calendars allow event creation but block guest invites or external attendees.</li>
+        <li><strong>Duplicate events from retries:</strong> users retry after a delayed response and create duplicates; require idempotent canary titles.</li>
       </ul>
     </div>
 
@@ -195,6 +198,7 @@ Do this exactly:
         <li>Authorized Google account shown by the agent</li>
         <li>Exact calendar name targeted</li>
         <li>Event payload used (title, date, start/end, timezone)</li>
+        <li>Whether event was timed vs all-day and whether attendees were included</li>
         <li>Surface/context used (dashboard, DM, server channel, thread)</li>
         <li>Exact raw error message (no paraphrase)</li>
       </ul>
