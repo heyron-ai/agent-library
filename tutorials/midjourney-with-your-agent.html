@@ -174,6 +174,33 @@ Output format:
       </ul>
     </div>
 
+    <h2>Advanced edge cases (when basic flow still fails)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong Discord account:</strong> you generated with one account but tested prompts in a different account/server context.</li>
+        <li><strong>Wrong destination context:</strong> prompt strategy happens in one chat, but generation/testing happens in another thread and feedback never makes it back.</li>
+        <li><strong>Command syntax drift:</strong> edited prompt text removes critical Midjourney flags or parameter order.</li>
+        <li><strong>Plan/queue confusion:</strong> generation throttling/limits can look like agent failure. Confirm queue/plan status first, then continue iteration.</li>
+        <li><strong>Retry spiral:</strong> re-running broad prompts without feeding concrete image feedback causes low-quality loops and token waste.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good recovery prompt (copy/paste)</h2>
+    <div class="code">You are my Midjourney workflow copilot.
+
+Rules:
+- Do NOT claim direct publishing/generation unless you can prove it in this exact context.
+- Ask me for exactly one missing input block, then generate prompts.
+- Output max 3 prompts, each with: prompt text, parameters, and one-line intent.
+- After I share results, give only targeted revisions (not full rewrites).
+
+Before prompts, return this checklist:
+1) Automation boundary (what you can/can't execute here)
+2) One canary prompt for fast test
+3) Success criteria for next revision
+
+Then stop and wait for my test result.</div>
+
     <h2>When to escalate to #help</h2>
     <div class="card">
       <ul>
