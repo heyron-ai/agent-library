@@ -196,6 +196,28 @@ Do not claim success without evidence.</div>
       <p><strong>Trust rule:</strong> never treat “I did it” as complete unless you see concrete evidence (repo, branch, commit, or file output).</p>
     </div>
 
+    <h2>Advanced edge cases (when basics pass but it still fails)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Connected in browser, not in runtime:</strong> OAuth looks successful in UI, but the active runtime/session still has stale auth state. Start a fresh session and run the read-only canary again.</li>
+        <li><strong>Public repo works, private repo fails:</strong> this usually means scope/account mismatch, not a broken module. Verify the exact GitHub account linked to the current workspace.</li>
+        <li><strong>Fallback claims hide real blocker:</strong> agent says it can “still help” with generic advice, but gives no repo evidence. Force yes/no on clone capability first, then require canary evidence before planning.</li>
+        <li><strong>Wrong workspace assumption:</strong> users compare GitHub repo files to a different local workspace and think clone failed. Require absolute path + branch + latest commit hash in the response.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good verification prompt</h2>
+    <div class="code">Diagnose GitHub repo access in this exact session.
+Do this in order and stop on first blocker:
+1) Confirm active GitHub identity (username/org visibility if available).
+2) Check access to OWNER/REPO with a read-only canary (default branch + latest commit hash).
+3) If clone is not allowed, say "clone blocked" and give the exact reason in one sentence.
+4) Return only:
+   - Capability: [clone available yes/no]
+   - Evidence: [repo visibility + branch + commit hash OR exact blocker]
+   - Safe next step: [single best next action]
+Do not claim success without concrete evidence.</div>
+
     <h2>Escalation packet for #help</h2>
     <div class="code">I’m getting: "I can't clone repositories due to security restrictions"
 Surface: [dashboard / discord dm / server channel]
