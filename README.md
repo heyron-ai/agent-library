@@ -109,6 +109,7 @@ Battle-tested workspace files to get started fast:
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
 - **[HEARTBEAT-CRON-DECISION-WORKFLOW.md](templates/HEARTBEAT-CRON-DECISION-WORKFLOW.md)** — A fast decision and verification playbook for choosing heartbeat vs cron, proving timezone/destination, and breaking scheduler confusion loops
 - **[AUTOMATION-HANDOFF-DECISION.md](templates/AUTOMATION-HANDOFF-DECISION.md)** — A canary-first workflow to decide what your agent can automate now vs what needs explicit human handoff, before burning time/tokens
+- **[API-FIRST-AUTOMATION-CANARY.md](templates/API-FIRST-AUTOMATION-CANARY.md)** — A 5-minute canary checklist to validate external-platform automation before long prompts, with proof-first output and clean handoff fallback
 - **[CLIENT-DATA-REDACTION-CHECKLIST.md](templates/CLIENT-DATA-REDACTION-CHECKLIST.md)** — A redaction-first workflow for safely using client/customer context without exposing sensitive identifiers, credentials, or account data
 - **[RUNTIME-500-502-INCIDENT-TRIAGE.md](templates/RUNTIME-500-502-INCIDENT-TRIAGE.md)** — A 5-minute incident triage checklist to separate local/session issues from probable runtime/platform failures when errors like `health 502` and `Gateway tool invoke failed: 500` appear
 
