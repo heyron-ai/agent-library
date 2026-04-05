@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Calendar Connected But Agent Can’t See Events — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+    .callout-success strong { color: var(--success); }
+    .callout-warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .callout-warning strong { color: var(--warning); }
+    .callout-danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step { border-left: 2px solid var(--border); padding-left: 14px; margin: 18px 0; }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Google Calendar Connected, But No Events?</h1>
+      <p>A fast, proof-first workflow to fix calendar visibility loops without endless reconnect retries.</p>
+    </div>
+
+    <p>Common pattern: Calendar shows as connected, but the agent says there are no events, misses meetings, or keeps asking to reconnect.</p>
+
+    <div class="callout-warning">
+      <p><strong>Reality check:</strong> “Connected” is not proof. You need one successful canary read from the exact calendar you care about, in the same surface/session.</p>
+    </div>
+
+    <h2>Fast path (4 steps)</h2>
+
+    <div class="step">
+      <div class="step-title">1) Confirm the exact Google account + calendar</div>
+      <p>Most failures are account mismatch (personal vs workspace) or wrong calendar selection. Verify the exact calendar name before testing.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Complete OAuth once in one clean browser profile</div>
+      <p>Finish every consent/security screen in one pass. Partial OAuth completion causes reconnect loops with stale access state.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Run a tiny canary read</div>
+      <p>Ask for events in a short known window (for example, next 24 hours) and require event evidence:</p>
+      <div class="code">Return event title + start time + timezone + calendar name.
+If none found, return explicit "0 events" and the exact window queried.</div>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Only then trust reminder or planning workflows</div>
+      <p>Do not jump into full daily planning until canary read proof is consistent in the same chat surface/thread.</p>
+    </div>
+
+    <h2>Copy/paste recovery prompt</h2>
+    <div class="code">My Google Calendar appears connected, but event reads are unreliable.
+
+Do this exactly:
+1) Show which Google account is currently authorized.
+2) Query ONLY the next 24 hours.
+3) Return: calendar name, queried time window, timezone, and each event title + start time.
+4) If zero events, return explicit "0 events" plus exact raw error text if any.
+5) Do not reconnect unless you show a specific auth/scope error first.</div>
+
+    <h2>High-friction failure patterns</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Account mismatch:</strong> connected account is different from the calendar account with real events.</li>
+        <li><strong>Wrong calendar selected:</strong> default calendar is empty while events live in a shared/team calendar.</li>
+        <li><strong>Timezone mismatch:</strong> events exist but appear “missing” because query window/timezone is wrong.</li>
+        <li><strong>Cross-surface mismatch:</strong> connector linked in one session/surface and tested in another.</li>
+      </ul>
+    </div>
+
+    <h2>Advanced edge cases (when basics pass but reads still fail)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Scope mismatch:</strong> OAuth completed with insufficient Calendar read scope, causing partial visibility.</li>
+        <li><strong>Workspace admin policy:</strong> org restrictions can block external app access to calendar data despite apparent connection success.</li>
+        <li><strong>Shared calendar permissions:</strong> you can see it in Google Calendar UI, but API-level access for that account is not granted.</li>
+        <li><strong>All-day/recurring event confusion:</strong> events may exist but parsing/filter logic hides them when users expect exact-time entries only.</li>
+      </ul>
+    </div>
+
+    <h2>Loop-break rules</h2>
+    <div class="callout-danger">
+      <p><strong>Stop reconnect spirals:</strong> no more than one reconnect per diagnostic cycle. If canary read still fails, escalate once with exact evidence instead of repeating setup.</p>
+    </div>
+
+    <h2>What to include if you escalate</h2>
+    <div class="card">
+      <ul>
+        <li>Authorized Google account shown by the agent</li>
+        <li>Calendar name tested (exact text)</li>
+        <li>Query window + timezone used</li>
+        <li>Surface/context used (dashboard, DM, server channel, thread)</li>
+        <li>Exact raw error message (no paraphrase)</li>
+      </ul>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> prove one canary read first. If it works, scale. If it fails, escalate with exact evidence once—don’t burn cycles in reconnect loops.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related guides: <a href="google-drive-connected-but-no-files.html">Google Drive Connected, But Agent Can’t Find Files?</a> · <a href="gmail-connected-but-agent-cant-send-email.html">Gmail Connected, But Agent Won’t Send?</a> · <a href="open-better-support-ticket.html">Open Better Support Tickets</a></p>
+    </div>
+  </div>
+</body>
+</html>
