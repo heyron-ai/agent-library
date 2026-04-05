@@ -168,6 +168,15 @@ Any recent reconnect/restart attempt + outcome:</code></pre>
     <h3>The error happens in every reply</h3>
     <p>That usually points to runtime/config health, not bad prompting. Use the packet above and escalate once with full evidence.</p>
 
+    <h3>“I reconnected/re-entered email and now it’s worse”</h3>
+    <p>Do <strong>one clean reconnect flow only</strong>, then rerun the tiny canary prompt. Repeating reconnects can create noisy state and make diagnosis harder.</p>
+
+    <h3>Which error matters most: 500/502 vs token mismatch?</h3>
+    <p>If you see both in the same window, prioritize <strong>runtime health errors</strong> (<code>health 502</code>, <code>500</code>) first. If runtime is healthy but auth still fails, then follow <a href="gateway-token-mismatch.html">Gateway Token Mismatch</a>.</p>
+
+    <h3>I opened a ticket but got silence</h3>
+    <p>Don’t open duplicates. Reply in the same ticket with one fresh canary result, exact current error text, and timestamp/timezone. This speeds triage and avoids fragmented threads.</p>
+
     <div class="callout danger">
       <div class="callout-title">Security note</div>
       <p style="margin:0;">Never paste full tokens/API keys in tickets or Discord screenshots. Redact secrets before sharing.</p>
