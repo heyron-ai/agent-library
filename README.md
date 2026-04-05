@@ -76,6 +76,7 @@ Battle-tested workspace files to get started fast:
 - **[SUPPORT-ESCALATION-PACKET.md](templates/SUPPORT-ESCALATION-PACKET.md)** — Structured intake + escalation format that reduces back-and-forth and speeds up triage
 - **[TICKET-REOPEN-EVIDENCE-PACKET.md](templates/TICKET-REOPEN-EVIDENCE-PACKET.md)** — One-shot reopen template for “marked resolved but still broken” cases with exact-error proof and minimal repro steps
 - **[MODEL-SWITCH-VERIFICATION.md](templates/MODEL-SWITCH-VERIFICATION.md)** — Step-by-step checklist to prove model switching is applied and isolate stale-session/config fallback issues
+- **[MODEL-SWITCH-500-RECOVERY.md](templates/MODEL-SWITCH-500-RECOVERY.md)** — Deterministic loop-break workflow for `Gateway tool invoke failed: 500` model-switch failures with canary tests, fresh-session proof, and escalation packet
 - **[MCP-CONNECTOR-RECOVERY.md](templates/MCP-CONNECTOR-RECOVERY.md)** — Fast recovery + isolation workflow for “connector installed but unavailable” MCP failures
 - **[TIMEZONE-DRIFT-PLAYBOOK.md](templates/TIMEZONE-DRIFT-PLAYBOOK.md)** — Step-by-step verification and recovery workflow for wrong timezone/day outputs and misfiring reminders
 - **[EXECUTION-EVIDENCE-CHECKLIST.md](templates/EXECUTION-EVIDENCE-CHECKLIST.md)** — Claim→evidence→verification workflow for “agent said done but nothing changed” trust-break incidents
