@@ -180,6 +180,40 @@ Task:
       </ul>
     </div>
 
+    <h2>Advanced edge cases (high-friction but common)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Cloudflare/WAF challenge pages (HTML instead of JSON):</strong> your agent is hitting a bot challenge. Allowlist <code>/wp-json/*</code> for API traffic or relax the rule for authenticated requests.</li>
+        <li><strong>"Application Passwords" section missing:</strong> some security policies/plugins disable it. Re-enable application passwords or use a dedicated plugin-based token flow.</li>
+        <li><strong>2FA enabled on the account:</strong> app passwords usually bypass interactive 2FA prompts, but some plugins break this. Test with a fresh dedicated automation user.</li>
+        <li><strong>Wrong site in multisite setups:</strong> credentials may auth successfully but post to the wrong blog/site context. Verify returned <code>link</code> host + path before publishing.</li>
+        <li><strong>Content created but formatting looks broken:</strong> send HTML content explicitly and set <code>status: draft</code> first. Validate rendering in WordPress editor before publish.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good recovery prompt (copy/paste)</h2>
+    <div class="code">Do NOT use browser automation. Use WordPress REST API only.
+
+Goal: create exactly one draft post and return proof.
+
+Connection details:
+- Site: https://YOUR-SITE.com
+- Username: YOUR_WP_USERNAME
+- Application Password: YOUR_APP_PASSWORD
+
+Required sequence:
+1) GET /wp-json/ and confirm JSON (return first 200 chars)
+2) POST /wp-json/wp/v2/posts with:
+   - title: "WP_API_CANARY_TEST"
+   - status: "draft"
+   - content: "API canary"
+3) Return ONLY:
+   - HTTP status
+   - post id
+   - edit link
+   - public link
+4) If failure, return exact status + raw response body. Do not paraphrase.</div>
+
     <h2>Security guardrails (use these)</h2>
     <div class="card">
       <ul>
