@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2: Agent Shows Error and Won’t Reply — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Module 2: Agent Shows “Error” and Won’t Reply?</h1>
+      <p>A fast isolation flow for beginners when every agent reply fails during setup.</p>
+    </div>
+
+    <p>If you're in early onboarding (often Module 2) and your agent keeps returning an error instead of a normal reply, don't keep random retrying. Use this 4-minute flow.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">What we’re seeing in community right now</div>
+      <p style="margin:0;">New users are hitting repeated "agent error / no reply" loops, then getting stuck because they don’t know whether it’s setup, runtime health, or support-routing.</p>
+    </div>
+
+    <h2>Step 1) Capture One Clean Failure</h2>
+    <div class="checklist">
+      <ol>
+        <li>Open a <strong>fresh chat/session</strong>.</li>
+        <li>Send one tiny prompt: <code>Reply with exactly: READY</code>.</li>
+        <li>Copy the <strong>exact error line</strong> (or screenshot it).</li>
+      </ol>
+    </div>
+
+    <h2>Step 2) Rule Out Surface/Context Confusion</h2>
+    <ul>
+      <li>Retry the same tiny prompt in one other surface (for example, dashboard chat vs Discord).</li>
+      <li>If one surface works and another fails, this is usually <strong>context/routing/policy</strong>, not model quality.</li>
+      <li>If both fail with the same error, continue to runtime-health checks.</li>
+    </ul>
+
+    <h2>Step 3) Check for Runtime Health Pattern</h2>
+    <p>If your errors mention things like <code>runtime not healthy</code>, <code>health 502</code>, or <code>Gateway tool invoke failed: 500</code>, you're likely dealing with runtime-side instability, not prompt quality.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Loop-break rule</div>
+      <p style="margin:0;">Do one clean retry after any restart/reconnect change. If the same error returns, stop retry loops and escalate with evidence.</p>
+    </div>
+
+    <h2>Step 4) Open the Ticket the Right Way</h2>
+    <p>Use the active support path (if legacy #help is moved, use <a href="https://heyron.ai/support">heyron.ai/support</a>). Paste this packet:</p>
+    <pre><code>Issue summary: Module 2 setup, agent errors on every reply
+Exact error text:
+Where it failed (dashboard / Discord DM / server):
+Tiny canary prompt used:
+Result in each surface tested:
+Timestamp + timezone:
+Any recent reconnect/restart attempt + outcome:</code></pre>
+
+    <h2>High-Friction Cases</h2>
+
+    <h3>“How do I create a help ticket?”</h3>
+    <p>Use: <a href="https://heyron.ai/support">https://heyron.ai/support</a>. Include exact error text and one screenshot. Don’t post only “it doesn’t work.”</p>
+
+    <h3>Community says “start over” — should I?</h3>
+    <p>Only after you capture one clean failure and one tiny canary test. Starting over blindly can erase useful evidence and slow support.</p>
+
+    <h3>The error happens in every reply</h3>
+    <p>That usually points to runtime/config health, not bad prompting. Use the packet above and escalate once with full evidence.</p>
+
+    <div class="callout danger">
+      <div class="callout-title">Security note</div>
+      <p style="margin:0;">Never paste full tokens/API keys in tickets or Discord screenshots. Redact secrets before sharing.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="runtime-health-502-server-side.html">Runtime Not Healthy (Health 502)</a> · <a href="how-to-create-help-ticket.html">How to Create a Help Ticket</a> · <a href="help-channel-moved-where-to-get-support.html">#help Moved?</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
