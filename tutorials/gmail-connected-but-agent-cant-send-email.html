@@ -171,6 +171,16 @@ Do this exactly:
       </ul>
     </div>
 
+    <h2>Advanced edge cases (when basic checks pass but sends still fail)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Send-as alias not verified:</strong> Gmail can be connected, but sending from a custom alias/domain fails until alias verification is complete.</li>
+        <li><strong>Workspace admin restriction:</strong> Google Workspace org policies may block external recipients or restrict app access even after OAuth appears successful.</li>
+        <li><strong>Daily or anti-abuse cap:</strong> canary may pass, then larger sends fail with quota/rate-style errors; capture exact error text and reduce send volume.</li>
+        <li><strong>Draft-vs-send confusion:</strong> task may only create a draft or fail silently after draft creation. Require explicit “sent” proof + message ID.</li>
+      </ul>
+    </div>
+
     <h2>Loop-break rules</h2>
     <div class="callout-danger">
       <p><strong>Stop the reconnect spiral:</strong> no more than one reconnect attempt per diagnostic cycle. If canary still fails, capture exact error text and escalate with evidence instead of repeating setup.</p>
