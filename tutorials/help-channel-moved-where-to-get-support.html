@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#help Moved? Where to Get Support Now — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>#help Moved? Where to Get Support Now</h1>
+      <p>A fast route to get unstuck when the old support channel is archived, moved, or read-only.</p>
+    </div>
+
+    <p>If you’re seeing “this channel has moved” (or you post in #help and nothing happens), the fix is usually simple: use the <strong>current support entry point</strong> and include a clean issue packet.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Most common mistake</div>
+      <p style="margin:0;">People keep retrying in an archived channel and assume support is down. It usually isn’t—your message just isn’t landing in the active queue.</p>
+    </div>
+
+    <h2>2-Minute Recovery Flow</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Confirm channel state:</strong> if you see a moved/archived banner, stop posting there.</li>
+        <li><strong>Use the active support path:</strong> open support via <a href="https://heyron.ai/support">heyron.ai/support</a>.</li>
+        <li><strong>Paste exact error text</strong> (no paraphrasing).</li>
+        <li><strong>Include where it failed:</strong> Discord DM, server channel, Telegram, dashboard, etc.</li>
+        <li><strong>Add one fresh reproduction attempt</strong> with timestamp + timezone.</li>
+      </ol>
+    </div>
+
+    <h2>Support Packet (Copy/Paste)</h2>
+    <pre><code>Issue summary:
+What I expected:
+What happened instead:
+Exact error text (full line):
+Where it failed (DM/server/dashboard/other):
+One fresh repro attempt + result:
+Timestamp + timezone:
+Workspace/session context (if relevant):</code></pre>
+
+    <h2>How to Tell If You’re in the Wrong Place</h2>
+    <ul>
+      <li>You can read the channel, but new posts are blocked or ignored.</li>
+      <li>A banner says the channel moved/archived/replaced.</li>
+      <li>Old support instructions point to a channel that no longer appears in server nav for new users.</li>
+      <li>Multiple retries in the same channel get no ticket thread or triage follow-up.</li>
+    </ul>
+
+    <h2>High-Friction Edge Cases</h2>
+
+    <h3>1) DM disabled, so bot can’t reply privately</h3>
+    <p>If private DMs are off, support workflows that rely on DM callbacks can fail silently. Include this in your ticket so support uses a channel/thread fallback immediately.</p>
+
+    <h3>2) Wrong server/account context</h3>
+    <p>If you run the agent in one account/server and open support from another, responders can’t match your context. Include the exact workspace/server where failure occurred.</p>
+
+    <h3>3) Cross-posting the same issue in multiple places</h3>
+    <p>Duplicate reports fragment evidence and slow triage. Keep one canonical thread and append updates there.</p>
+
+    <div class="callout success">
+      <div class="callout-title">Loop-break rule</div>
+      <p style="margin:0;">After one clean repro + one clean ticket, stop retrying blindly. Wait for triage or provide new evidence only.</p>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-title">Security note</div>
+      <p style="margin:0;">Never include API keys, bot tokens, or full secrets in support tickets. Share only redacted values.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="open-better-support-ticket.html">Open Better Support Tickets</a> · <a href="ticket-marked-resolved-but-not-fixed.html">Ticket Marked Resolved, But Not Fixed?</a> · <a href="whambulance-couldnt-send-dm.html">Whambulance Couldn't Send DM?</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
