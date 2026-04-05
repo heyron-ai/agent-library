@@ -184,8 +184,19 @@
       <ul>
         <li>Changing SOUL.md/AGENTS.md repeatedly (not related to runtime health)</li>
         <li>Reconnecting integrations over and over before proving scope</li>
+        <li>Rapid model-switch retries while runtime is unhealthy (often creates extra 500 noise)</li>
         <li>Posting “still broken” with no timestamp, no surface test, no exact error text</li>
         <li>Mixing old and new errors in one thread without a clean latest repro</li>
+      </ul>
+    </div>
+
+    <h2>Advanced edge case: 502 + model-change 500 combo</h2>
+    <div class="card">
+      <p>A recurring pattern: users see <strong>health 502</strong>, then try switching models and hit <strong>Gateway tool invoke failed: 500</strong>. In many cases, the model switch is failing <em>because</em> runtime health is degraded — not because your chosen model ID is wrong.</p>
+      <ul>
+        <li>First, stabilize runtime health (this guide) before testing model changes.</li>
+        <li>Use one canary model test only <em>after</em> runtime is healthy again.</li>
+        <li>If both 502 and 500 occur in the same window, report both with timestamps.</li>
       </ul>
     </div>
 
@@ -204,6 +215,9 @@ Retest steps done:
 - hard refresh
 - incognito test
 - waited 60-120s and retried once
+Related errors in same time window:
+- model-change 500 seen? [yes/no]
+- exact message: [paste exact text]
 Current status: [still failing / intermittent]
 
 Please check host/runtime health server-side.</div>
