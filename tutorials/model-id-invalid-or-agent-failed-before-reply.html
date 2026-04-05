@@ -193,6 +193,8 @@ Step 3: Add fallback #2 → test</div>
         <li><strong>Fallback masks root cause:</strong> runtime may report generic “all models failed” while the first real failure is auth/quota on primary.</li>
         <li><strong>Stale runtime after config edit:</strong> dashboard shows new model list, but active runtime is still using old values until a fresh session/restart.</li>
         <li><strong>Mixed key + model family:</strong> key is valid, but not authorized for that model family/tier.</li>
+        <li><strong>Model is invalid at startup and UI settings appear stuck:</strong> some users report they can’t change settings while every prompt instantly errors. Open settings in a fresh browser tab/session, remove fallbacks first, save one known-good model, then start a brand-new chat.</li>
+        <li><strong>Support channel access confusion during onboarding:</strong> if you can’t see a support channel yet, use the web support form first so your issue is in queue while Discord permissions refresh.</li>
       </ul>
     </div>
 
@@ -211,13 +213,14 @@ Step 3: Add fallback #2 → test</div>
 4) Propose the smallest safe rollback to one known-good model.
 5) After rollback, run a tiny canary prompt: "Reply with OK" and report result.</div>
 
-    <h2>When to escalate to #help</h2>
+    <h2>When to escalate to support</h2>
     <div class="card">
       <ul>
         <li>You reverted to a previously working model and canary still fails.</li>
         <li>You keep seeing 401/403 errors after key reset.</li>
         <li>Dashboard shows one model, runtime reports another.</li>
         <li>Behavior differs across Discord vs dashboard with same agent config.</li>
+        <li>You cannot access the Discord support channel yet (permission/visibility delay) and need immediate help.</li>
       </ul>
     </div>
 
@@ -229,6 +232,7 @@ Step 3: Add fallback #2 → test</div>
       <li>Result of tiny canary prompt</li>
       <li>Whether you tested with one-model/no-fallback mode in a fresh session</li>
       <li>What changed right before it broke</li>
+      <li>Whether support-channel access is blocked (and confirmation you also filed at heyron.ai/support)</li>
     </ul>
 
     <div class="callout-success">
