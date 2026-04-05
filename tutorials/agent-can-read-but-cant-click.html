@@ -145,6 +145,30 @@
       </ol>
     </div>
 
+    <h2>High-friction edge case: “I installed Chromium but it still can’t click”</h2>
+    <p>This is showing up often in community chats. Installing a browser binary by itself does <em>not</em> automatically give your agent browser-control capability.</p>
+    <div class="card">
+      <ul>
+        <li><strong>Browser installed ≠ automation enabled:</strong> Chromium can exist on the host and your session can still be read-only.</li>
+        <li><strong>Session mismatch:</strong> you may have enabled tooling in one environment but are testing in another (DM vs server, old thread vs new thread, different workspace).</li>
+        <li><strong>Wrong success test:</strong> “it can open a URL” is not proof it can click/login/submit.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Loop-break rule:</strong> Stop retrying broad “use Chromium and post this” prompts until you pass a tiny canary test that proves click capability in your current session.</p>
+    </div>
+
+    <h2>2-minute canary test (proof before production)</h2>
+    <div class="code">Before doing the full workflow, run this exact test:
+
+1) Tell me clearly whether you can perform browser UI actions in THIS session (yes/no).
+2) If yes, name the exact browser automation tool available.
+3) Run one tiny canary task that requires a click on a safe test page and report evidence.
+4) If no, switch to manual-handoff mode and give step-by-step click instructions for me.
+
+Do not claim completion without evidence.</div>
+
     <h2>Known-good fallback pattern</h2>
     <p>When automation isn’t available, split work between the agent and a human:</p>
     <div class="card">
