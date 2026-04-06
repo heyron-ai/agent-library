@@ -169,8 +169,14 @@ After updating, read it back and print:
     <h3>Same event title exists multiple times</h3>
     <p>The agent may edit the wrong one unless you provide date/time/calendar identity. Never rely on title alone.</p>
 
+    <h3>Recurring series vs one occurrence</h3>
+    <p>Google Calendar can update <strong>only this event</strong> or the <strong>entire series</strong>. If the wrong scope is chosen, it can look like your update was ignored. Require the agent to state exactly which scope it edited.</p>
+
     <h3>All-day vs timed event mismatch</h3>
     <p>Updating an all-day event with timed fields can produce unexpected display shifts. Force the agent to confirm event type.</p>
+
+    <h3>Organizer/permission mismatch</h3>
+    <p>If you are not the organizer (or only have limited access), edits may partially apply or fail silently. Ask the agent to confirm your effective permission level on that calendar/event.</p>
 
     <h3>Google Calendar UI looks unchanged</h3>
     <p>Sometimes the browser view is stale. Hard refresh once, then open event details. Trust API/read-back evidence over cached list view.</p>
@@ -185,8 +191,10 @@ Event title:
 Original date/time + timezone:
 Requested new date/time + timezone:
 Timed or all-day:
+Recurring scope (single event or full series):
 Canary edit used:
 Read-back result after update:
+Permission level (owner/editor/viewer):
 Surface used (dashboard/Discord/etc):
 Timestamp + timezone:
 Any duplicate events created:</code></pre>
