@@ -153,6 +153,8 @@ GUILD_ID=1478816095941955779   # this is actually a channel ID</div>
         <li><strong>Private threads:</strong> thread IDs require explicit thread access. If your config expects channels, use the parent channel ID instead.</li>
         <li><strong>Category sync drift:</strong> if a channel is no longer synced to its category, old deny overrides can silently block the bot.</li>
         <li><strong>Role hierarchy:</strong> ensure your bot role is not effectively restricted by server role structure or integration restrictions.</li>
+        <li><strong>HTTP 403 from Discord API:</strong> if direct API reads return 403, verify you are using a <em>bot token</em> (not user token), the bot is in the target guild, and the bot still has channel visibility after recent permission edits.</li>
+        <li><strong>Message Content intent mismatch:</strong> in Developer Portal, enable <em>Message Content Intent</em> if your integration expects to read normal message text in channels.</li>
       </ul>
     </div>
 
@@ -193,6 +195,8 @@ GUILD_ID=1478816095941955779   # this is actually a channel ID</div>
 - Bot role perms checked: yes/no
 - Channel overrides checked: yes/no
 - Clean-channel test result: pass/fail
+- Direct Discord API test status: 200/401/403
+- Message Content intent enabled: yes/no
 - Error text from agent (exact): [paste]</div>
 
     <div class="footer">
