@@ -201,6 +201,31 @@ If direct publish is blocked, return an API/tool-first fallback and the exact mi
       </ul>
     </div>
 
+    <h2>Advanced edge cases that look like “random Facebook failure”</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong identity lane:</strong> posting as personal profile vs the intended Page identity.</li>
+        <li><strong>Business Manager mismatch:</strong> account has partial access in Meta Business Suite but lacks actual publish permission for that Page.</li>
+        <li><strong>Page role confusion:</strong> editor/admin role changed, inherited role removed, or access pending approval.</li>
+        <li><strong>Content policy block:</strong> link domain, ad-like wording, or repeated duplicate text triggers temporary limits.</li>
+        <li><strong>Media compatibility mismatch:</strong> asset dimensions/format unsupported for the intended post type.</li>
+        <li><strong>Rate-limit loop:</strong> repeated retries in a short window trigger temporary anti-abuse throttling.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good recovery prompt (copy/paste)</h2>
+    <div class="code">I want Facebook Page posting workflow help, but do not assume browser login automation.
+
+Do exactly this:
+1) Ask me to confirm the exact destination Page name and posting identity.
+2) Build one canary post draft (caption + CTA + one image brief).
+3) Return a manual/API publish checklist with explicit permission checks.
+4) If direct publish is blocked, return ONLY:
+   - exact blocker category (login / permission / policy / media / rate-limit)
+   - one next action
+   - one fallback route
+5) Do not ask for raw credentials and do not retry blocked browser flows repeatedly.</div>
+
     <h2>Support packet (if you still get stuck)</h2>
     <div class="code">Include these in your support request:
 - What you wanted: "Fully automate Facebook page posting"
