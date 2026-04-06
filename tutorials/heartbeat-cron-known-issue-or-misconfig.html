@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heartbeat/Cron Broken or Just Misconfigured? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Heartbeat/Cron Broken or Just Misconfigured?</h1>
+      <p>A deterministic 5-minute checklist to tell the difference between a platform issue and a local setup problem.</p>
+    </div>
+
+    <p>When reminders miss, heartbeat runs go quiet, or schedules drift, most people immediately assume “the scheduler is down.” Sometimes that’s true. Usually, it’s a misconfig you can prove in minutes.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">Most common failure mode</div>
+      <p style="margin:0;">Users change <code>timezone</code>, delivery destination, or session context and keep retesting old assumptions. One clean canary run with proof beats ten blind retries.</p>
+    </div>
+
+    <h2>Step 1) Confirm What “Failed” Actually Means</h2>
+    <div class="checklist">
+      <ol>
+        <li><strong>Never use “didn’t work” as the signal.</strong> Identify exactly what failed:
+          <ul>
+            <li>job never executed</li>
+            <li>job executed but delivered nowhere</li>
+            <li>executed late (timezone/window issue)</li>
+            <li>executed in wrong context/session</li>
+          </ul>
+        </li>
+        <li><strong>Capture one concrete timestamp</strong> (with timezone) from your expected run.</li>
+      </ol>
+    </div>
+
+    <h2>Step 2) Run a Tiny Canary (Now + 2 Minutes)</h2>
+    <p>Create one disposable reminder with obvious text, short delay, and known destination. Keep it minimal.</p>
+    <pre><code>Reminder text: "CANARY: scheduler test from [surface/context]"
+When: now + 2 minutes
+Destination: same place you're watching
+Expected result: one message, once, with exact canary text</code></pre>
+
+    <div class="callout success">
+      <div class="callout-title">Interpretation rule</div>
+      <p style="margin:0;">If canary fires correctly, your scheduler pipeline is healthy. Your original job likely has configuration drift (time expression, destination, or context mismatch).</p>
+    </div>
+
+    <h2>Step 3) Verify the Three Drift Zones</h2>
+
+    <h3>A) Time drift (cron expression + timezone)</h3>
+    <ul>
+      <li>Confirm schedule and timezone are paired intentionally (e.g., <code>America/New_York</code> vs server default UTC).</li>
+      <li>If the message arrives at the wrong hour/day, this is almost always timezone mismatch, not scheduler outage.</li>
+    </ul>
+
+    <h3>B) Destination drift (where output is delivered)</h3>
+    <ul>
+      <li>Check whether delivery goes to main session, isolated run announce, or a specific channel.</li>
+      <li>If run history shows success but no visible message, destination is wrong or not monitored.</li>
+    </ul>
+
+    <h3>C) Context drift (wrong session)</h3>
+    <ul>
+      <li>Jobs bound to a different session can appear “missing” even when successful.</li>
+      <li>Recreate with explicit session target instead of assuming the current chat thread is implicit.</li>
+    </ul>
+
+    <h2>Step 4) Use This One-Paste Triage Packet</h2>
+    <p>When escalating to support, paste this once:</p>
+    <pre><code>Symptom: (never ran / ran late / ran but no message / wrong place)
+Expected time + timezone:
+Actual observed time + timezone:
+Canary test run (now+2m): (pass/fail + exact output)
+Schedule expression used:
+Session target + delivery mode:
+Where I looked for output:
+1 screenshot or log snippet:</code></pre>
+
+    <h2>Fast Decision Tree</h2>
+    <ul>
+      <li><strong>Canary passes:</strong> local config issue (time, destination, or context drift).</li>
+      <li><strong>Canary fails + no run evidence:</strong> possible scheduler/runtime issue, escalate with packet.</li>
+      <li><strong>Run evidence exists but no message:</strong> delivery/session mismatch, not core scheduler failure.</li>
+    </ul>
+
+    <div class="callout danger">
+      <div class="callout-title">Loop-break rule</div>
+      <p style="margin:0;">Don’t spam retries with the same broken config. Change one variable at a time and rerun a fresh canary so you can prove causality.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="heartbeat-vs-cron-which-to-use.html">Heartbeat vs Cron: Which One Should You Use?</a> · <a href="reminders-not-firing.html">Reminders Not Firing?</a> · <a href="agent-timezone-wrong.html">Agent Using the Wrong Time or Day?</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
