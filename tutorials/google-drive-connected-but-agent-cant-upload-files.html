@@ -184,7 +184,19 @@ Do exactly this:
         <li><strong>Shortcut confusion:</strong> uploading to a shortcut target may place file in an unexpected parent location.</li>
         <li><strong>Duplicate filename assumptions:</strong> upload succeeds but you are viewing an older same-name file.</li>
         <li><strong>Workspace policy blocks:</strong> org security policy can allow read while blocking create/upload actions.</li>
+        <li><strong>File type or size gate:</strong> tiny <code>.txt</code> canaries work, but larger files or blocked MIME types fail silently or with generic errors.</li>
+        <li><strong>Insufficient storage/quota:</strong> account or shared drive has no remaining storage, so uploads fail despite valid auth.</li>
       </ul>
+    </div>
+
+    <h2>If tiny upload works but real file fails</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Compare file size:</strong> test one medium file (for example 1–5 MB) before large uploads.</li>
+        <li><strong>Compare file type:</strong> try <code>.txt</code> → <code>.csv</code> → your real type (for example <code>.pdf</code>, <code>.docx</code>, <code>.zip</code>).</li>
+        <li><strong>Keep destination fixed:</strong> do not change folder and file type at the same time.</li>
+        <li><strong>Return exact raw error:</strong> require the agent to quote exact provider error text and upload attempt timestamp.</li>
+      </ol>
     </div>
 
     <h2>When to escalate</h2>
