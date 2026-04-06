@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Works, But Tools Don’t Run? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Chat Works, But Tools Don’t Run?</h1>
+      <p>Fix the high-friction “agent replies normally, but file/command tasks hang” loop in under 5 minutes.</p>
+    </div>
+
+    <p>A recurring support pattern is: <em>“My agent is talking fine, but git/file/tool actions freeze or never finish.”</em> This is usually a runtime/session execution issue, not a prompt-quality issue.</p>
+
+    <div class="callout">
+      <p><strong>Core rule:</strong> treat “chat is alive” and “tool execution is healthy” as two separate systems. One can work while the other is stalled.</p>
+    </div>
+
+    <h2>2-minute isolation checklist</h2>
+    <div class="card">
+      <ol>
+        <li>Run a <strong>tiny canary tool task</strong> (for example: list one folder).</li>
+        <li>If canary hangs, open a <strong>fresh session</strong> and retry the same tiny task.</li>
+        <li>If fresh session works, your old session is likely execution-stuck.</li>
+        <li>If fresh session also fails, suspect runtime/container/gateway health.</li>
+        <li>Avoid retry spam while stuck — it usually makes diagnosis harder.</li>
+      </ol>
+    </div>
+
+    <h2>Known symptoms of execution-layer freeze</h2>
+    <div class="card">
+      <ul>
+        <li>Normal chat answers still come back quickly.</li>
+        <li>Tool tasks (file reads, git commands, pushes) stay pending or timeout.</li>
+        <li>Approvals may appear repeatedly without task completion.</li>
+        <li>A restart/new session temporarily clears the issue.</li>
+      </ul>
+    </div>
+
+    <h2>Safe recovery flow</h2>
+    <div class="card">
+      <ol>
+        <li><strong>Stop queueing new heavy tasks.</strong></li>
+        <li><strong>Open fresh chat/session</strong> and run one tiny canary first.</li>
+        <li>If canary passes, re-run your real task in the fresh session.</li>
+        <li>If canary fails, perform runtime restart/health checks before retrying.</li>
+        <li>If still failing after restart, escalate with clean evidence packet (below).</li>
+      </ol>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Don’t trust “done” without proof:</strong> require a verifiable output (file path, diff snippet, command result) before assuming the task completed.</p>
+    </div>
+
+    <h2>Copy/paste canary prompt</h2>
+    <div class="code">Run one tiny tool canary task only:
+1) List files in the current workspace root.
+2) Return exactly 5 filenames.
+3) If any step fails, return the exact error text and stop.
+Do not run any additional commands.</div>
+
+    <h2>Proof-first completion contract</h2>
+    <div class="code">For every task, respond in this format:
+- Status: success or failed
+- Evidence: exact output/path/diff proving the action happened
+- Verification: one check that confirms state changed as expected
+If evidence is missing, treat task as not completed.</div>
+
+    <h2>Support-ready escalation packet</h2>
+    <div class="code">Execution freeze report
+
+What still works: (chat replies yes/no)
+What fails: (file/git/tool tasks)
+Tiny canary result: (pass/fail + exact output)
+Fresh session canary result: (pass/fail)
+Restart attempted: (yes/no + what was restarted)
+Time observed (timezone):
+Recent exact error text:</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> if chat works but tools hang, isolate with one tiny canary, move to a fresh session, then escalate only with exact evidence.</p>
+    </div>
+
+    <div class="footer">
+      <p>This single checklist prevents most retry loops and helps support identify whether the issue is session-level or runtime-level fast.</p>
+    </div>
+  </div>
+</body>
+</html>
