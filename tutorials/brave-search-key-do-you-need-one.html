@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do You Need a Brave API Key for Web Search? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step {
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+      margin: 18px 0;
+    }
+    .step-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Do You Need a Brave API Key for Web Search?</h1>
+      <p>A fast way to resolve "missing Brave key" confusion and get web research working reliably again.</p>
+    </div>
+
+    <p>This is a frequent support loop: your agent says web research failed because a Brave API key is missing, and you're not sure if you actually need one.</p>
+
+    <div class="callout">
+      <p><strong>Short answer:</strong> some setups can use built-in search access, while others use a personal provider key override. The fix is to identify which mode your environment is in before changing anything.</p>
+    </div>
+
+    <h2>Why this error happens</h2>
+    <div class="card">
+      <ul>
+        <li>Your workspace was configured to use a provider key, but the key is missing/expired.</li>
+        <li>The agent attempted one search pathway and did not fall back cleanly.</li>
+        <li>A stale config/session state is surfacing an old key requirement.</li>
+        <li>The prompt requested broad research and masked a simpler tool-level failure.</li>
+      </ul>
+    </div>
+
+    <h2>5-minute diagnosis flow</h2>
+
+    <div class="step">
+      <div class="step-title">1) Run a tiny canary search</div>
+      <p>Ask for one very small query first. Example:</p>
+      <div class="code">Search the web for: "OpenClaw gateway status command".
+Return 3 results with title + URL only.</div>
+      <p>If this works, search access is available. Your earlier failure was likely scope or tool-routing related, not a hard key block.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) If canary fails, capture exact error text</div>
+      <p>Don't paraphrase. Copy the exact message (including provider name, status code, and any "key missing" text).</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Check if your environment expects a personal key</div>
+      <p>If your workspace intentionally uses a Brave/provider override, missing key errors are expected until that key is valid.</p>
+      <p>If your environment should use built-in search, this points to config drift or a transient runtime issue.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Retry with a focused request</div>
+      <p>Large "research everything" prompts fail more often. Retry with one source, one question, and a strict output format.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) Escalate with evidence (if still broken)</div>
+      <p>Send a clean support packet (template below) instead of retrying in loops.</p>
+    </div>
+
+    <h2>Prompt pattern that avoids false failures</h2>
+
+    <h3>High-failure pattern</h3>
+    <div class="code">Research everything about [topic] and give me a complete strategy.</div>
+
+    <h3>Low-failure pattern</h3>
+    <div class="code">Run one web search query: "[topic] best practices 2026".
+Return exactly:
+1) Top 5 URLs
+2) One-sentence summary per URL
+3) Confidence: low/medium/high</div>
+
+    <div class="callout-warning">
+      <p><strong>Avoid thrash:</strong> repeated retries with the same broad prompt usually add noise. Use one canary, then one focused retry, then escalate with evidence.</p>
+    </div>
+
+    <h2>Support packet (copy/paste)</h2>
+    <div class="code">Web search issue report
+- Channel/surface: [Discord DM / server / dashboard]
+- Exact error text: [paste full text]
+- Canary query used: [paste prompt]
+- Canary result: [worked / failed]
+- Time + timezone: [e.g., 2026-04-06 00:50 UTC]
+- Model in use (if known): [model id]
+- What I already tried: [1-2 bullets]</div>
+
+    <h2>When a personal Brave key is actually needed</h2>
+    <div class="card">
+      <ul>
+        <li>Your org/workspace explicitly standardized on Brave provider credentials.</li>
+        <li>You need provider-specific behavior not available through default search tooling.</li>
+        <li>Your admin configured policies that require explicit external provider auth.</li>
+      </ul>
+    </div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> treat "missing Brave key" as a routing/config signal, not an automatic hard stop. Prove search with a tiny canary first, then adjust config only if evidence says you should.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related reads: <a href="web-search-returned-nothing.html">Web Search Returned Nothing?</a> and <a href="agent-feels-slow-or-stuck.html">Agent Feels Slow or Stuck?</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
