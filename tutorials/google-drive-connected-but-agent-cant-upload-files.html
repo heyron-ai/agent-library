@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Drive Connected, But Agent Can’t Upload Files? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+    .callout-success strong { color: var(--success); }
+    .callout-warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .callout-warning strong { color: var(--warning); }
+    .callout-danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step { border-left: 2px solid var(--border); padding-left: 14px; margin: 18px 0; }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Google Drive Connected, But Agent Can’t Upload Files?</h1>
+      <p>A deterministic fix flow for “connected but upload failed” loops: prove account, folder, and permission state before reconnecting again.</p>
+    </div>
+
+    <p>Community pattern: Drive shows as connected, reads sometimes work, but uploads fail with vague errors. Most cases are wrong account, wrong target folder/shared-drive permissions, or blocked file type/size assumptions.</p>
+
+    <div class="callout-warning">
+      <p><strong>Loop-break rule:</strong> do not reconnect Drive 5 times in a row. Run one tiny upload canary first, then change only one variable at a time.</p>
+    </div>
+
+    <h2>What this usually means</h2>
+    <div class="card">
+      <ul>
+        <li><strong>OAuth account mismatch:</strong> connector linked to Account A while you’re checking files in Account B.</li>
+        <li><strong>Folder target mismatch:</strong> upload went to a different folder/shared drive than expected.</li>
+        <li><strong>Permission gap:</strong> you can view a shared folder but do not have upload/edit rights.</li>
+        <li><strong>Session/context mismatch:</strong> upload attempted in a different surface/thread than where connector is active.</li>
+      </ul>
+    </div>
+
+    <h2>5-minute deterministic recovery flow</h2>
+
+    <div class="step">
+      <div class="step-title">1) Lock account + destination first</div>
+      <p>Tell the agent the exact Google account email and exact destination folder name/path before any upload attempt.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Run a tiny canary upload</div>
+      <p>Upload one small text file (for example <code>canary-drive-upload.txt</code>) and require returned proof: folder name, file name, and created timestamp.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Verify from the same account</div>
+      <p>Open Drive in the same Google account and search exact filename. If missing, check “Recent” and shared-drive destination confusion.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) If canary fails, check permissions before reconnect</div>
+      <p>Confirm upload rights in the target folder/shared drive. Read access does not always include create/upload permission.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) Reconnect once, then retest once</div>
+      <p>If needed, reconnect Drive in one clean browser flow and immediately rerun the same tiny canary test. Avoid random prompt changes.</p>
+    </div>
+
+    <h2>Copy/paste recovery prompt</h2>
+    <div class="code">Google Drive is connected, but uploads fail.
+
+Do exactly this:
+1) Confirm active Google account email you are using for Drive operations.
+2) Target this destination folder exactly: [PASTE FOLDER NAME OR PATH].
+3) Upload a tiny file named: canary-drive-upload.txt with content: "drive canary [today's date]".
+4) Return proof only:
+   - account email
+   - destination folder/path used
+   - uploaded filename
+   - created timestamp
+5) If upload fails, return exact raw error text and one likely cause (no guessing list).</div>
+
+    <h2>High-friction edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Shared Drive restrictions:</strong> some org drives block uploads from external or non-member accounts.</li>
+        <li><strong>Shortcut confusion:</strong> uploading to a shortcut target may place file in an unexpected parent location.</li>
+        <li><strong>Duplicate filename assumptions:</strong> upload succeeds but you are viewing an older same-name file.</li>
+        <li><strong>Workspace policy blocks:</strong> org security policy can allow read while blocking create/upload actions.</li>
+      </ul>
+    </div>
+
+    <h2>When to escalate</h2>
+    <div class="callout-danger">
+      <p><strong>Escalate after one clean canary cycle</strong> if upload still fails with the same raw error and account/folder are confirmed.</p>
+    </div>
+
+    <div class="code">Support packet:
+- Goal: "Upload file to Google Drive folder"
+- Connector status: connected (yes/no)
+- Active Google account email used
+- Exact destination folder/path
+- Canary filename used
+- Exact raw error text from failed upload
+- Surface used (dashboard / Discord DM / server thread)
+- Whether reconnect was attempted once in clean browser flow</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> treat Drive uploads as a proof-first operation: lock account + folder, run a tiny canary, then scale. This kills most reconnect loops fast.</p>
+    </div>
+
+    <div class="footer">
+      <p>Built from recurring connector “connected-but-not-working” support patterns in the heyron community.</p>
+    </div>
+  </div>
+</body>
+</html>
