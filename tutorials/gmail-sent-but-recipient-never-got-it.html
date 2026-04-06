@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gmail Sent But Recipient Never Got It — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+    .callout-success strong { color: var(--success); }
+    .callout-warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .callout-warning strong { color: var(--warning); }
+    .callout-danger { border-left-color: var(--danger); background: rgba(240,71,71,0.08); }
+    .callout-danger strong { color: var(--danger); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step { border-left: 2px solid var(--border); padding-left: 14px; margin: 18px 0; }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Gmail Says “Sent,” But Recipient Never Got It?</h1>
+      <p>A fast, proof-first workflow to separate true delivery failures from inbox filtering and sender mismatch.</p>
+    </div>
+
+    <p>Common loop: your agent returns success, maybe even a message ID, but the recipient says nothing arrived.</p>
+
+    <div class="callout-warning">
+      <p><strong>Reality check:</strong> “Send succeeded” is not the same as “recipient saw it in Primary Inbox.” You need delivery proof on both sender and recipient sides.</p>
+    </div>
+
+    <h2>Fast path (5 steps)</h2>
+
+    <div class="step">
+      <div class="step-title">1) Lock sender identity first</div>
+      <p>Confirm the exact sending account and alias before retrying. Many misses are “sent from wrong mailbox” incidents.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Send one canary with unique subject</div>
+      <p>Use plain text and no links/attachments:</p>
+      <div class="code">DELIVERY_CANARY_{{YYYYMMDD}}_{{HHmm}}</div>
+      <p>Keep this test tiny. No campaigns, no formatting, no bulk recipients.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Capture sender-side proof</div>
+      <p>Require: sent status + message ID + timestamp + recipient address exactly as sent.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Check recipient-side folders in order</div>
+      <p>Recipient should check: <strong>Primary</strong> → <strong>All Mail</strong> → <strong>Spam/Junk</strong> → <strong>Promotions/Updates</strong> using the unique subject line.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">5) Retry once with one variable changed</div>
+      <p>If not found, change only one variable (recipient domain, alias, or subject/body style) and retest. Avoid random multi-change retries.</p>
+    </div>
+
+    <h2>Copy/paste recovery prompt</h2>
+    <div class="code">My Gmail connector reports success, but the recipient didn’t receive the email.
+
+Do this exactly:
+1) Confirm active sender account and alias.
+2) Send ONE plain-text canary email to: RECIPIENT@example.com
+3) Subject: DELIVERY_CANARY_TEST
+4) Body: "canary"
+5) Return only: sender address, alias used, recipient address, send status, message ID, timestamp, and raw error text if any.
+6) Do not reconnect unless there is an explicit auth error.</div>
+
+    <h2>High-friction failure patterns</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong sender account/alias:</strong> message was sent, but from an unexpected mailbox.</li>
+        <li><strong>Recipient-side filtering:</strong> message lands in Spam/Promotions, so it appears “missing.”</li>
+        <li><strong>Formatting triggers:</strong> heavy links/attachments on first send can increase filtering.</li>
+        <li><strong>Workspace domain policy:</strong> recipient org silently blocks or quarantines external senders.</li>
+      </ul>
+    </div>
+
+    <h2>Advanced edge cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Send-as alias not fully trusted:</strong> Gmail accepts send request but downstream providers de-prioritize or reject.</li>
+        <li><strong>SPF/DKIM/DMARC misalignment:</strong> custom domain configuration can cause delivery failure despite local “sent” success.</li>
+        <li><strong>Recipient typo or auto-corrected address:</strong> especially when pulling contacts from memory/context.</li>
+        <li><strong>Rate or reputation throttling:</strong> multiple retries in a short window may degrade deliverability.</li>
+      </ul>
+    </div>
+
+    <div class="callout-danger">
+      <p><strong>Loop-break rule:</strong> after two canary attempts with full proof capture, stop retrying and escalate with evidence. Reconnect loops won’t fix deliverability policy issues.</p>
+    </div>
+
+    <h2>Escalation packet (copy exactly)</h2>
+    <div class="code">- Sender mailbox + alias used
+- Recipient mailbox/domain
+- Canary subject
+- Send timestamp + timezone
+- Message ID returned by send action
+- Recipient folder search result (Primary/All Mail/Spam/Promotions)
+- Exact raw error text (if any)
+- Surface used (dashboard/DM/server/thread)</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> prove sender identity + one canary + recipient folder search before changing config. Most “never got it” cases are filtering or identity mismatch, not connector breakage.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related guides: <a href="gmail-connected-but-agent-cant-send-email.html">Gmail Connected, But Agent Won’t Send?</a> · <a href="gmail-connected-but-sending-from-wrong-account.html">Gmail Sending from Wrong Account</a> · <a href="open-better-support-ticket.html">Open Better Support Tickets</a></p>
+    </div>
+  </div>
+</body>
+</html>
