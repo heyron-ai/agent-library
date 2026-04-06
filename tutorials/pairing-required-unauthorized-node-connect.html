@@ -63,7 +63,12 @@
 
     <div class="callout callout-danger">
       <div class="callout-label">What this means</div>
-      <p style="margin:0">Your app is reaching a gateway, but the gateway is rejecting trust state (unpaired node, expired/invalid token, or wrong public endpoint).</p>
+      <p style="margin:0">Your app is reaching a gateway, but the gateway is rejecting trust state (unpaired node, expired/invalid token, stale browser auth state, or wrong public endpoint).</p>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-label">Using heyron.ai in a browser?</div>
+      <p style="margin:0">A sudden <strong>"Auth failed: pairing required"</strong> after an in-browser session freeze is often session-state drift, not a full outage. Treat browser state (cookies/site data) as part of the pairing path.</p>
     </div>
 
     <h2>Fast Recovery Flow</h2>
@@ -130,6 +135,20 @@
       <summary>Pairing succeeds, then fails again after restart</summary>
       <div class="answer">
         <p>You likely rotated token/config unintentionally or restarted a different gateway instance. Reconfirm single source of truth for runtime + config path.</p>
+      </div>
+    </details>
+
+    <details class="trouble-card">
+      <summary>heyron.ai browser session froze, then showed “pairing required”</summary>
+      <div class="answer">
+        <p>This is commonly stale browser auth/pairing state. Do one clean browser reset path before deeper debugging:</p>
+        <ul style="margin-left:20px; color:var(--text-muted)">
+          <li>Hard refresh once</li>
+          <li>Sign out, then sign back in</li>
+          <li>Retry in an incognito/private window</li>
+          <li>If still blocked, clear site data for heyron.ai and reconnect with a fresh pairing flow</li>
+        </ul>
+        <p style="margin-top:10px">If multiple users report this at the same time, include that in escalation — it may indicate backend auth instability rather than a single-device issue.</p>
       </div>
     </details>
 
