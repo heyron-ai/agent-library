@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Calendar Event Updated But Still Shows Old Time — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent-light: #7289DA;
+      --danger: #ed4245;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.15);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+    h2 { font-size: 24px; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    h3 { font-size: 18px; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { margin: 10px 0 18px 24px; }
+    li { margin-bottom: 8px; }
+    strong { color: #fff; }
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .callout {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .callout-title { font-weight: 700; margin-bottom: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .callout.warning { border-left: 3px solid var(--warning); }
+    .callout.warning .callout-title { color: var(--warning); }
+    .callout.success { border-left: 3px solid var(--success); }
+    .callout.success .callout-title { color: var(--success); }
+    .callout.danger { border-left: 3px solid var(--danger); }
+    .callout.danger .callout-title { color: var(--danger); }
+    .checklist {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0 22px;
+    }
+    code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      color: var(--accent-light);
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    pre code { border: 0; padding: 0; background: transparent; color: var(--text); }
+    .footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Google Calendar Event Updated, But It Still Shows the Old Time?</h1>
+      <p>A fast proof-first workflow for edit/update failures and timezone drift in Calendar tasks.</p>
+    </div>
+
+    <p>If your agent says it updated a calendar event but the old time/details still show, don’t spam retries. Use this 4-minute isolate-and-proof flow.</p>
+
+    <div class="callout warning">
+      <div class="callout-title">What this usually is</div>
+      <p style="margin:0;">Most cases are one of these: wrong calendar selected, wrong event edited (same title), timezone shift, or stale UI cache in Google Calendar.</p>
+    </div>
+
+    <h2>Step 1) Lock the Exact Event Identity</h2>
+    <div class="checklist">
+      <ol>
+        <li>Identify the exact event by <strong>title + date + start time + calendar name</strong>.</li>
+        <li>If multiple events share the same title, include a unique clue (attendee, location, description text).</li>
+        <li>Ask the agent to show the event metadata before editing.</li>
+      </ol>
+    </div>
+
+    <pre><code>Before editing, list the exact target event:
+- Calendar name
+- Event title
+- Current start/end time with timezone
+- Event ID (if available)
+Then apply the update and show the new start/end time with timezone.</code></pre>
+
+    <h2>Step 2) Run a Tiny Edit Canary</h2>
+    <ul>
+      <li>Change one small field first (for example: add <code>[CANARY]</code> to the title).</li>
+      <li>Read the event back immediately after edit.</li>
+      <li>If canary change is visible but time is wrong, you likely have a timezone or all-day/timed mismatch.</li>
+    </ul>
+
+    <h2>Step 3) Force Timezone Proof</h2>
+    <p>Ask for both the <strong>input timezone</strong> and the <strong>stored timezone</strong> on the event:</p>
+
+    <pre><code>Update this event to:
+- Date: 2026-04-07
+- Start: 09:00
+- End: 09:30
+- Timezone: America/New_York
+After updating, read it back and print:
+- Stored start/end timestamps
+- Stored timezone
+- Whether the event is timed or all-day</code></pre>
+
+    <div class="callout success">
+      <div class="callout-title">Loop-break rule</div>
+      <p style="margin:0;">If two proofed attempts still write the wrong value, stop retries and escalate with evidence. Repeated blind edits create duplicates and confusion.</p>
+    </div>
+
+    <h2>High-Friction Edge Cases</h2>
+
+    <h3>Same event title exists multiple times</h3>
+    <p>The agent may edit the wrong one unless you provide date/time/calendar identity. Never rely on title alone.</p>
+
+    <h3>All-day vs timed event mismatch</h3>
+    <p>Updating an all-day event with timed fields can produce unexpected display shifts. Force the agent to confirm event type.</p>
+
+    <h3>Google Calendar UI looks unchanged</h3>
+    <p>Sometimes the browser view is stale. Hard refresh once, then open event details. Trust API/read-back evidence over cached list view.</p>
+
+    <h3>Wrong calendar got edited</h3>
+    <p>Many users have Personal + Work calendars with similar events. Require explicit calendar name in every edit command.</p>
+
+    <h2>Escalation Packet (Copy/Paste)</h2>
+    <pre><code>Issue summary: Calendar event update says success but old value remains
+Calendar name:
+Event title:
+Original date/time + timezone:
+Requested new date/time + timezone:
+Timed or all-day:
+Canary edit used:
+Read-back result after update:
+Surface used (dashboard/Discord/etc):
+Timestamp + timezone:
+Any duplicate events created:</code></pre>
+
+    <div class="callout danger">
+      <div class="callout-title">Security note</div>
+      <p style="margin:0;">Redact attendee emails and private meeting links before sharing support evidence.</p>
+    </div>
+
+    <div class="footer">
+      <p>Related: <a href="google-calendar-connected-but-no-events.html">Google Calendar Connected, But No Events?</a> · <a href="google-calendar-connected-but-cant-create-events.html">Can’t Create Events?</a> · <a href="daily-econ-calendar-reminder.html">Daily Reminder Troubleshooting</a></p>
+      <p style="margin-top:8px;">Made with 🌩️ by The Glow Cloud — heyron</p>
+    </div>
+  </div>
+</body>
+</html>
