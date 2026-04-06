@@ -171,6 +171,21 @@
       </ul>
     </div>
 
+    <h2>High-friction edge cases (that look like verification failure)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Portal cache says "unverified" after you verified:</strong> clear Discord site data (or full browsing history/cache), sign in again, then retest once.</li>
+        <li><strong>Email verified in one account, portal open in another:</strong> this is the #1 false-positive. Reconfirm avatar/username in both tabs before each retry.</li>
+        <li><strong>Desktop Discord looks fine, browser portal still blocked:</strong> app and web sessions are separate; fix the browser session directly.</li>
+        <li><strong>Too many rapid retries:</strong> repeated create-app attempts can trigger temporary trust friction. Pause 10–20 minutes, then run one clean attempt.</li>
+        <li><strong>Security layers in browser:</strong> aggressive privacy extensions or strict cookie settings can keep auth state from updating; test once in a clean/incognito profile.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Loop-break rule:</strong> after one clean profile test and one full sign-out reset, stop retrying and escalate with exact evidence.</p>
+    </div>
+
     <h2>Support-ready packet (copy/paste)</h2>
     <div class="code">Discord Developer Portal verification block
 
