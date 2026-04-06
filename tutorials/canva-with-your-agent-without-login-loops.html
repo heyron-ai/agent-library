@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Canva with Your Agent (Without Login Loops) — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --danger: #f04747;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(230,126,34,0.15);
+      color: #f39c12;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 620px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-success { border-left-color: var(--success); background: rgba(67,181,129,0.08); }
+    .callout-success strong { color: var(--success); }
+    .callout-warning { border-left-color: var(--warning); background: rgba(250,166,26,0.08); }
+    .callout-warning strong { color: var(--warning); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .step { border-left: 2px solid var(--border); padding-left: 14px; margin: 18px 0; }
+    .step-title { font-weight: 700; margin-bottom: 6px; }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 30px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Troubleshooting</div>
+      <h1>Using Canva with Your Agent (Without Login Loops)</h1>
+      <p>A capability-safe workflow for Canva tasks: agent does strategy + copy + design brief, you handle final in-Canva execution.</p>
+    </div>
+
+    <p>Common community pattern: users ask for fully automatic Canva edits/posting, then get stuck in login/click loops. The fastest path is to split planning work from final editor actions.</p>
+
+    <div class="callout-warning">
+      <p><strong>Reality check:</strong> your agent can reliably create content, structure, and design instructions. Direct in-browser Canva editing is often blocked by login/auth/interactive UI constraints.</p>
+    </div>
+
+    <h2>What your agent should own</h2>
+    <div class="card">
+      <ul>
+        <li>Campaign goal and audience positioning.</li>
+        <li>Carousel/script/thumbnail copy.</li>
+        <li>Slide-by-slide layout blueprint.</li>
+        <li>Design system (fonts, spacing, color usage rules).</li>
+        <li>Final QA checklist before export/publish.</li>
+      </ul>
+    </div>
+
+    <h2>Where people get stuck</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Interactive login:</strong> Google/SSO/2FA prompts break automation flow.</li>
+        <li><strong>Click-based editing:</strong> not every runtime can perform reliable UI actions.</li>
+        <li><strong>Account context drift:</strong> wrong Canva account/team/workspace.</li>
+        <li><strong>Blind retries:</strong> repeating the same blocked step burns tokens and time.</li>
+      </ul>
+    </div>
+
+    <h2>5-minute workflow that works today</h2>
+
+    <div class="step">
+      <div class="step-title">1) Ask for an exact Canva-ready brief</div>
+      <p>Have the agent output dimensions, slide count, per-slide copy, visual hierarchy, and asset notes.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2) Run one canary deliverable</div>
+      <p>Create one test graphic in Canva from the brief before requesting a full campaign set.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">3) Lock a style system</div>
+      <p>Once one design works, ask the agent to generate the remaining variants with the same style constraints.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4) Export with checklist proof</div>
+      <p>Use the agent’s QA checklist to verify spelling, CTA, dimensions, and brand consistency before publish.</p>
+    </div>
+
+    <h2>Copy/paste prompt</h2>
+    <div class="code">I need Canva assets, but I know direct browser editing may be blocked.
+
+Goal:
+- Create a [platform] content set for [audience/topic]
+- Keep output Canva-ready with no vague directions
+
+Return:
+1) Exact canvas specs (dimensions + count)
+2) Per-slide/per-image copy (ready to paste)
+3) Visual direction per slide (layout, hierarchy, icon/photo style)
+4) Brand style lock (font pairing, color rules, spacing)
+5) QA checklist before export
+
+If direct Canva editing is unavailable, do NOT retry login loops.
+Switch to brief-first mode and provide one canary asset plan first.</div>
+
+    <h2>Escalate only with evidence</h2>
+    <div class="code">Support packet:
+- What you asked for
+- What succeeded (brief/copy/plan)
+- Exact failure text (if any)
+- Where it failed: login / click / export / publish
+- Canva account type (personal/team) and whether SSO/2FA is enabled
+- One screenshot or exact timestamp of failure</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> treat your agent as your creative strategist + production writer, then run final Canva actions in a human-approved lane. You’ll ship faster and avoid retry spirals.</p>
+    </div>
+
+    <div class="footer">
+      <p>Built from recurring heyron onboarding/support friction around Canva automation expectations and browser-action limits.</p>
+    </div>
+  </div>
+</body>
+</html>
