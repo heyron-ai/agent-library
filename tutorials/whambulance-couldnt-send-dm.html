@@ -215,6 +215,27 @@
       </ul>
     </div>
 
+    <h2>Seeing a blank triage snapshot? Do this exact recovery</h2>
+    <p>Some users complete the DM step, but support receives an empty/blank issue body. That usually means the message payload was stripped by client formatting, relay behavior, or a failed first handshake.</p>
+    <div class="card">
+      <ol>
+        <li><strong>Stop repost spam.</strong> One clean retry is better than 5 partial retries.</li>
+        <li><strong>Post plain text only</strong> (no screenshots-only, no embeds-only) with 3 lines: issue, exact error, what you already tried.</li>
+        <li><strong>Include destination context:</strong> DM, #help, thread, or web ticket — say where the failure happened.</li>
+        <li><strong>If the relay still appears blank,</strong> bypass #help and submit at <a href="https://heyron.ai/support">heyron.ai/support</a> with the same 3-line summary.</li>
+      </ol>
+    </div>
+
+    <h3>Copy/paste plain-text triage packet</h3>
+    <div class="code">Support packet (Discord DM handoff)
+
+Issue:
+Exact error text:
+Where it failed (DM/#help/thread/web):
+What I already tried:
+Timezone + time observed:
+Can support continue via ticket if DM handoff fails again?</div>
+
     <h2>Known-good test message</h2>
     <p>Paste this in #help after changing settings (if that channel is still active):</p>
     <div class="code">Test: I enabled DMs from server members. Please reopen my support thread if needed.</div>
