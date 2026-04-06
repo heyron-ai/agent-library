@@ -68,6 +68,7 @@ Battle-tested workspace files to get started fast:
 - **[HEARTBEAT.md](templates/HEARTBEAT.md)** — Proactive heartbeat checklist template
 - **[COMMUNITY-SWEEP.md](templates/COMMUNITY-SWEEP.md)** — Community intelligence workflow template
 - **[DISCORD-CONNECT-CHECKLIST.md](templates/DISCORD-CONNECT-CHECKLIST.md)** — Fast diagnostic checklist for Discord connection failures
+- **[DISCORD-API-403-TRIAGE.md](templates/DISCORD-API-403-TRIAGE.md)** — A deterministic 5-minute triage for Discord API `403 Forbidden` errors (token type, guild/channel visibility, ID mismatch, and canary-based proof)
 - **[DISCORD-DEVELOPER-PORTAL-LOOP-BREAKER.md](templates/DISCORD-DEVELOPER-PORTAL-LOOP-BREAKER.md)** — Deterministic 5-minute recovery flow for “email verified but still can’t create Discord app” loops using account lock, incognito canary tests, and escalation-ready evidence
 - **[MEMORY-RECOVERY-PLAYBOOK.md](templates/MEMORY-RECOVERY-PLAYBOOK.md)** — Step-by-step playbook for diagnosing and fixing “my agent forgot” complaints
 - **[CONTEXT-LIMIT-RESCUE.md](templates/CONTEXT-LIMIT-RESCUE.md)** — Quick triage and recovery workflow for `context limit exceeded` / oversized prompt failures
