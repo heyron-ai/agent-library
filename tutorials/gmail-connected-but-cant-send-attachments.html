@@ -181,6 +181,20 @@ Do this exactly:
       </ul>
     </div>
 
+    <h2>New high-friction cases</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Google Drive link vs real attachment:</strong> agent included a Drive URL in body text, but no file was attached to the email payload.</li>
+        <li><strong>Blocked archive/macros:</strong> <code>.zip</code>, macro-enabled Office files, or password-protected archives may be blocked by sender or recipient policy.</li>
+        <li><strong>Alias mismatch confusion:</strong> message sends from a different alias/mailbox than expected, then recipient filtering rules hide it.</li>
+        <li><strong>DLP/compliance hold:</strong> send appears successful, but attachment is held, stripped, or delayed by Workspace/admin controls.</li>
+      </ul>
+    </div>
+
+    <div class="callout-warning">
+      <p><strong>Proof rule:</strong> require the agent to return both <em>message ID</em> and the exact <em>attachment filename list</em>. If the list is empty, it was not an attachment send.</p>
+    </div>
+
     <div class="callout-danger">
       <p><strong>Loop-break rule:</strong> after two one-variable tests with full proof output, stop reconnecting and escalate with evidence.</p>
     </div>
