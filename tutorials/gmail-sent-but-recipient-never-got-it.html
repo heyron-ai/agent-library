@@ -186,6 +186,16 @@ Do this exactly:
       </ul>
     </div>
 
+    <h2>New high-friction cases (worth checking early)</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Threading confusion:</strong> recipient replies in an older thread while you’re checking only for a new top-level message.</li>
+        <li><strong>Recipient forwarding rules:</strong> message was delivered, then auto-forwarded/archived/label-filtered out of expected inbox views.</li>
+        <li><strong>Google Workspace quarantine/hold:</strong> sender sees success, but recipient org security policy delays or quarantines delivery.</li>
+        <li><strong>Plus-address mismatch:</strong> canary sent to <code>name+tag@domain.com</code> while recipient checks only <code>name@domain.com</code> routing expectations.</li>
+      </ul>
+    </div>
+
     <div class="callout-danger">
       <p><strong>Loop-break rule:</strong> after two canary attempts with full proof capture, stop retrying and escalate with evidence. Reconnect loops won’t fix deliverability policy issues.</p>
     </div>
