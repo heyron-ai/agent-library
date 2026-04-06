@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Says Verify Email (But You Already Did)? — heyron</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #5865F2;
+      --accent-light: #7289DA;
+      --success: #43b581;
+      --warning: #faa61a;
+      --code-bg: #161616;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(88,101,242,0.18);
+      color: #9ba8ff;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+    h2 { font-size: 24px; font-weight: 700; margin: 40px 0 14px; letter-spacing: -0.01em; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 0 0 18px 22px; }
+    li { margin-bottom: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 18px 0;
+      border-left: 3px solid var(--accent);
+      background: rgba(88,101,242,0.08);
+    }
+    .callout strong { color: var(--accent-light); }
+
+    .callout-warning {
+      border-left-color: var(--warning);
+      background: rgba(250,166,26,0.08);
+    }
+    .callout-warning strong { color: var(--warning); }
+
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(67,181,129,0.08);
+    }
+    .callout-success strong { color: var(--success); }
+
+    .code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', Consolas, Monaco, monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 14px 0;
+      color: #d6deff;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    a { color: var(--accent-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 28px; }
+      .container { padding: 28px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="hero-badge">Setup + Troubleshooting</div>
+      <h1>Discord Says “Verify Email” (But You Already Did)?</h1>
+      <p>A deterministic fix flow for the Discord Developer Portal block that stops you from creating your bot app.</p>
+    </div>
+
+    <p>A fresh community pain point: users verify their email, but Discord Developer Portal still blocks app creation. This is usually an account/session mismatch, stale verification state, or account trust requirement delay.</p>
+
+    <div class="callout">
+      <p><strong>Core rule:</strong> before retrying setup, prove you are in the same Discord account in both the main app and the Developer Portal.</p>
+    </div>
+
+    <h2>2-minute triage (do in order)</h2>
+    <div class="card">
+      <ol>
+        <li>Open <a href="https://discord.com/channels/@me" target="_blank" rel="noopener">discord.com/channels/@me</a> and confirm the account you expect.</li>
+        <li>Open <a href="https://discord.com/developers/applications" target="_blank" rel="noopener">discord.com/developers/applications</a> in the <strong>same browser profile</strong>.</li>
+        <li>If still blocked, fully sign out from both pages, then sign back into one account only.</li>
+        <li>Hard-refresh Developer Portal (<strong>Cmd/Ctrl+Shift+R</strong>).</li>
+        <li>If blocked, try a private/incognito window and repeat once.</li>
+      </ol>
+    </div>
+
+    <h2>Most common root causes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Wrong account:</strong> Discord app logged into account A, Developer Portal opened under account B.</li>
+        <li><strong>Stale session:</strong> email verification completed, but old cookies still show unverified state.</li>
+        <li><strong>Verification lag:</strong> trust checks can take a little time after first verification/login changes.</li>
+        <li><strong>Browser profile mix-up:</strong> multiple Chrome profiles each carrying different Discord login state.</li>
+        <li><strong>Security requirement pending:</strong> Discord may require extra trust steps (phone/2FA prompts) for developer actions.</li>
+      </ul>
+    </div>
+
+    <h2>Known-good reset flow</h2>
+    <div class="code">1) Sign out from discord.com and discord.com/developers
+2) Close all Discord web tabs
+3) Reopen one fresh tab: https://discord.com/login
+4) Log in to your intended account
+5) Open: https://discord.com/developers/applications
+6) Try "New Application" again</div>
+
+    <div class="callout-warning">
+      <p><strong>Do not rotate bot tokens</strong> for this issue. This block happens before your app exists, so token resets won’t help.</p>
+    </div>
+
+    <h2>If you need to unblock tonight</h2>
+    <div class="card">
+      <ul>
+        <li>Try a different browser with a clean profile (no Discord cookies).</li>
+        <li>Avoid VPN/proxy for the setup step if trust checks are failing.</li>
+        <li>Wait 10–20 minutes after verification and retry once (not 20 rapid retries).</li>
+        <li>If it still fails, capture evidence and escalate with one clean report.</li>
+      </ul>
+    </div>
+
+    <h2>Support-ready packet (copy/paste)</h2>
+    <div class="code">Discord Developer Portal verification block
+
+Discord username:
+Discord user ID (optional):
+Time verification was completed:
+Browser + profile used:
+Still blocked at step:
+Exact error text shown:
+Tried clean browser profile? (yes/no):
+Tried full sign-out + sign-in reset? (yes/no):</div>
+
+    <div class="callout-success">
+      <p><strong>Bottom line:</strong> this is usually identity/session drift, not a Heyron problem. Account-proof first, clean-session reset second, then escalate with evidence if still blocked.</p>
+    </div>
+
+    <div class="footer">
+      <p>Once this is resolved, continue with the main Discord setup guide in the tutorials index.</p>
+    </div>
+  </div>
+</body>
+</html>
