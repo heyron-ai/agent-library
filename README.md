@@ -110,6 +110,7 @@ Battle-tested workspace files to get started fast:
 - **[TOOL-CAPABILITY-REALITY-CHECK.md](templates/TOOL-CAPABILITY-REALITY-CHECK.md)** — A deterministic capability check to separate what your agent can automate now vs where human handoff is required
 - **[SURFACE-MISMATCH-CANARY.md](templates/SURFACE-MISMATCH-CANARY.md)** — A tiny proof-first workflow for “works in DM/dashboard but fails in server channel/thread” routing and policy mismatch incidents
 - **[RUNTIME-RESTART-VERIFICATION.md](templates/RUNTIME-RESTART-VERIFICATION.md)** — A proof-first workflow to verify whether a restart actually applied and isolate stale-session/host mismatch loops
+- **[STALE-STATE-LOOP-BREAKER.md](templates/STALE-STATE-LOOP-BREAKER.md)** — A deterministic 5-minute workflow for “I fixed it but still see the same error” loops, using exact error fingerprints, fresh-context canaries, and escalation-ready proof
 - **[GITHUB-VS-WORKSPACE-DIFF-CHECKLIST.md](templates/GITHUB-VS-WORKSPACE-DIFF-CHECKLIST.md)** — A deterministic checklist to diagnose and fix file mismatch confusion between live workspace files and GitHub repo history (branch/path/context-proof first)
 - **[AGENTS-DRIFT-PREVENTION.md](templates/AGENTS-DRIFT-PREVENTION.md)** — A deterministic playbook to detect, recover, and prevent unexpected AGENTS.md behavior drift from merges, sync conflicts, and parallel edits
 - **[PERSONAL-DASHBOARD-STARTER-KIT.md](templates/PERSONAL-DASHBOARD-STARTER-KIT.md)** — A user-facing build brief for making a clean dashboard with your agent, step by step
