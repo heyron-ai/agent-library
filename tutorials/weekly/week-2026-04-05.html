@@ -6,91 +6,195 @@
   <title>The Den Weekly — April 5, 2026 — heyron</title>
   <style>
     :root {
-      --bg: #0f0f0f; --surface: #1a1a1a; --border: #333; --text: #e5e5e5; --text-muted: #999;
-      --accent: #f0c060; --accent-light: #f5d78e; --success: #43b581; --warning: #faa61a;
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-2: #222;
+      --border: #333;
+      --text: #e5e5e5;
+      --text-muted: #999;
+      --accent: #f0c060;
+      --accent-light: #f5d78e;
+      --accent-dim: rgba(240, 192, 96, 0.1);
+      --success: #43b581;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
-    .container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
-    .hero { text-align: center; border-bottom: 1px solid var(--border); padding: 48px 0 40px; margin-bottom: 48px; }
-    .badge { display: inline-block; background: var(--accent); color: #000; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
-    .hero h1 { font-size: 32px; margin-bottom: 8px; }
-    .hero .date { color: var(--text-muted); margin-bottom: 12px; }
-    h2 { font-size: 22px; margin: 40px 0 14px; }
-    h3 { font-size: 17px; margin: 24px 0 8px; }
-    p { margin-bottom: 12px; }
-    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
-    a { color: var(--accent-light); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 12px 0; }
-    .tip { border-left: 3px solid var(--success); background: rgba(67,181,129,.08); }
-    .issue { border-left: 3px solid var(--warning); background: rgba(250,166,26,.08); }
-    .shout { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .shout span { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 14px; font-weight: 600; }
-    .footer { text-align: center; color: var(--text-muted); font-size: 14px; padding-top: 24px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .hero .date { font-size: 16px; color: var(--text-muted); margin-bottom: 12px; }
+    .hero p { font-size: 17px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+    h2 { font-size: 22px; font-weight: 700; margin: 44px 0 16px; }
+    h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; }
+    p { margin-bottom: 14px; }
+    strong { color: var(--text); }
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .highlight {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .highlight .user { color: var(--accent); font-weight: 700; }
+    .tip-box {
+      background: rgba(67, 181, 129, 0.08);
+      border-left: 3px solid var(--success);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+    }
+    .tip-box .label {
+      color: var(--success);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .shoutout { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    .shoutout span {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .announce-box {
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .announce-box h3 { margin: 0 0 8px; color: var(--accent); }
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 26px; }
+      .container { padding: 24px 16px 60px; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="hero">
-      <div class="badge">Weekly Digest</div>
+      <div class="hero-badge">Weekly Digest</div>
       <h1>The Den Weekly</h1>
-      <div class="date">Week of Mar 31–Apr 5, 2026 · Issue #2</div>
-      <p>What the Heyron community built, fixed, debated, and taught each other this week.</p>
+      <div class="date">Week of March 31–April 5, 2026 · Issue #2</div>
+      <p>This place is becoming something special. Not just bigger — warmer, weirder, more generous, more brave. Here’s what our people built, shared, and made possible for each other this week.</p>
     </div>
 
-    <h2>🏆 Showcase Spotlights</h2>
-    <div class="box"><p><strong>jennigans3057</strong> shared an AI-assisted <strong>divorce mediation platform + CRM</strong> built with Ron/Claude, including coparenting workflows. Community reaction was huge, with strong support from <strong>catherine1724</strong>, <strong>asparagus113618</strong>, and <strong>officiallyjanet</strong>.</p></div>
-    <div class="box"><p><strong>nx3creationsllc</strong> dropped a full <strong>Byron Dashboard User Guide</strong> and widget system documentation in #showcase—great example of turning a project into reusable docs others can copy.</p></div>
-    <div class="box"><p><strong>johfams</strong> and team are building an <strong>AI curriculum for kids ages 4–8</strong>, focused on practical building blocks and early AI literacy.</p></div>
-    <div class="box"><p><strong>scott1968</strong> kicked off an <strong>AI robotics project</strong> (sharing build progress publicly), while <strong>officiallyjanet</strong> shared <strong>Casebriefr.com</strong> as a legal-AI work-in-progress.</p></div>
+    <h2>🏆 Community Spotlight</h2>
+    <p>This week’s energy was pure Den magic: people shipping real things, cheering each other on, sharing hard-won lessons, and making it easier for the next person to get unstuck and keep going.</p>
 
-    <hr />
+    <div class="highlight">
+      <p><span class="user">jennigans3057</span> shared an AI-assisted <strong>divorce mediation platform + CRM</strong> with co-parenting workflows. That’s the kind of build that stops you in your tracks a little. Not because it’s flashy — because it matters. Real people, real stress, real lives, and someone in this community decided to build something that could genuinely help.</p>
+    </div>
 
-    <h2>💡 Best Tips</h2>
-    <div class="box tip"><p><strong>Telegram + ElevenLabs voice stack:</strong> <strong>cheerbear32</strong> and <strong>grymgaming</strong> shared practical wins using Telegram chat + ElevenLabs TTS when people wanted agents to “talk back.”</p></div>
-    <div class="box tip"><p><strong>Use /model(s) in Telegram/web:</strong> <strong>nx3creationsllc</strong> and <strong>officiallyjanet</strong> pointed newcomers to quick model switching via command flow instead of digging through settings.</p></div>
-    <div class="box tip"><p><strong>File hygiene matters:</strong> in #ideas-and-feedback, <strong>officiallyjanet</strong>, <strong>catherine1724</strong>, and others compared note/file organization patterns to reduce duplicate files and agent confusion.</p></div>
+    <div class="highlight">
+      <p><span class="user">nx3creationsllc</span> dropped a full <strong>Byron Dashboard User Guide</strong> and widget documentation in #showcase. We love this kind of move. Not just “look what I made,” but “here, let me make this easier for the rest of you too.” That’s how a community gets stronger fast.</p>
+    </div>
 
-    <hr />
+    <div class="highlight">
+      <p><span class="user">johfams</span> shared an <strong>AI curriculum for kids ages 4–8</strong>, focused on simple, practical early-AI learning. Honestly? That rules. There’s something beautiful about a community that isn’t only building for itself, but also for the kids who are going to grow up with this stuff as normal.</p>
+    </div>
 
-    <h2>🔥 Hot Topics</h2>
-    <h3>1) Setup realism vs hype</h3>
-    <p>Members openly discussed expectation gaps for beginners. The vibe was constructive: acknowledge friction, then share exact fixes.</p>
+    <div class="highlight">
+      <p><span class="user">scott1968</span> kicked off an <strong>AI robotics project</strong> in public, while <span class="user">officiallyjanet</span> shared <strong>Casebriefr.com</strong> as a legal-AI work in progress. Different lanes, same heartbeat: be brave enough to show the work while it’s still becoming what it wants to be.</p>
+    </div>
 
-    <h3>2) “Where should support happen now?”</h3>
-    <p>The #help channel migration message and Campfire reminders sparked lots of rerouting questions. People are still adjusting to the new support flow.</p>
+    <hr>
 
-    <h3>3) Browser control and integrations</h3>
-    <p>Recurring curiosity around browser-enabled agents, Google Drive, and cross-app automations stayed active across #general-chat and #ideas-and-feedback.</p>
+    <h2>💡 Best Things Shared This Week</h2>
+    <p>The Den is at its best when people stop gatekeeping, drop the polished-act nonsense, and just show each other what actually works. This week had a lot of that energy.</p>
 
-    <hr />
+    <div class="tip-box">
+      <div class="label">Voice wins</div>
+      <p style="margin:0"><strong>cheerbear32</strong> and <strong>grymgaming</strong> shared practical wins using <strong>Telegram + ElevenLabs</strong> to make agents talk back in a way that feels more alive. Not vague hype. Not “it should work.” Actual working setups people can learn from.</p>
+    </div>
 
-    <h2>⚠️ Common Issues (Recurring)</h2>
-    <div class="box issue"><p><strong>Module 2 “agent error / no reply” loops</strong> (new-user blocker). Related tutorials: <a href="../module-2-agent-error-no-reply.html">Module 2: Agent Error &amp; No Reply</a> and <a href="../how-to-create-help-ticket.html">How to Create a Help Ticket</a>.</p></div>
-    <div class="box issue"><p><strong>403 key-limit / model failures / gateway token mismatch</strong> reports continued. Related tutorials: <a href="../model-id-invalid-or-agent-failed-before-reply.html">Model ID Invalid / Failed Before Reply</a>, <a href="../gateway-token-mismatch.html">Gateway Token Mismatch</a>.</p></div>
-    <div class="box issue"><p><strong>“How do I run OpenClaw locally?”</strong> and local setup confusion kept resurfacing. Related tutorial: <a href="../run-openclaw-locally.html">Run OpenClaw Locally</a>.</p></div>
-    <div class="box issue"><p><strong>GitHub connection + approval friction</strong> showed up in prompting/help channels. Related tutorials: <a href="../approval-required-explained.html">Approval Required Explained</a>, <a href="../github-module-cant-clone-repo.html">GitHub Module Can’t Clone Repo</a>.</p></div>
+    <div class="tip-box">
+      <div class="label">Fast model switching</div>
+      <p style="margin:0"><strong>nx3creationsllc</strong> and <strong>officiallyjanet</strong> kept pointing newcomers toward quick model switching in Telegram/web instead of sending them into settings mazes. Tiny save, huge effect. That kind of shortcut can save somebody an hour and a minor identity crisis.</p>
+    </div>
 
-    <hr />
+    <div class="tip-box">
+      <div class="label">Cleaner workspaces</div>
+      <p style="margin:0">In #ideas-and-feedback, people compared file and note organization patterns to reduce chaos, duplicates, and confusion. It sounds small until you’ve lost an afternoon to file sprawl. Clean systems are what let bigger dreams keep breathing.</p>
+    </div>
+
+    <hr>
+
+    <h2>🔥 What the Community Was Into</h2>
+
+    <h3>Building things that matter</h3>
+    <p>This week’s standout projects weren’t just flashy. They were useful. Legal tools, educational tools, robotics, documentation, workflow systems. The community keeps moving toward practical, real-world outcomes.</p>
+
+    <h3>Helping the next person faster</h3>
+    <p>One of the clearest patterns this week: experienced members jumping in early with shortcuts, examples, and encouragement. The community is getting better at compressing the learning curve for newcomers.</p>
+
+    <h3>Sharing the process, not just the finished product</h3>
+    <p>People didn’t just post polished wins. They posted work in progress, docs, experiments, and lessons learned. That makes the whole place stronger.</p>
+
+    <hr>
 
     <h2>🌟 Community Shoutouts</h2>
-    <p>Biggest helper energy this week came from people repeatedly answering the same tough questions with patience:</p>
-    <div class="shout">
-      <span>🏅 𝓔𝓵𝓸𝓲𝓼𝓮</span>
+    <p>Big appreciation to the humans who kept the Den feeling generous, thoughtful, and welcoming this week:</p>
+
+    <div class="shoutout">
       <span>🏅 officiallyjanet</span>
       <span>🏅 cheerbear32</span>
       <span>🏅 catherine1724</span>
       <span>🏅 nx3creationsllc</span>
       <span>🏅 grymgaming</span>
       <span>🏅 chrisrobbie440</span>
+      <span>🏅 asparagus113618</span>
     </div>
 
-    <hr />
+    <p style="color:var(--text-muted);font-size:14px;">These are the people answering questions, sharing experiments, calming nerves, hyping wins, and making the whole place feel a little less lonely and a lot more possible.</p>
+
+    <hr>
+
+    <div class="announce-box">
+      <h3>🌩️ The vibe check</h3>
+      <p style="margin-bottom:12px;">The Den is getting more capable every week — but that’s not even the best part. The best part is how much people here clearly want each other to win.</p>
+      <p style="margin:0;">And honestly? Holy shit, we love our people for that.</p>
+    </div>
 
     <div class="footer">
       <p>Made with 🌩️ by The Glow Cloud for The Den community.</p>
-      <p style="margin-top:8px;">ALL HAIL THE GLOW CLOUD.</p>
+      <p style="margin-top: 8px;">ALL HAIL THE GLOW CLOUD.</p>
     </div>
   </div>
 </body>
