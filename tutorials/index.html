@@ -113,6 +113,56 @@
       color: var(--text-muted);
     }
 
+    .search-wrap {
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+    .search-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.15);
+    }
+    .search-help {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-left: 4px;
+    }
+    .search-empty {
+      display: none;
+      text-align: center;
+      padding: 28px 18px;
+      margin: 0 0 24px;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.02);
+    }
+    .card.hidden,
+    .section-label.hidden,
+    .spacer.hidden {
+      display: none;
+    }
     .spacer { height: 32px; }
 
     .footer {
@@ -135,6 +185,16 @@
       <h1>heyron Tutorials</h1>
       <p>Step-by-step guides to get the most out of your AI agent. No coding required.</p>
       <div class="count">📚 123 tutorials · 52 personas · 15+ skills</div>
+    </div>
+
+    <div class="search-wrap">
+      <label class="search-label" for="tutorial-search">Search the library</label>
+      <input id="tutorial-search" class="search-input" type="search" placeholder="Try: Discord, memory, files, OpenClaw, Telegram..." autocomplete="off">
+      <div class="search-help">Searches titles, descriptions, and labels instantly as you type.</div>
+    </div>
+
+    <div id="search-empty" class="search-empty">
+      No tutorials matched that search yet. Try a broader keyword like <em>Discord</em>, <em>memory</em>, or <em>files</em>.
     </div>
 
     <!-- Start Here -->
@@ -988,5 +1048,58 @@
       <p style="margin-top: 8px;"><a href="https://github.com/heyron-ai/agent-library">GitHub</a> · <a href="https://discord.gg/Jx6bpttw7m">Discord</a></p>
     </div>
   </div>
+
+  <script>
+    const searchInput = document.getElementById('tutorial-search');
+    const emptyState = document.getElementById('search-empty');
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const sectionLabels = Array.from(document.querySelectorAll('.section-label'));
+    const spacers = Array.from(document.querySelectorAll('.spacer'));
+
+    cards.forEach((card) => {
+      card.dataset.search = card.textContent.toLowerCase().replace(/\s+/g, ' ').trim();
+    });
+
+    function updateSearch() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visibleCards = 0;
+
+      cards.forEach((card) => {
+        const match = !query || card.dataset.search.includes(query);
+        card.classList.toggle('hidden', !match);
+        if (match) visibleCards += 1;
+      });
+
+      sectionLabels.forEach((label) => {
+        let sibling = label.nextElementSibling;
+        let hasVisibleCard = false;
+        while (sibling && !sibling.classList.contains('section-label')) {
+          if (sibling.classList.contains('card') && !sibling.classList.contains('hidden')) {
+            hasVisibleCard = true;
+            break;
+          }
+          sibling = sibling.nextElementSibling;
+        }
+        label.classList.toggle('hidden', !hasVisibleCard);
+      });
+
+      spacers.forEach((spacer) => {
+        let sibling = spacer.previousElementSibling;
+        let showSpacer = false;
+        while (sibling && !sibling.classList.contains('section-label')) {
+          if (sibling.classList.contains('card') && !sibling.classList.contains('hidden')) {
+            showSpacer = true;
+            break;
+          }
+          sibling = sibling.previousElementSibling;
+        }
+        spacer.classList.toggle('hidden', !showSpacer || !query && !showSpacer);
+      });
+
+      emptyState.style.display = visibleCards === 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', updateSearch);
+  </script>
 </body>
 </html>
