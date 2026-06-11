@@ -2,43 +2,47 @@
 
 Everything your AI agent needs to be great. Tutorials, personas, skills, templates, and fix scripts — curated for heyron containers.
 
-> **New here?** Ignore the folders if you want. Start with the tutorials site: **https://heyron-ai.github.io/agent-library/tutorials/**
+> **New here?** Ignore the folders if you want. Start with the tutorials site: **https://heyron.ai/tutorials**
 
-## 📚 Tutorials (35+ guides)
+## 📚 Tutorials
 
-**[Browse all tutorials →](https://heyron-ai.github.io/agent-library/tutorials/)**
+> **⚠️ Tutorials have moved.** The live, canonical tutorial site is **https://heyron.ai/tutorials** (served from `heyron-ai/mission-control` → `public/tutorials/`). Edits made to `tutorials/` in this repo will **not** appear on heyron.ai — make tutorial changes in the mission-control repo. (Decision: 2026-06-11.)
+
+### Legacy folder (35+ guides)
+
+**[Browse all tutorials →](https://heyron.ai/tutorials)**
 
 The library now includes onboarding guides, troubleshooting docs, setup walkthroughs, and beginner-safe mental models. Some of the most important ones:
 
 ### Start Here
 | Tutorial | Description | Time |
 |----------|-------------|------|
-| [What Your Agent Can Do](https://heyron-ai.github.io/agent-library/tutorials/what-your-agent-can-do.html) | Capabilities, limitations, and real examples | 4 min |
-| [Your First SOUL.md](https://heyron-ai.github.io/agent-library/tutorials/your-first-soul-md.html) | Give your agent a personality | 5 min |
-| [How Memory Works](https://heyron-ai.github.io/agent-library/tutorials/how-memory-works.html) | Why your agent forgets and how to fix it | 5 min |
-| [Why Your Agent Gets Worse in Long Chats](https://heyron-ai.github.io/agent-library/tutorials/long-chats-and-lost-work.html) | Session length, lost work, and how to avoid it | 6 min |
+| [What Your Agent Can Do](https://heyron.ai/tutorialswhat-your-agent-can-do.html) | Capabilities, limitations, and real examples | 4 min |
+| [Your First SOUL.md](https://heyron.ai/tutorialsyour-first-soul-md.html) | Give your agent a personality | 5 min |
+| [How Memory Works](https://heyron.ai/tutorialshow-memory-works.html) | Why your agent forgets and how to fix it | 5 min |
+| [Why Your Agent Gets Worse in Long Chats](https://heyron.ai/tutorialslong-chats-and-lost-work.html) | Session length, lost work, and how to avoid it | 6 min |
 
 ### Setup & Models
 | Tutorial | Description | Time |
 |----------|-------------|------|
-| [Connect to Discord](https://heyron-ai.github.io/agent-library/tutorials/connect-discord.html) | Full Discord setup walkthrough | 10 min |
-| [Connect to Telegram](https://heyron-ai.github.io/agent-library/tutorials/connect-telegram.html) | Telegram setup in 5 minutes | 5 min |
-| [API Keys & Models](https://heyron-ai.github.io/agent-library/tutorials/api-keys-and-models.html) | Choose your agent's brain | 5 min |
-| [Get an OpenRouter Key for Free Models](https://heyron-ai.github.io/agent-library/tutorials/openrouter-free-models.html) | Use one key for 300+ models and experiment with free options | 6 min |
+| [Connect to Discord](https://heyron.ai/tutorialsconnect-discord.html) | Full Discord setup walkthrough | 10 min |
+| [Connect to Telegram](https://heyron.ai/tutorialsconnect-telegram.html) | Telegram setup in 5 minutes | 5 min |
+| [API Keys & Models](https://heyron.ai/tutorialsapi-keys-and-models.html) | Choose your agent's brain | 5 min |
+| [Get an OpenRouter Key for Free Models](https://heyron.ai/tutorialsopenrouter-free-models.html) | Use one key for 300+ models and experiment with free options | 6 min |
 
 ### Troubleshooting Highlights
 | Tutorial | Description | Time |
 |----------|-------------|------|
-| [Why Your Agent Says “Approval Required”](https://heyron-ai.github.io/agent-library/tutorials/approval-required-explained.html) | Plain-English guide to approval prompts | 4 min |
-| [Agent Feels Slow or Stuck?](https://heyron-ai.github.io/agent-library/tutorials/agent-feels-slow-or-stuck.html) | Fast diagnostic checklist for laggy or stuck behavior | 4 min |
-| [Discord Slash Commands Missing?](https://heyron-ai.github.io/agent-library/tutorials/discord-slash-commands-missing.html) | Recover missing slash commands | 4 min |
-| [Whambulance Couldn't Send You a DM?](https://heyron-ai.github.io/agent-library/tutorials/whambulance-couldnt-send-dm.html) | Fix the DM-blocked support flow and ticket reset loop | 4 min |
+| [Why Your Agent Says “Approval Required”](https://heyron.ai/tutorialsapproval-required-explained.html) | Plain-English guide to approval prompts | 4 min |
+| [Agent Feels Slow or Stuck?](https://heyron.ai/tutorialsagent-feels-slow-or-stuck.html) | Fast diagnostic checklist for laggy or stuck behavior | 4 min |
+| [Discord Slash Commands Missing?](https://heyron.ai/tutorialsdiscord-slash-commands-missing.html) | Recover missing slash commands | 4 min |
+| [Whambulance Couldn't Send You a DM?](https://heyron.ai/tutorialswhambulance-couldnt-send-dm.html) | Fix the DM-blocked support flow and ticket reset loop | 4 min |
 
 See the full tutorials index for everything else, including dashboard troubleshooting, reminders, MCP guides, Dropbox MCP, ElevenLabs voice setup, and more.
 
 ## 🎭 Agent Personas (52 ready-to-use SOUL.md files)
 
-**[Browse all personas →](https://heyron-ai.github.io/agent-library/tutorials/personas.html)**
+**[Browse all personas →](https://heyron.ai/tutorialspersonas.html)**
 
 Pre-built personalities for every use case — personal, business, creative, marketing, real estate, education, and more. Copy, paste, go. Free forever.
 
@@ -48,7 +52,7 @@ See [personas/README.md](personas/README.md) for the full catalog.
 
 ## 🧩 Skills Library (19 skills)
 
-**[Browse all skills →](https://heyron-ai.github.io/agent-library/tutorials/skills.html)**
+**[Browse all skills →](https://heyron.ai/tutorialsskills.html)**
 
 Ready-to-use skills that work in heyron containers. See [skills/README.md](skills/README.md) for the full catalog.
 
@@ -152,4 +156,4 @@ Found a great skill or have a tutorial idea? Drop it in [The Den](https://discor
 
 ---
 
-Made with 🌩️ by [The Glow Cloud](https://heyron-ai.github.io/agent-library/tutorials/) — heyron
+Made with 🌩️ by [The Glow Cloud](https://heyron.ai/tutorials) — heyron
